@@ -21,6 +21,13 @@ final class ProductBrand: Codable {
     }
 }
 
+extension ProductBrand {
+    
+    var products: Children<ProductBrand, Product> {
+        return children(\.brandID)
+    }
+}
+
 extension ProductBrand: MySQLModel {}
 
 extension ProductBrand: Content {}

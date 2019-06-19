@@ -1,9 +1,11 @@
+//
+// Created by jmarkstar on 19/06/19.
+//
 
 import Vapor
 import Fluent
 import Authentication
 
-//https://theswiftwebdeveloper.com/diving-into-vapor-part-3-introduction-to-routing-and-fluent-in-vapor-3-221d209f1fec
 final class ProductBrandController: RouteCollection {
 
     func boot(router: Router) throws {

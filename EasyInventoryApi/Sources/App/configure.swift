@@ -39,14 +39,14 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
 
     //Models for existing tables
 
-    ProductBrand.defaultDatabase = .mysql
-    ProductCategory.defaultDatabase = .mysql
     User.defaultDatabase = .mysql
     UserToken.defaultDatabase = .mysql
-
-    // Configure migrations
-    //var migrations = MigrationConfig()
-    //migrations.add(model: ProductBrand.self, database: .mysql)
-    //services.register(migrations)
-
+    Role.defaultDatabase = .mysql
+    ProductBrand.defaultDatabase = .mysql
+    ProductCategory.defaultDatabase = .mysql
+    ProductUnit.defaultDatabase = .mysql
+    Product.defaultDatabase = .mysql
+    Provider.defaultDatabase = .mysql
+    ProductInput.defaultDatabase = .mysql
+    ProductOutput.defaultDatabase = .mysql
 }

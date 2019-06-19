@@ -24,6 +24,13 @@ final class ProductCategory: Codable {
     }
 }
 
+extension ProductCategory {
+    
+    var products: Children<ProductCategory, Product> {
+        return children(\.categoryID)
+    }
+}
+
 extension ProductCategory: MySQLModel {}
 
 extension ProductCategory: Content {}

@@ -1,6 +1,5 @@
 //
 // Created by jmarkstar on 19/06/19.
-// from: https://medium.com/@martinlasek/tutorial-how-to-build-bearer-auth-8ae3f80b9522
 //
 
 import Foundation
