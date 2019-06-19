@@ -1,5 +1,5 @@
 
-## EasyInvetory
+## EasyInventory
 
 ### Database Model.
 
