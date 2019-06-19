@@ -1,5 +1,7 @@
+
 import FluentMySQL
 import Vapor
+import Authentication
 
 /// Called before your application initializes.
 public func configure(_ config: inout Config, _ env: inout Environment, _ services: inout Services) throws {
@@ -18,6 +20,7 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     // Configure a MySQL database
     try services.register(FluentMySQLProvider())
     try services.register(MySQLProvider())
+    try services.register(AuthenticationProvider())
 
     let mysqlConfig = MySQLDatabaseConfig(
             hostname: "127.0.0.1",
@@ -38,9 +41,12 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
 
     ProductBrand.defaultDatabase = .mysql
     ProductCategory.defaultDatabase = .mysql
+    User.defaultDatabase = .mysql
+    UserToken.defaultDatabase = .mysql
 
     // Configure migrations
     //var migrations = MigrationConfig()
     //migrations.add(model: ProductBrand.self, database: .mysql)
     //services.register(migrations)
+
 }

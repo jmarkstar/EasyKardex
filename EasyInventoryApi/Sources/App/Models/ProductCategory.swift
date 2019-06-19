@@ -13,7 +13,6 @@ final class ProductCategory: Codable {
     var id: Int?
     var name: String
 
-    /// Creates a new `brand`.
     init(id: Int? = nil, name: String) {
         self.id = id
         self.name = name

@@ -2,7 +2,7 @@
 import Foundation
 import Vapor
 import FluentMySQL
-/// A single entry of a Brand list.
+
 final class ProductBrand: Codable {
 
     static let entity = "product_brand"
@@ -10,7 +10,6 @@ final class ProductBrand: Codable {
     var id: Int?
     var name: String
 
-    /// Creates a new `brand`.
     init(id: Int? = nil, name: String) {
         self.id = id
         self.name = name

@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "Brand Create",
+			"name": "Auth Register",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -18,7 +18,108 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"name\": \"Coca Cola\"\n}"
+					"raw": "{\n\t\"username\": \"mestrella\",\n\t\"password\": \"abc123\",\n\t\"fullname\": \"Maria Estrella\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Auth Login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\":\"jmarkstar\",\n\t\"password\":\"abc123\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Auth Logout",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "UpCVgtS5yl14caY44tAhsM0fd4Nmri1iA4n9L3q6iBo=",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/logout",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Brand Create",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "ba40HG+qrEPlSv6mILc20ncvdQIT/v2zlBZHG3HbNqA=",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Inka Cola\"\n}"
 				},
 				"url": {
 					"raw": "http://localhost:8080/brands",
@@ -37,6 +138,16 @@
 		{
 			"name": "Brand Get all",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "ba40HG+qrEPlSv6mILc20ncvdQIT/v2zlBZHG3HbNqA=",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"body": {
@@ -60,8 +171,24 @@
 		{
 			"name": "Brand Get by ID",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "ba40HG+qrEPlSv6mILc20ncvdQIT/v2zlBZHG3HbNqA=",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer ba40HG+qrEPlSv6mILc20ncvdQIT/v2zlBZHG3HbNqA=",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
 					"raw": ""
@@ -84,6 +211,16 @@
 		{
 			"name": "Brand Delete",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "ba40HG+qrEPlSv6mILc20ncvdQIT/v2zlBZHG3HbNqA=",
+							"type": "string"
+						}
+					]
+				},
 				"method": "DELETE",
 				"header": [],
 				"body": {
@@ -91,7 +228,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/brands/4",
+					"raw": "http://localhost:8080/brands/3",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -99,7 +236,7 @@
 					"port": "8080",
 					"path": [
 						"brands",
-						"4"
+						"3"
 					]
 				}
 			},
@@ -108,6 +245,16 @@
 		{
 			"name": "Brand update",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "ba40HG+qrEPlSv6mILc20ncvdQIT/v2zlBZHG3HbNqA=",
+							"type": "string"
+						}
+					]
+				},
 				"method": "PUT",
 				"header": [
 					{
@@ -272,6 +419,16 @@
 			"response": []
 		}
 	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "UpCVgtS5yl14caY44tAhsM0fd4Nmri1iA4n9L3q6iBo=",
+				"type": "string"
+			}
+		]
+	},
 	"event": [
 		{
 			"listen": "prerequest",
