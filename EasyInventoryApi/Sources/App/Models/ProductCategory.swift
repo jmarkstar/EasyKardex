@@ -1,11 +1,14 @@
+//
+// Created by jmarkstar on 19/06/19.
+//
 
 import Foundation
 import Vapor
 import FluentMySQL
-/// A single entry of a Brand list.
-final class ProductBrand: Codable {
 
-    static let entity = "product_brand"
+final class ProductCategory: Codable {
+
+    static let entity = "product_category"
 
     var id: Int?
     var name: String
@@ -17,14 +20,13 @@ final class ProductBrand: Codable {
     }
 
     enum CodingKeys: String, CodingKey {
-        case id = "id_brand"
+        case id = "id_category"
         case name = "name"
     }
 }
 
-extension ProductBrand: MySQLModel {}
+extension ProductCategory: MySQLModel {}
 
-extension ProductBrand: Content {}
+extension ProductCategory: Content {}
 
-extension ProductBrand: Parameter {}
-
+extension ProductCategory: Parameter {}

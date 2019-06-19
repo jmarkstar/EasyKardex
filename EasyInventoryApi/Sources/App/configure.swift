@@ -37,6 +37,7 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     //Models for existing tables
 
     ProductBrand.defaultDatabase = .mysql
+    ProductCategory.defaultDatabase = .mysql
 
     // Configure migrations
     //var migrations = MigrationConfig()

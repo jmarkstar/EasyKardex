@@ -48,7 +48,7 @@
     </projectState>
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Sources/App/app.swift">
           <provider selected="true" editor-type-id="text-editor">
@@ -70,17 +70,62 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Sources/App/configure.swift">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="465">
-              <caret line="32" column="44" selection-start-line="32" selection-start-column="44" selection-end-line="32" selection-end-column="44" />
+            <state relative-caret-position="570">
+              <caret line="39" column="44" selection-start-line="39" selection-start-column="44" selection-end-line="39" selection-end-column="44" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Sources/App/routes.swift">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="6" column="63" selection-start-line="6" selection-start-column="63" selection-end-line="6" selection-end-column="63" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Sources/App/Models/ProductCategory.swift">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="6" column="18" selection-start-line="6" selection-start-column="18" selection-end-line="6" selection-end-column="18" />
+              <folding>
+                <element signature="e#44#61#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Sources/App/routes.swift">
+        <entry file="file://$PROJECT_DIR$/Sources/App/Controllers/ProductBrandController.swift">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="4" selection-start-line="4" selection-end-line="4" />
+            <state relative-caret-position="180">
+              <caret line="12" column="43" selection-start-line="12" selection-start-column="43" selection-end-line="12" selection-end-column="43" />
+              <folding>
+                <element signature="e#0#12#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Sources/App/Controllers/ProductCategoryController.swift">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="227">
+              <caret line="20" column="4" lean-forward="true" selection-start-line="20" selection-start-column="4" selection-end-line="26" selection-end-column="5" />
+              <folding>
+                <element signature="e#44#61#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Sources/App/Models/ProductBrand.swift">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="30">
+              <caret line="2" selection-start-line="2" selection-end-line="3" selection-end-column="18" />
             </state>
           </provider>
         </entry>
@@ -98,25 +143,17 @@
         <option value="$PROJECT_DIR$/Sources/App/app.swift" />
         <option value="$PROJECT_DIR$/Sources/App/boot.swift" />
         <option value="$PROJECT_DIR$/Sources/App/Controllers/TodoController.swift" />
-        <option value="$PROJECT_DIR$/Sources/App/Controllers/ProductBrandController.swift" />
-        <option value="$PROJECT_DIR$/Sources/App/Models/ProductBrand.swift" />
         <option value="$PROJECT_DIR$/Sources/App/configure.swift" />
+        <option value="$PROJECT_DIR$/Sources/App/Models/ProductBrand.swift" />
+        <option value="$PROJECT_DIR$/Sources/App/Models/ProductCategory.swift" />
         <option value="$PROJECT_DIR$/Sources/App/routes.swift" />
+        <option value="$PROJECT_DIR$/Sources/App/Controllers/ProductCategoryController.swift" />
+        <option value="$PROJECT_DIR$/Sources/App/Controllers/ProductBrandController.swift" />
       </list>
     </option>
   </component>
   <component name="MacroExpansionManager">
     <option name="directoryName" value="VzqfQEBP" />
-  </component>
-  <component name="ProjectConfigurationFiles">
-    <option name="files">
-      <list>
-        <option value="$PROJECT_DIR$/.idea/SmallBusinessApi.iml" />
-        <option value="$PROJECT_DIR$/.idea/misc.xml" />
-        <option value="$PROJECT_DIR$/.idea/modules.xml" />
-        <option value="$PROJECT_DIR$/.idea/vcs.xml" />
-      </list>
-    </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="2346" />
@@ -130,61 +167,49 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
-              <item name="SmallBusinessApi" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SmallBusinessApi" type="462c0819:PsiDirectoryNode" />
+              <item name="EasyInventoryApi" type="b2602c69:ProjectViewProjectNode" />
+              <item name="EasyInventoryApi" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="SmallBusinessApi" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SmallBusinessApi" type="462c0819:PsiDirectoryNode" />
-              <item name=".circleci" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SmallBusinessApi" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SmallBusinessApi" type="462c0819:PsiDirectoryNode" />
-              <item name="Public" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SmallBusinessApi" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SmallBusinessApi" type="462c0819:PsiDirectoryNode" />
+              <item name="EasyInventoryApi" type="b2602c69:ProjectViewProjectNode" />
+              <item name="EasyInventoryApi" type="462c0819:PsiDirectoryNode" />
               <item name="Sources" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="SmallBusinessApi" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SmallBusinessApi" type="462c0819:PsiDirectoryNode" />
+              <item name="EasyInventoryApi" type="b2602c69:ProjectViewProjectNode" />
+              <item name="EasyInventoryApi" type="462c0819:PsiDirectoryNode" />
               <item name="Sources" type="462c0819:PsiDirectoryNode" />
               <item name="App" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="SmallBusinessApi" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SmallBusinessApi" type="462c0819:PsiDirectoryNode" />
+              <item name="EasyInventoryApi" type="b2602c69:ProjectViewProjectNode" />
+              <item name="EasyInventoryApi" type="462c0819:PsiDirectoryNode" />
               <item name="Sources" type="462c0819:PsiDirectoryNode" />
-              <item name="AppTests" type="462c0819:PsiDirectoryNode" />
+              <item name="App" type="462c0819:PsiDirectoryNode" />
+              <item name="Controllers" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="SmallBusinessApi" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SmallBusinessApi" type="462c0819:PsiDirectoryNode" />
-              <item name="Tests" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SmallBusinessApi" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SmallBusinessApi" type="462c0819:PsiDirectoryNode" />
-              <item name="Tests" type="462c0819:PsiDirectoryNode" />
-              <item name="AppTests" type="462c0819:PsiDirectoryNode" />
+              <item name="EasyInventoryApi" type="b2602c69:ProjectViewProjectNode" />
+              <item name="EasyInventoryApi" type="462c0819:PsiDirectoryNode" />
+              <item name="Sources" type="462c0819:PsiDirectoryNode" />
+              <item name="App" type="462c0819:PsiDirectoryNode" />
+              <item name="Models" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/Sources/AppTests" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
@@ -207,7 +232,7 @@
     </option>
   </component>
   <component name="RunManager">
-    <configuration name="Run" type="SwiftPackageManagerRunConfiguration" factoryName="Swift Package Run" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SmallBusinessApi" TARGET_NAME="Run" CONFIG_NAME="Run" RUN_TARGET_PROJECT_NAME="SmallBusinessApi" RUN_TARGET_NAME="Run">
+    <configuration name="Run" type="SwiftPackageManagerRunConfiguration" factoryName="Swift Package Run" PASS_PARENT_ENVS_2="true" PROJECT_NAME="EasyInventoryApi" TARGET_NAME="Run" CONFIG_NAME="Run" RUN_TARGET_PROJECT_NAME="EasyInventoryApi" RUN_TARGET_NAME="Run">
       <method v="2">
         <option name="SPM.BUILD_TASK_PROVIDER" enabled="true" />
       </method>
@@ -224,40 +249,48 @@
       <option name="presentableId" value="Default" />
       <updated>1560893316532</updated>
       <workItem from="1560893319503" duration="15708000" />
+      <workItem from="1560923486124" duration="1611000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="15708000" />
+    <option name="totallyTimeSpent" value="17319000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1920" y="-2" width="1920" height="1082" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info id="Favorites" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20757738" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20971185" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Database Changes" />
-      <window_info anchor="bottom" id="Version Control" sideWeight="0.4994664" weight="0.32948583" />
-      <window_info anchor="bottom" id="Messages" />
-      <window_info anchor="bottom" id="Terminal" sideWeight="0.76840985" weight="0.3347324" />
-      <window_info anchor="bottom" id="Event Log" sideWeight="0.23159018" side_tool="true" weight="0.36096537" />
-      <window_info anchor="bottom" id="Build" sideWeight="0.5528282" weight="0.41762853" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49893278" weight="0.32948583" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.22350472" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.13326338" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="Cargo" />
-      <window_info anchor="right" id="Database" />
+      <window_info anchor="bottom" id="Database Changes" order="7" />
+      <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.4994664" weight="0.32948583" />
+      <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.76840985" weight="0.3347324" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.29562435" side_tool="true" weight="0.45330536" />
+      <window_info anchor="bottom" id="Build" order="11" sideWeight="0.7043757" weight="0.22140609" />
+      <window_info anchor="bottom" id="Messages" order="12" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Database" order="3" />
+      <window_info anchor="right" id="Cargo" order="4" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/.build/checkouts/fluent-sqlite" />
+      <path value="$PROJECT_DIR$/.build/checkouts/sqlite" />
+    </ignored-roots>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/README.md">
@@ -420,26 +453,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Sources/App/Controllers/ProductBrandController.swift">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="545">
-          <caret line="42" column="9" lean-forward="true" selection-start-line="42" selection-start-column="9" selection-end-line="42" selection-end-column="9" />
-          <folding>
-            <element signature="e#0#12#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Sources/App/Models/ProductBrand.swift">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="27" column="33" selection-start-line="27" selection-start-column="33" selection-end-line="27" selection-end-column="33" />
-          <folding>
-            <element signature="e#1#18#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Tests/AppTests/AppTests.swift">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -466,17 +479,54 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Sources/App/Models/ProductBrand.swift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" selection-start-line="2" selection-end-line="3" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Sources/App/Models/ProductCategory.swift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="18" selection-start-line="6" selection-start-column="18" selection-end-line="6" selection-end-column="18" />
+          <folding>
+            <element signature="e#44#61#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Sources/App/configure.swift">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="32" column="44" selection-start-line="32" selection-start-column="44" selection-end-line="32" selection-end-column="44" />
+        <state relative-caret-position="570">
+          <caret line="39" column="44" selection-start-line="39" selection-start-column="44" selection-end-line="39" selection-end-column="44" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Sources/App/routes.swift">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" selection-start-line="4" selection-end-line="4" />
+        <state relative-caret-position="90">
+          <caret line="6" column="63" selection-start-line="6" selection-start-column="63" selection-end-line="6" selection-end-column="63" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Sources/App/Controllers/ProductCategoryController.swift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="227">
+          <caret line="20" column="4" lean-forward="true" selection-start-line="20" selection-start-column="4" selection-end-line="26" selection-end-column="5" />
+          <folding>
+            <element signature="e#44#61#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Sources/App/Controllers/ProductBrandController.swift">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="43" selection-start-line="12" selection-start-column="43" selection-end-line="12" selection-end-column="43" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

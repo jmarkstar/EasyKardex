@@ -10,12 +10,20 @@ final class ProductBrandController: RouteCollection {
 
         brands.post(use: create)
         brands.get(use: index)
+        brands.get(ProductBrand.parameter, use: getById)
         brands.put(ProductBrand.parameter, use: update)
         brands.delete(ProductBrand.parameter, use: delete)
     }
 
     func index(_ req: Request) throws -> Future<[ProductBrand]> {
         return ProductBrand.query(on: req).all()
+    }
+
+    func getById(_ req: Request) throws -> Future<ProductBrand> {
+        guard let futureBrand = try? req.parameters.next(ProductBrand.self) else {
+            throw Abort(.notFound)
+        }
+        return futureBrand
     }
 
     func create(_ req: Request) throws -> Future<ProductBrand> {
