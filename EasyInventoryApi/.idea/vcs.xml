@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.build/checkouts/console" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.build/checkouts/core" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.build/checkouts/crypto" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.build/checkouts/database-kit" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.build/checkouts/fluent" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.build/checkouts/fluent-sqlite" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.build/checkouts/http" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.build/checkouts/multipart" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.build/checkouts/routing" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.build/checkouts/service" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.build/checkouts/sql" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.build/checkouts/sqlite" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.build/checkouts/swift-nio" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.build/checkouts/swift-nio-ssl" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.build/checkouts/swift-nio-ssl-support" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.build/checkouts/swift-nio-zlib-support" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.build/checkouts/template-kit" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.build/checkouts/url-encoded-form" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.build/checkouts/validation" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.build/checkouts/vapor" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.build/checkouts/websocket" vcs="Git" />
+  </component>
+</project>
