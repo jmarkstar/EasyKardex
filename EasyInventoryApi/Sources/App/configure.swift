@@ -26,8 +26,8 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
             hostname: "127.0.0.1",
             port: 3306,
             username: "root",
-            password: "abc123",
-            database: "small_business_db"
+            password: "root",
+            database: "easy_inventory_db"
     )
 
     let mysql = MySQLDatabase(config: mysqlConfig)

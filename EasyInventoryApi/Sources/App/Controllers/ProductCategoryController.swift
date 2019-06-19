@@ -24,7 +24,7 @@ final class ProductCategoryController: RouteCollection {
 
     func getById(_ req: Request) throws -> Future<ProductCategory> {
 
-        guard let _ = try? req.requireAuthenticated(User.self) else {
+        guard try req.isAuthenticated(User.self) else {
             throw Abort(.unauthorized)
         }
 
@@ -37,7 +37,7 @@ final class ProductCategoryController: RouteCollection {
 
     func index(_ req: Request) throws -> Future<[ProductCategory]> {
 
-        guard let _ = try? req.requireAuthenticated(User.self) else {
+        guard try req.isAuthenticated(User.self) else {
             throw Abort(.unauthorized)
         }
 
@@ -46,7 +46,7 @@ final class ProductCategoryController: RouteCollection {
 
     func create(_ req: Request) throws -> Future<ProductCategory> {
 
-        guard let _ = try? req.requireAuthenticated(User.self) else {
+        guard try req.isAuthenticated(User.self) else {
             throw Abort(.unauthorized)
         }
 
@@ -57,7 +57,7 @@ final class ProductCategoryController: RouteCollection {
 
     func update(_ req: Request) throws -> Future<ProductCategory> {
 
-        guard let _ = try? req.requireAuthenticated(User.self) else {
+        guard try req.isAuthenticated(User.self) else {
             throw Abort(.unauthorized)
         }
 
@@ -81,7 +81,7 @@ final class ProductCategoryController: RouteCollection {
 
     func delete(_ req: Request) throws -> Future<HTTPStatus> {
 
-        guard let _ = try? req.requireAuthenticated(User.self) else {
+        guard try req.isAuthenticated(User.self) else {
             throw Abort(.unauthorized)
         }
 

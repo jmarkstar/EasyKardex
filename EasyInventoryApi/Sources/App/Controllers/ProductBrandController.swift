@@ -22,7 +22,7 @@ final class ProductBrandController: RouteCollection {
 
     func index(_ req: Request) throws -> Future<[ProductBrand]> {
 
-        guard let _ = try? req.requireAuthenticated(User.self) else {
+        guard try req.isAuthenticated(User.self) else {
             throw Abort(.unauthorized)
         }
 
@@ -31,7 +31,7 @@ final class ProductBrandController: RouteCollection {
 
     func getById(_ req: Request) throws -> Future<ProductBrand> {
 
-        guard let _ = try? req.requireAuthenticated(User.self) else {
+        guard try req.isAuthenticated(User.self) else {
             throw Abort(.unauthorized)
         }
 
@@ -43,7 +43,7 @@ final class ProductBrandController: RouteCollection {
 
     func create(_ req: Request) throws -> Future<ProductBrand> {
 
-        guard let _ = try? req.requireAuthenticated(User.self) else {
+        guard try req.isAuthenticated(User.self) else {
             throw Abort(.unauthorized)
         }
 
@@ -54,7 +54,7 @@ final class ProductBrandController: RouteCollection {
 
     func update(_ req: Request) throws -> Future<ProductBrand> {
 
-        guard let _ = try? req.requireAuthenticated(User.self) else {
+        guard try req.isAuthenticated(User.self) else {
             throw Abort(.unauthorized)
         }
 
@@ -78,7 +78,7 @@ final class ProductBrandController: RouteCollection {
 
     func delete(_ req: Request) throws -> Future<HTTPStatus> {
 
-        guard let _ = try? req.requireAuthenticated(User.self) else {
+        guard try req.isAuthenticated(User.self) else {
             throw Abort(.unauthorized)
         }
 
