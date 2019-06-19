@@ -3,7 +3,9 @@ import Vapor
 /// Register your application's routes here.
 public func routes(_ router: Router) throws {
 
-    try router.register(collection: AuthenticationController())
-    try router.register(collection: ProductCategoryController())
-    try router.register(collection: ProductBrandController())
+    let routerVersion = router.grouped("v1")
+    
+    try routerVersion.register(collection: AuthenticationController())
+    try routerVersion.register(collection: ProductCategoryController())
+    try routerVersion.register(collection: ProductBrandController())
 }

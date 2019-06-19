@@ -16,12 +16,14 @@ final class User: Codable {
     var username: String
     var password: String
     var fullname: String?
+    var roleID: Role.ID?
 
-    init(id: Int? = nil, username: String, password: String, fullname: String?) {
+    init(id: Int? = nil, username: String, password: String, fullname: String? = nil, roleID: Role.ID? = nil) {
         self.id = id
         self.username = username
         self.password = password
         self.fullname = fullname
+        self.roleID = roleID
     }
 
     enum CodingKeys: String, CodingKey {
@@ -29,6 +31,14 @@ final class User: Codable {
         case username = "username"
         case password = "password"
         case fullname = "fullname"
+        case roleID = "id_role"
+    }
+}
+
+extension User {
+    
+    var role: Parent<User, Role>? {
+        return parent(\.roleID)
     }
 }
 

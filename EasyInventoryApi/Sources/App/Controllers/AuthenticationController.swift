@@ -29,7 +29,11 @@ final class AuthenticationController: RouteCollection {
             let hasher = try req.make(BCryptDigest.self)
             let passwordHashed = try hasher.hash(user.password)
 
-            let newUser = User(username: user.username, password: passwordHashed, fullname: user.fullname)
+            guard let roleID = user.roleID else {
+                throw Abort(HTTPStatus.badRequest)
+            }
+            
+            let newUser = User(username: user.username, password: passwordHashed, fullname: user.fullname, roleID: roleID)
 
             return newUser.save(on: req).map { storedUser in
 

@@ -27,7 +27,7 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
             port: 3306,
             username: "root",
             password: "root",
-            database: "easy_inventory_db"
+            database: "easy_kardex_db"
     )
 
     let mysql = MySQLDatabase(config: mysqlConfig)
