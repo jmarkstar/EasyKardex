@@ -103,8 +103,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Sources/App/Controllers/ProductCategoryController.swift">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
+            <state relative-caret-position="450">
+              <caret line="30" column="88" lean-forward="true" selection-start-line="30" selection-start-column="88" selection-end-line="30" selection-end-column="88" />
               <folding>
                 <element signature="e#44#61#0" expanded="true" />
               </folding>
@@ -248,12 +248,12 @@
       <updated>1560893316532</updated>
       <workItem from="1560893319503" duration="15708000" />
       <workItem from="1560923486124" duration="5142000" />
-      <workItem from="1560928648766" duration="3142000" />
+      <workItem from="1560928648766" duration="3199000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="23992000" />
+    <option name="totallyTimeSpent" value="24049000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1920" y="-2" width="1920" height="1082" extended-state="6" />
@@ -264,7 +264,7 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49893278" weight="0.32948583" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.21196222" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.21196222" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -548,8 +548,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Sources/App/Controllers/ProductCategoryController.swift">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
+        <state relative-caret-position="450">
+          <caret line="30" column="88" lean-forward="true" selection-start-line="30" selection-start-column="88" selection-end-line="30" selection-end-column="88" />
           <folding>
             <element signature="e#44#61#0" expanded="true" />
           </folding>
