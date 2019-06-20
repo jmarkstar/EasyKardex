@@ -70,6 +70,10 @@ extension Product {
 
 extension Product: MySQLModel {}
 
+extension Product: Parameter {}
+
+extension Product: Content {}
+
 extension Product {
     struct ProductPublic: Content {
         let id: Int

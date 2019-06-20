@@ -70,6 +70,10 @@ extension ProductInput {
 
 extension ProductInput: MySQLModel {}
 
+extension ProductInput: Parameter {}
+
+extension ProductInput: Content {}
+
 extension ProductInput {
     struct InputPublic: Content {
         let id: Int

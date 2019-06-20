@@ -53,6 +53,10 @@ extension ProductOutput {
 
 extension ProductOutput: MySQLModel {}
 
+extension ProductOutput: Parameter {}
+
+extension ProductOutput: Content {}
+
 extension ProductOutput {
     struct OutputPublic: Content {
         let id: Int
