@@ -2,9 +2,9 @@
 import PackageDescription
 
 let package = Package(
-    name: "EasyInventoryApi",
+    name: "EasyKardexApi",
     products: [
-        .library(name: "EasyInventoryApi", targets: ["App"]),
+        .library(name: "EasyKardexApi", targets: ["App"]),
     ],
     dependencies: [
         // 💧 A server-side Swift web framework.

@@ -15,10 +15,7 @@ final class AuthenticationController: RouteCollection {
         router.post("register", use: register)
         router.post("login", use: login)
 
-        let tokenAuthenticationMiddleware = User.tokenAuthMiddleware()
-        let authedROutes = router.grouped(tokenAuthenticationMiddleware)
-
-        authedROutes.get("logout", use: logout)
+        router.authenticated().get("logout", use: logout)
     }
 
     func register(_ req: Request) throws -> Future<User.UserPublic> {
@@ -27,7 +24,7 @@ final class AuthenticationController: RouteCollection {
 
             let hasher = try req.make(BCryptDigest.self)
             let passwordHashed = try hasher.hash(user.password)
-
+            
             guard let roleID = user.roleID else {
                 throw Abort(HTTPStatus.badRequest)
             }

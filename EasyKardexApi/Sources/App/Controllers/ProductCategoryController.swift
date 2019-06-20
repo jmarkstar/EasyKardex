@@ -10,10 +10,7 @@ final class ProductCategoryController: RouteCollection {
 
     func boot(router: Router) throws {
 
-        let tokenAuthenticationMiddleware = User.tokenAuthMiddleware()
-        let authedROutes = router.grouped(tokenAuthenticationMiddleware)
-
-        let categories = authedROutes.grouped("categories")
+        let categories = router.adminAuthorizated().grouped("categories")
 
         categories.post(use: create)
         categories.get(use: index)
@@ -24,10 +21,6 @@ final class ProductCategoryController: RouteCollection {
 
     func getById(_ req: Request) throws -> Future<ProductCategory> {
 
-        guard try req.isAuthenticated(User.self) else {
-            throw Abort(.unauthorized)
-        }
-
         guard let futureCategory = try? req.parameters.next(ProductCategory.self) else {
             throw Abort(.notFound)
         }
@@ -37,18 +30,10 @@ final class ProductCategoryController: RouteCollection {
 
     func index(_ req: Request) throws -> Future<[ProductCategory]> {
 
-        guard try req.isAuthenticated(User.self) else {
-            throw Abort(.unauthorized)
-        }
-
         return ProductCategory.query(on: req).all()
     }
 
     func create(_ req: Request) throws -> Future<ProductCategory> {
-
-        guard try req.isAuthenticated(User.self) else {
-            throw Abort(.unauthorized)
-        }
 
         return try req.content.decode(ProductCategory.self).flatMap { category in
             return category.save(on: req)
@@ -56,10 +41,6 @@ final class ProductCategoryController: RouteCollection {
     }
 
     func update(_ req: Request) throws -> Future<ProductCategory> {
-
-        guard try req.isAuthenticated(User.self) else {
-            throw Abort(.unauthorized)
-        }
 
         guard let futureCategory = try? req.parameters.next(ProductCategory.self) else {
             throw Abort(.badRequest)
@@ -80,10 +61,6 @@ final class ProductCategoryController: RouteCollection {
     }
 
     func delete(_ req: Request) throws -> Future<HTTPStatus> {
-
-        guard try req.isAuthenticated(User.self) else {
-            throw Abort(.unauthorized)
-        }
 
         guard let futureCategory = try? req.parameters.next(ProductCategory.self) else {
             throw Abort(.badRequest)

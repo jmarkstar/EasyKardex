@@ -9,3 +9,14 @@ public func routes(_ router: Router) throws {
     try routerVersion.register(collection: ProductCategoryController())
     try routerVersion.register(collection: ProductBrandController())
 }
+
+extension Router {
+
+    public func authenticated() -> Router {
+        return self.grouped(AuthenticationMiddleware())
+    }
+    
+    public func adminAuthorizated() -> Router {
+        return authenticated().grouped(AdminAuthorizationMiddleware())
+    }
+}

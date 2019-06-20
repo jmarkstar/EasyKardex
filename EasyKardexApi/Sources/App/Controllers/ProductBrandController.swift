@@ -10,10 +10,7 @@ final class ProductBrandController: RouteCollection {
 
     func boot(router: Router) throws {
 
-        let tokenAuthenticationMiddleware = User.tokenAuthMiddleware()
-        let authedROutes = router.grouped(tokenAuthenticationMiddleware)
-
-        let brands = authedROutes.grouped("brands")
+        let brands = router.adminAuthorizated().grouped("brands")
 
         brands.post(use: create)
         brands.get(use: index)
@@ -24,18 +21,10 @@ final class ProductBrandController: RouteCollection {
 
     func index(_ req: Request) throws -> Future<[ProductBrand]> {
 
-        guard try req.isAuthenticated(User.self) else {
-            throw Abort(.unauthorized)
-        }
-
         return ProductBrand.query(on: req).all()
     }
 
     func getById(_ req: Request) throws -> Future<ProductBrand> {
-
-        guard try req.isAuthenticated(User.self) else {
-            throw Abort(.unauthorized)
-        }
 
         guard let futureBrand = try? req.parameters.next(ProductBrand.self) else {
             throw Abort(.notFound)
@@ -44,21 +33,13 @@ final class ProductBrandController: RouteCollection {
     }
 
     func create(_ req: Request) throws -> Future<ProductBrand> {
-
-        guard try req.isAuthenticated(User.self) else {
-            throw Abort(.unauthorized)
-        }
-
+        
         return try req.content.decode(ProductBrand.self).flatMap { brand in
             return brand.save(on: req)
         }
     }
 
     func update(_ req: Request) throws -> Future<ProductBrand> {
-
-        guard try req.isAuthenticated(User.self) else {
-            throw Abort(.unauthorized)
-        }
 
         guard let futureBrand = try? req.parameters.next(ProductBrand.self) else {
             throw Abort(.badRequest)
@@ -79,10 +60,6 @@ final class ProductBrandController: RouteCollection {
     }
 
     func delete(_ req: Request) throws -> Future<HTTPStatus> {
-
-        guard try req.isAuthenticated(User.self) else {
-            throw Abort(.unauthorized)
-        }
 
         guard let futureBrand = try? req.parameters.next(ProductBrand.self) else {
             throw Abort(.badRequest)

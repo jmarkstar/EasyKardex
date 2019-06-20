@@ -8,14 +8,20 @@ import FluentMySQL
 import Authentication
 
 final class User: Codable {
-
+    
     static let entity = "user"
 
     var id: Int?
     var username: String
     var password: String
     var fullname: String?
-    var roleID: Role.ID?
+    var roleID: Role.ID? {
+        didSet{
+            userRole = roleID == 1 ? .admin : .`operator`
+        }
+    }
+    
+    var userRole: UserType?
 
     init(id: Int? = nil, username: String, password: String, fullname: String? = nil, roleID: Role.ID? = nil) {
         self.id = id
@@ -52,4 +58,9 @@ extension User {
         let id: Int
         let username: String
     }
+}
+
+enum UserType: Int {
+    case admin = 1
+    case `operator` = 2
 }

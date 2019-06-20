@@ -7,16 +7,12 @@
 
 import Vapor
 import Fluent
-import Authentication
 
 final class ProductUnitController: RouteCollection {
     
     func boot(router: Router) throws {
         
-        let tokenAuthenticationMiddleware = User.tokenAuthMiddleware()
-        let authedROutes = router.grouped(tokenAuthenticationMiddleware)
-        
-        let units = authedROutes.grouped("units")
+        let units = router.adminAuthorizated().grouped("units")
         
         units.post(use: create)
         units.get(use: index)
@@ -27,18 +23,10 @@ final class ProductUnitController: RouteCollection {
     
     func index(_ req: Request) throws -> Future<[ProductUnit]> {
         
-        guard try req.isAuthenticated(User.self) else {
-            throw Abort(.unauthorized)
-        }
-        
         return ProductUnit.query(on: req).all()
     }
     
     func getById(_ req: Request) throws -> Future<ProductUnit> {
-        
-        guard try req.isAuthenticated(User.self) else {
-            throw Abort(.unauthorized)
-        }
         
         guard let future = try? req.parameters.next(ProductUnit.self) else {
             throw Abort(.notFound)
@@ -48,20 +36,12 @@ final class ProductUnitController: RouteCollection {
     
     func create(_ req: Request) throws -> Future<ProductUnit> {
         
-        guard try req.isAuthenticated(User.self) else {
-            throw Abort(.unauthorized)
-        }
-        
         return try req.content.decode(ProductUnit.self).flatMap { brand in
             return brand.save(on: req)
         }
     }
     
     func update(_ req: Request) throws -> Future<ProductUnit> {
-        
-        guard try req.isAuthenticated(User.self) else {
-            throw Abort(.unauthorized)
-        }
         
         guard let future = try? req.parameters.next(ProductUnit.self) else {
             throw Abort(.badRequest)
@@ -82,10 +62,6 @@ final class ProductUnitController: RouteCollection {
     }
     
     func delete(_ req: Request) throws -> Future<HTTPStatus> {
-        
-        guard try req.isAuthenticated(User.self) else {
-            throw Abort(.unauthorized)
-        }
         
         guard let future = try? req.parameters.next(ProductUnit.self) else {
             throw Abort(.badRequest)
