@@ -17,7 +17,7 @@ final class AuthenticationMiddleware: Middleware {
     func respond(to request: Request, chainingTo next: Responder) throws -> EventLoopFuture<Response> {
         
         guard let bearerAuthorization = request.http.headers.bearerAuthorization else {
-            throw Abort(.badRequest)
+            throw Abort(.badRequest, reason: request.localizedString("auth.notheader"))
         }
         
         return UserToken
@@ -27,13 +27,13 @@ final class AuthenticationMiddleware: Middleware {
             .flatMap { userToken in
                 
                 guard let userToken = userToken else {
-                    throw Abort(.unauthorized)
+                    throw Abort(.unauthorized, reason: request.localizedString("auth.invalidtoken"))
                 }
                 
                 return User.authenticate(token: userToken, on: request).flatMap { user in
                     
                     guard let user = user else {
-                        throw Abort(.unauthorized)
+                        throw Abort(.unauthorized, reason: request.localizedString("auth.notuser"))
                     }
                     
                     try request.authenticate(user)

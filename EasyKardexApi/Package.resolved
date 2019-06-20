@@ -78,8 +78,26 @@
         "repositoryURL": "https://github.com/vapor/http.git",
         "state": {
           "branch": null,
-          "revision": "254a0a0cbf22a02b697a075a0d2ddbb448bb7c87",
-          "version": "3.2.0"
+          "revision": "3808ed0401379b6e9f4a053f03090ea9d658caa9",
+          "version": "3.2.1"
+        }
+      },
+      {
+        "package": "Lingo",
+        "repositoryURL": "https://github.com/miroslavkovac/Lingo.git",
+        "state": {
+          "branch": null,
+          "revision": "f21f388b04239641b3e88d14f21762125faa9857",
+          "version": "3.0.5"
+        }
+      },
+      {
+        "package": "LingoVapor",
+        "repositoryURL": "https://github.com/vapor-community/lingo-vapor.git",
+        "state": {
+          "branch": null,
+          "revision": "326f6ae747df1ba98bd10130995239f4a904a0cf",
+          "version": "3.0.1"
         }
       },
       {

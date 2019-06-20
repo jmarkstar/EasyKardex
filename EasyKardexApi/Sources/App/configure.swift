@@ -2,6 +2,7 @@
 import FluentMySQL
 import Vapor
 import Authentication
+import LingoVapor
 
 /// Called before your application initializes.
 public func configure(_ config: inout Config, _ env: inout Environment, _ services: inout Services) throws {
@@ -16,10 +17,13 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     middlewares.use(ErrorMiddleware.self) // Catches errors and converts to HTTP response
     services.register(middlewares)
 
-    // Configure a MySQL database
+    // Providers
     try services.register(FluentMySQLProvider())
     try services.register(MySQLProvider())
     try services.register(AuthenticationProvider())
+    
+    let lingoProvider = LingoProvider(defaultLocale: "en", localizationsDir: "Localizations")
+    try services.register(lingoProvider)
 
     let mysqlConfig = MySQLDatabaseConfig(
             hostname: "127.0.0.1",

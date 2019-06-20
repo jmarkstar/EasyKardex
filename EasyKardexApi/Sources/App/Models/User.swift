@@ -15,13 +15,7 @@ final class User: Codable {
     var username: String
     var password: String
     var fullname: String?
-    var roleID: Role.ID? {
-        didSet{
-            userRole = roleID == 1 ? .admin : .`operator`
-        }
-    }
-    
-    var userRole: UserType?
+    var roleID: Role.ID?
 
     init(id: Int? = nil, username: String, password: String, fullname: String? = nil, roleID: Role.ID? = nil) {
         self.id = id

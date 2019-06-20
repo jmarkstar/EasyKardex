@@ -1,0 +1,7 @@
+{
+    "auth.notheader":"Authorization Header is needed.",
+    "auth.invalidtoken":"Invalid Token.",
+    "auth.notuser":"User does not exists.",
+    "auth.notlogin":"You must login to continue.",
+    "auth.notallowed":"You are not allowed to do this."
+}
