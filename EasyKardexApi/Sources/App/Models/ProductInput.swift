@@ -15,7 +15,7 @@ final class ProductInput: Codable {
     
     var id: Int?
     var productID: Product.ID
-    var providerID: Provider.ID
+    var providerID: ProductProvider.ID
     var purchasePrice: Float
     var expirationDate: Date
     var quantity: Int
@@ -24,7 +24,7 @@ final class ProductInput: Codable {
     
     init(id: Int? = nil,
          productID: Product.ID,
-         providerID: Provider.ID,
+         providerID: ProductProvider.ID,
          purchasePrice: Float,
          expirationDate: Date,
          quantity: Int,
@@ -59,7 +59,7 @@ extension ProductInput {
         return parent(\.productID)
     }
     
-    var provider: Parent<ProductInput, Provider> {
+    var provider: Parent<ProductInput, ProductProvider> {
         return parent(\.providerID)
     }
     

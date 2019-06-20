@@ -1,5 +1,5 @@
 //
-//  Provider.swift
+//  ProductProvider.swift
 //  App
 //
 //  Created by Marco Estrella on 6/19/19.
@@ -9,7 +9,7 @@ import Foundation
 import Vapor
 import FluentMySQL
 
-final class Provider: Codable {
+final class ProductProvider: Codable {
     
     static let entity = "provider"
     
@@ -33,6 +33,8 @@ final class Provider: Codable {
     }
 }
 
-extension Provider: MySQLModel {}
+extension ProductProvider: MySQLModel {}
 
-extension Provider: Content {}
+extension ProductProvider: Content {}
+
+extension ProductProvider: Parameter {}

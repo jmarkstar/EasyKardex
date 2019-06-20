@@ -48,7 +48,7 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     ProductCategory.defaultDatabase = .mysql
     ProductUnit.defaultDatabase = .mysql
     Product.defaultDatabase = .mysql
-    Provider.defaultDatabase = .mysql
+    ProductProvider.defaultDatabase = .mysql
     ProductInput.defaultDatabase = .mysql
     ProductOutput.defaultDatabase = .mysql
 }
