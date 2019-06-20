@@ -6,7 +6,7 @@ import Vapor
 import Fluent
 import Authentication
 
-final class ProductBrandController: RouteCollection {
+final class ProductBrandController: BasicController<ProductBrand>, RouteCollection {
 
     func boot(router: Router) throws {
 
@@ -17,26 +17,6 @@ final class ProductBrandController: RouteCollection {
         brands.get(ProductBrand.parameter, use: getById)
         brands.put(ProductBrand.parameter, use: update)
         brands.delete(ProductBrand.parameter, use: delete)
-    }
-
-    func index(_ req: Request) throws -> Future<[ProductBrand]> {
-
-        return ProductBrand.query(on: req).all()
-    }
-
-    func getById(_ req: Request) throws -> Future<ProductBrand> {
-
-        guard let futureBrand = try? req.parameters.next(ProductBrand.self) else {
-            throw Abort(.notFound)
-        }
-        return futureBrand
-    }
-
-    func create(_ req: Request) throws -> Future<ProductBrand> {
-        
-        return try req.content.decode(ProductBrand.self).flatMap { brand in
-            return brand.save(on: req)
-        }
     }
 
     func update(_ req: Request) throws -> Future<ProductBrand> {
@@ -57,16 +37,5 @@ final class ProductBrandController: RouteCollection {
                 return brand
             }).update(on: req)
         }
-    }
-
-    func delete(_ req: Request) throws -> Future<HTTPStatus> {
-
-        guard let futureBrand = try? req.parameters.next(ProductBrand.self) else {
-            throw Abort(.badRequest)
-        }
-
-        return futureBrand.flatMap { brand in
-            return brand.delete(on: req)
-        }.transform(to: .ok)
     }
 }

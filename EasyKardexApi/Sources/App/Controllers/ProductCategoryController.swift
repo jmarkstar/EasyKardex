@@ -6,7 +6,7 @@ import Foundation
 import Vapor
 import Fluent
 
-final class ProductCategoryController: RouteCollection {
+final class ProductCategoryController: BasicController<ProductCategory>, RouteCollection {
 
     func boot(router: Router) throws {
 
@@ -18,28 +18,7 @@ final class ProductCategoryController: RouteCollection {
         categories.put(ProductCategory.parameter, use: update)
         categories.delete(ProductCategory.parameter, use: delete)
     }
-
-    func getById(_ req: Request) throws -> Future<ProductCategory> {
-
-        guard let futureCategory = try? req.parameters.next(ProductCategory.self) else {
-            throw Abort(.notFound)
-        }
-
-        return futureCategory
-    }
-
-    func index(_ req: Request) throws -> Future<[ProductCategory]> {
-
-        return ProductCategory.query(on: req).all()
-    }
-
-    func create(_ req: Request) throws -> Future<ProductCategory> {
-
-        return try req.content.decode(ProductCategory.self).flatMap { category in
-            return category.save(on: req)
-        }
-    }
-
+    
     func update(_ req: Request) throws -> Future<ProductCategory> {
 
         guard let futureCategory = try? req.parameters.next(ProductCategory.self) else {
@@ -58,16 +37,5 @@ final class ProductCategoryController: RouteCollection {
                 return category
             }).update(on: req)
         }
-    }
-
-    func delete(_ req: Request) throws -> Future<HTTPStatus> {
-
-        guard let futureCategory = try? req.parameters.next(ProductCategory.self) else {
-            throw Abort(.badRequest)
-        }
-
-        return futureCategory.flatMap { category in
-            return category.delete(on: req)
-        }.transform(to: .ok)
     }
 }
