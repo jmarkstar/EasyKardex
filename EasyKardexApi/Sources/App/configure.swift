@@ -19,10 +19,9 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
 
     // Providers
     try services.register(FluentMySQLProvider())
-    try services.register(MySQLProvider())
     try services.register(AuthenticationProvider())
     
-    let lingoProvider = LingoProvider(defaultLocale: "en", localizationsDir: "Localizations")
+    let lingoProvider = LingoProvider(defaultLocale: "en")
     try services.register(lingoProvider)
 
     let mysqlConfig = MySQLDatabaseConfig(
