@@ -8,34 +8,89 @@
 import Vapor
 import Fluent
 
-final class ProductOutputController: BasicController<ProductOutput>, RouteCollection {
+final class ProductOutputController: RouteCollection {
     
     func boot(router: Router) throws {
         
         let outputs = router.authenticated().grouped("outputs")
         
-        outputs.post(use: create)
-        outputs.get(use: index)
-        outputs.get(ProductOutput.parameter, use: getById)
-        outputs.put(ProductOutput.parameter, use: update)
-        outputs.delete(ProductOutput.parameter, use: delete)
+        outputs.get(use: getAll)
+        outputs.get(Int.parameter, use: getById)
+        outputs.delete(Int.parameter, use: delete)
+        outputs.put(PublicProductOutput.self, at: Int.parameter, use: update)
+        outputs.post(PublicProductOutput.self, use: create)
     }
     
-    func update(_ req: Request) throws -> Future<ProductOutput> {
+    func create(_ req: Request, newInput: PublicProductOutput) throws -> Future<HTTPStatus> {
+        let user = try req.requireAuthenticated(User.self)
         
-        guard let future = try? req.parameters.next(ProductOutput.self) else {
-            throw Abort(.badRequest)
-        }
+        var inputModel = newInput.toModel()
+        inputModel.creatorID = user.id
         
-        return try req.content.decode(ProductOutput.self).flatMap { updated in
+        return inputModel.create(on: req).transform(to: .created)
+    }
+    
+    func getAll(_ req: Request) throws -> Future<[PublicProductOutput]> {
+        
+        return ProductOutput.query(on: req).all().flatMap { inputs in
             
-            return future.map(to: ProductOutput.self, { item in
-                
-                //provider.companyName = updated.companyName
-                //provider.contactName = updated.contactName
-                //provider.contactPhoneNumber = updated.contactPhoneNumber
-                return item
-            }).update(on: req)
+            return Future.map(on: req) {
+                return inputs.map { $0.toPublic() }
+            }
         }
+    }
+    
+    func getById(_ req: Request) throws -> Future<PublicProductOutput> {
+        
+        guard let inputId = try? req.parameters.next(Int.self) else {
+            throw Abort(HTTPStatus.badRequest, reason: req.localizedString("output.notid"))
+        }
+        
+        return ProductOutput.find(inputId, on: req).flatMap { foundOutput in
+            
+            guard let output = foundOutput else {
+                throw Abort(HTTPStatus.notFound, reason: req.localizedString("output.notfound"))
+            }
+            
+            return Future.map(on: req) {
+                return output.toPublic()
+            }
+        }
+    }
+    
+    func delete(_ req: Request) throws -> Future<HTTPStatus> {
+        
+        guard let inputId = try? req.parameters.next(Int.self) else {
+            throw Abort(.badRequest, reason: req.localizedString("output.notid"))
+        }
+        
+        return ProductOutput.find(inputId, on: req).flatMap(to: Void.self) { foundOutput in
+            
+            guard let output = foundOutput else {
+                throw Abort(.notFound, reason: req.localizedString("output.notfound"))
+            }
+            
+            return output.delete(on: req)
+            }.transform(to: .noContent)
+    }
+    
+    func update(_ req: Request, editedOutput: PublicProductOutput) throws -> Future<HTTPStatus> {
+        
+        guard let inputId = try? req.parameters.next(Int.self) else {
+            throw Abort(.badRequest, reason: req.localizedString("output.notid"))
+        }
+        
+        return ProductOutput.find(inputId, on: req)
+            .flatMap(to: ProductOutput.self) { foundOutput in
+                
+                guard var output = foundOutput else {
+                    throw Abort(.notFound, reason: req.localizedString("output.notfound"))
+                }
+                
+                output.prodInputID = editedOutput.productInputID
+                output.quantity = editedOutput.quantity
+                
+                return output.save(on: req)
+            }.transform(to: .noContent)
     }
 }

@@ -9,25 +9,25 @@ import Foundation
 import Vapor
 import FluentMySQL
 
-final class ProductOutput: Codable {
+struct ProductOutput: Codable {
     
     static let entity = "product_output"
     
     var id: Int?
     var prodInputID: ProductInput.ID
     var quantity: Int
-    var creationData: Date?
+    var creationDate: Date?
     var creatorID: User.ID?
     
     init(id: Int? = nil,
          prodInputID: ProductInput.ID,
          quantity: Int,
-         creationData: Date? = nil,
+         creationDate: Date? = nil,
          creatorID: User.ID? = nil) {
         self.id = id
         self.prodInputID = prodInputID
         self.quantity = quantity
-        self.creationData = creationData
+        self.creationDate = creationDate
         self.creatorID = creatorID
     }
     
@@ -35,7 +35,7 @@ final class ProductOutput: Codable {
         case id = "id_output"
         case prodInputID = "id_product_input"
         case quantity = "quantity"
-        case creationData = "creation_data"
+        case creationDate = "creation_data"
         case creatorID = "creation_user_id"
     }
 }
@@ -52,14 +52,3 @@ extension ProductOutput {
 }
 
 extension ProductOutput: MySQLModel {}
-
-extension ProductOutput: Parameter {}
-
-extension ProductOutput: Content {}
-
-extension ProductOutput {
-    struct OutputPublic: Content {
-        let id: Int
-        let username: String
-    }
-}

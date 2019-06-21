@@ -49,5 +49,9 @@ extension ProductInput {
     var creator: Parent<ProductInput, User>? {
         return parent(\.creatorID)
     }
+    
+    var outputs: Children<ProductInput, ProductOutput> {
+        return children(\.prodInputID)
+    }
 }
 

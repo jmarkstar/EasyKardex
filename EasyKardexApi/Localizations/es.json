@@ -5,5 +5,9 @@
     "auth.notlogin":"Debes logearte para continuar.",
     "auth.notallowed":"No estas permitido para hacer esto.",
     
-    "input.notid":"Debes agregar el ID de la entrada de producto."
+    "input.notid":"Debes ingresar el ID de la entrada de producto.",
+    "input.notfound":"La entrada de producto no existe.",
+    
+    "output.notid":"Debes ingresar el ID de la salida de producto.",
+    "output.notfound":"La salida de producto no existe."
 }

@@ -5,5 +5,9 @@
     "auth.notlogin":"You must login to continue.",
     "auth.notallowed":"You are not allowed to do this.",
     
-    "input.notid":"You must add the id of the product input."
+    "input.notid":"You must add the id of the product input.",
+    "input.notfound":"Product Input does not exists.",
+    
+    "output.notid":"You must add the id of the product output.",
+    "output.notfound":"Product Output does not exists."
 }

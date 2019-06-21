@@ -49,7 +49,7 @@ final class ProductInputController: RouteCollection {
         return ProductInput.find(inputId, on: req).flatMap { foundInput in
             
             guard let input = foundInput else {
-                throw Abort(HTTPStatus.notFound, reason: "Users doesnt exists")
+                throw Abort(HTTPStatus.notFound, reason: req.localizedString("input.notfound"))
             }
             
             return Future.map(on: req) {
@@ -67,7 +67,7 @@ final class ProductInputController: RouteCollection {
         return ProductInput.find(inputId, on: req).flatMap(to: Void.self) { foundInput in
             
             guard let input = foundInput else {
-                throw Abort(.notFound, reason: "Users doesnt exists")
+                throw Abort(.notFound, reason: req.localizedString("input.notfound"))
             }
             
             return input.delete(on: req)
@@ -84,7 +84,7 @@ final class ProductInputController: RouteCollection {
             .flatMap(to: ProductInput.self) { foundInput in
                 
                 guard var input = foundInput else {
-                    throw Abort(.notFound, reason: "Users doesnt exists")
+                    throw Abort(.notFound, reason: req.localizedString("input.notfound"))
                 }
                 
                 input.productID = editedInput.productID
