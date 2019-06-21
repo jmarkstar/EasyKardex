@@ -17,7 +17,7 @@ public struct PublicProductInput {
     let expirationDate: Date
     let quantity: Int
     let creationDate: Date?
-    let creatorID: Int?
+    var creatorID: Int?
 }
 
 extension PublicProductInput: Content {}

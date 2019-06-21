@@ -22,8 +22,10 @@ final class ProductInputController: RouteCollection {
     }
     
     func create(_ req: Request, newInput: PublicProductInput) throws -> Future<HTTPStatus> {
+        let user = try req.requireAuthenticated(User.self)
         
-        let inputModel = newInput.toModel()
+        var inputModel = newInput.toModel()
+        inputModel.creatorID = user.id
         
         return inputModel.create(on: req).transform(to: .created)
     }
@@ -31,10 +33,6 @@ final class ProductInputController: RouteCollection {
     func getAll(_ req: Request) throws -> Future<[PublicProductInput]> {
         
         return ProductInput.query(on: req).all().flatMap { inputs in
-            
-            /*guard inputs.count > 0 else {
-                throw Abort(HTTPStatus.noContent, reason: "There is not inputs")
-            }*/
             
             return Future.map(on: req) {
                 return inputs.map { $0.toPublic() }
@@ -51,7 +49,7 @@ final class ProductInputController: RouteCollection {
         return ProductInput.find(inputId, on: req).flatMap { foundInput in
             
             guard let input = foundInput else {
-                throw Abort(HTTPStatus.badRequest, reason: "Users doesnt exists")
+                throw Abort(HTTPStatus.notFound, reason: "Users doesnt exists")
             }
             
             return Future.map(on: req) {
@@ -63,13 +61,13 @@ final class ProductInputController: RouteCollection {
     func delete(_ req: Request) throws -> Future<HTTPStatus> {
         
         guard let inputId = try? req.parameters.next(Int.self) else {
-            throw Abort(HTTPStatus.badRequest, reason: req.localizedString("input.notid"))
+            throw Abort(.badRequest, reason: req.localizedString("input.notid"))
         }
         
         return ProductInput.find(inputId, on: req).flatMap(to: Void.self) { foundInput in
             
             guard let input = foundInput else {
-                throw Abort(HTTPStatus.badRequest, reason: "Users doesnt exists")
+                throw Abort(.notFound, reason: "Users doesnt exists")
             }
             
             return input.delete(on: req)
@@ -79,14 +77,14 @@ final class ProductInputController: RouteCollection {
     func update(_ req: Request, editedInput: PublicProductInput) throws -> Future<HTTPStatus> {
         
         guard let inputId = try? req.parameters.next(Int.self) else {
-            throw Abort(HTTPStatus.badRequest, reason: req.localizedString("input.notid"))
+            throw Abort(.badRequest, reason: req.localizedString("input.notid"))
         }
         
         return ProductInput.find(inputId, on: req)
             .flatMap(to: ProductInput.self) { foundInput in
                 
                 guard var input = foundInput else {
-                    throw Abort(HTTPStatus.badRequest, reason: "Users doesnt exists")
+                    throw Abort(.notFound, reason: "Users doesnt exists")
                 }
                 
                 input.productID = editedInput.productID
