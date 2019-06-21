@@ -16,13 +16,15 @@ final class User: Codable {
     var password: String
     var fullname: String?
     var roleID: Role.ID?
+    var creationDate: Date?
 
-    init(id: Int? = nil, username: String, password: String, fullname: String? = nil, roleID: Role.ID? = nil) {
+    init(id: Int? = nil, username: String, password: String, fullname: String? = nil, roleID: Role.ID? = nil, creationDate: Date? = nil) {
         self.id = id
         self.username = username
         self.password = password
         self.fullname = fullname
         self.roleID = roleID
+        self.creationDate = creationDate
     }
 
     enum CodingKeys: String, CodingKey {
@@ -31,6 +33,7 @@ final class User: Codable {
         case password = "password"
         case fullname = "fullname"
         case roleID = "id_role"
+        case creationDate = "creation_date"
     }
 }
 

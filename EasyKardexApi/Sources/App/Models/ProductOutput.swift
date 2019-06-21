@@ -35,7 +35,7 @@ struct ProductOutput: Codable {
         case id = "id_output"
         case prodInputID = "id_product_input"
         case quantity = "quantity"
-        case creationDate = "creation_data"
+        case creationDate = "creation_date"
         case creatorID = "creation_user_id"
     }
 }

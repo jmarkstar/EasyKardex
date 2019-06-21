@@ -29,7 +29,7 @@ struct ProductInput: Codable {
         case purchasePrice = "purchase_price"
         case expirationDate = "expiration_date"
         case quantity = "quantity"
-        case creationDate = "creation_data"
+        case creationDate = "creation_date"
         case creatorID = "creation_user_id"
     }
 }

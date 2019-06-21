@@ -21,15 +21,15 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     
     var contentConfig = ContentConfig.default()
     let jsonDecoder = JSONDecoder()
-    //let jsonEncoder = JSONEncoder()
-    //jsonEncoder.dateEncodingStrategy = .formatted(.normalDate)
+    let jsonEncoder = JSONEncoder()
+    jsonEncoder.dateEncodingStrategy = .formatted(.datetime)
 
     jsonDecoder.dateDecodingStrategyFormatters = [ DateFormatter.iso8601,
                                             DateFormatter.datetime,
                                             DateFormatter.normalDate ]
     
     contentConfig.use(decoder: jsonDecoder, for: .json)
-    //contentConfig.use(encoder: jsonEncoder, for: .json)
+    contentConfig.use(encoder: jsonEncoder, for: .json)
     services.register(contentConfig)
     
     let fluentProvider = FluentMySQLProvider()

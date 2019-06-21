@@ -17,12 +17,14 @@ final class ProductProvider: Codable {
     var companyName: String
     var contactName: String
     var contactPhoneNumber: String
+    var creationDate: Date?
     
-    init(id: Int? = nil, companyName: String, contactName: String, contactPhoneNumber: String) {
+    init(id: Int? = nil, companyName: String, contactName: String, contactPhoneNumber: String, creationDate: Date? = nil) {
         self.id = id
         self.companyName = companyName
         self.contactName = contactName
         self.contactPhoneNumber = contactPhoneNumber
+        self.creationDate = creationDate
     }
     
     enum CodingKeys: String, CodingKey {
@@ -30,6 +32,7 @@ final class ProductProvider: Codable {
         case companyName = "company_name"
         case contactName = "contact_name"
         case contactPhoneNumber = "contact_phone"
+        case creationDate = "creation_date"
     }
 }
 

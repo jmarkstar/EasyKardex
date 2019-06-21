@@ -22,6 +22,7 @@ final class Product: Codable {
     var image: String?
     var thumb: String?
     var description: String?
+    var creationDate: Date?
     
     init(id: Int? = nil,
          brandID: ProductBrand.ID,
@@ -30,7 +31,8 @@ final class Product: Codable {
          name: String,
          image: String? = nil,
          thumb: String? = nil,
-         description: String? = nil) {
+         description: String? = nil,
+         creationDate: Date? = nil) {
         self.id = id
         self.brandID = brandID
         self.categoryID = categoryID
@@ -39,6 +41,7 @@ final class Product: Codable {
         self.image = image
         self.thumb = thumb
         self.description = description
+        self.creationDate = creationDate
     }
     
     enum CodingKeys: String, CodingKey {
@@ -50,6 +53,7 @@ final class Product: Codable {
         case image = "image"
         case thumb = "thumb"
         case description = "description"
+        case creationDate = "creation_date"
     }
 }
 
