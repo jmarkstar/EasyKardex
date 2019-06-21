@@ -9,7 +9,7 @@ import Foundation
 import Vapor
 import FluentMySQL
 
-final class ProductInput: Codable {
+struct ProductInput: Codable {
     
     static let entity = "product_input"
     
@@ -19,27 +19,8 @@ final class ProductInput: Codable {
     var purchasePrice: Float
     var expirationDate: Date
     var quantity: Int
-    var creationData: Date?
+    var creationDate: Date?
     var creatorID: User.ID?
-    
-    init(id: Int? = nil,
-         productID: Product.ID,
-         providerID: ProductProvider.ID,
-         purchasePrice: Float,
-         expirationDate: Date,
-         quantity: Int,
-         creationData: Date? = nil,
-         creatorID: User.ID? = nil) {
-        
-        self.id = id
-        self.productID = productID
-        self.providerID = providerID
-        self.purchasePrice = purchasePrice
-        self.expirationDate = expirationDate
-        self.quantity = quantity
-        self.creationData = creationData
-        self.creatorID = creatorID
-    }
     
     enum CodingKeys: String, CodingKey {
         case id = "id_input"
@@ -48,10 +29,12 @@ final class ProductInput: Codable {
         case purchasePrice = "purchase_price"
         case expirationDate = "expiration_date"
         case quantity = "quantity"
-        case creationData = "creation_data"
+        case creationDate = "creation_data"
         case creatorID = "creation_user_id"
     }
 }
+
+extension ProductInput: MySQLModel {}
 
 extension ProductInput {
     
@@ -68,14 +51,3 @@ extension ProductInput {
     }
 }
 
-extension ProductInput: MySQLModel {}
-
-extension ProductInput: Parameter {}
-
-extension ProductInput: Content {}
-
-extension ProductInput {
-    struct InputPublic: Content {
-        let id: Int
-    }
-}

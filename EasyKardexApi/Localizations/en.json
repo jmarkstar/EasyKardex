@@ -3,5 +3,7 @@
     "auth.invalidtoken":"Invalid Token.",
     "auth.notuser":"User does not exists.",
     "auth.notlogin":"You must login to continue.",
-    "auth.notallowed":"You are not allowed to do this."
+    "auth.notallowed":"You are not allowed to do this.",
+    
+    "input.notid":"You must add the id of the product input."
 }

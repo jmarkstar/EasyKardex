@@ -12,7 +12,7 @@ final class ProductOutputController: BasicController<ProductOutput>, RouteCollec
     
     func boot(router: Router) throws {
         
-        let outputs = router.adminAuthorizated().grouped("outputs")
+        let outputs = router.authenticated().grouped("outputs")
         
         outputs.post(use: create)
         outputs.get(use: index)

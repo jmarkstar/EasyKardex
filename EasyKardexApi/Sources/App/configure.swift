@@ -18,7 +18,24 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     services.register(middlewares)
 
     // Providers
-    try services.register(FluentMySQLProvider())
+    
+    var contentConfig = ContentConfig.default()
+    let jsonDecoder = JSONDecoder()
+    //let jsonEncoder = JSONEncoder()
+    //jsonEncoder.dateEncodingStrategy = .formatted(.normalDate)
+
+    jsonDecoder.dateDecodingStrategyFormatters = [ DateFormatter.iso8601,
+                                            DateFormatter.datetime,
+                                            DateFormatter.normalDate ]
+    
+    contentConfig.use(decoder: jsonDecoder, for: .json)
+    //contentConfig.use(encoder: jsonEncoder, for: .json)
+    services.register(contentConfig)
+    
+    let fluentProvider = FluentMySQLProvider()
+    
+    
+    try services.register(fluentProvider)
     try services.register(AuthenticationProvider())
     
     let lingoProvider = LingoProvider(defaultLocale: "en")

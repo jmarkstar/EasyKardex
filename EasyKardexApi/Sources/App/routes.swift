@@ -8,4 +8,5 @@ public func routes(_ router: Router) throws {
     try routerVersion.register(collection: AuthenticationController())
     try routerVersion.register(collection: ProductCategoryController())
     try routerVersion.register(collection: ProductBrandController())
+    try routerVersion.register(collection: ProductInputController())
 }
