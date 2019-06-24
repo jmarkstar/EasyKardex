@@ -24,7 +24,10 @@ final class ProductInputController: RouteCollection {
     func create(_ req: Request, newInput: PublicProductInput) throws -> Future<HTTPStatus> {
         let user = try req.requireAuthenticated(User.self)
         
-        var inputModel = newInput.toModel()
+        guard var inputModel = newInput.toModel() else {
+            throw Abort(.badRequest)
+        }
+        
         inputModel.creatorID = user.id
         
         return inputModel.create(on: req).transform(to: .created)
@@ -32,7 +35,19 @@ final class ProductInputController: RouteCollection {
     
     func getAll(_ req: Request) throws -> Future<[PublicProductInput]> {
         
-        return ProductInput.query(on: req).all().flatMap { inputs in
+        let filters = try req.query.decode(PublicProductInput.self)
+        
+        let queryBuilder = ProductInput.query(on: req)
+        
+        if let productId = filters.productID {
+            queryBuilder.filter(\.productID == productId)
+        }
+        
+        if let creationDate = filters.creationDate {
+            queryBuilder.filter(\.creationDate >= creationDate)
+        }
+        
+        return queryBuilder.all().flatMap { inputs in
             
             return Future.map(on: req) {
                 return inputs.map { $0.toPublic() }
@@ -87,11 +102,19 @@ final class ProductInputController: RouteCollection {
                     throw Abort(.notFound, reason: req.localizedString("input.notfound"))
                 }
                 
-                input.productID = editedInput.productID
-                input.providerID = editedInput.providerID
-                input.purchasePrice = editedInput.purchasePrice
-                input.expirationDate = editedInput.expirationDate
-                input.quantity = editedInput.quantity
+                guard let productID = editedInput.productID,
+                    let providerID = editedInput.providerID,
+                    let purchasePrice = editedInput.purchasePrice,
+                    let expirationDate = editedInput.expirationDate,
+                    let quantity = editedInput.quantity else {
+                        throw Abort(.badRequest, reason: req.localizedString("input.notparams"))
+                }
+                
+                input.productID = productID
+                input.providerID = providerID
+                input.purchasePrice = purchasePrice
+                input.expirationDate = expirationDate
+                input.quantity = quantity
                 
                 return input.save(on: req)
         }.transform(to: .noContent)

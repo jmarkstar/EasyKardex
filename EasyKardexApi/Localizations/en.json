@@ -6,6 +6,7 @@
     "auth.notallowed":"You are not allowed to do this.",
     
     "input.notid":"You must add the id of the product input.",
+    "input.notparams":"You must add product id, provider id, purchase price, expiration date and quantity.",
     "input.notfound":"Product Input does not exists.",
     
     "output.notid":"You must add the id of the product output.",

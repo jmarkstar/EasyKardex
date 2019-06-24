@@ -4,6 +4,9 @@
 //
 //  Created by Marco Estrella on 6/20/19.
 //
+// I parsed it manually because I should manage 2 defferent format of Dates.
+// expirationDate = yyyy-MM-dd and creationDate yyyy-MM-dd HH:mm:ss
+//
 
 import Foundation
 import Vapor
@@ -11,11 +14,11 @@ import Vapor
 public struct PublicProductInput {
     
     let id: Int?
-    let productID: Int
-    let providerID: Int
-    let purchasePrice: Float
-    let expirationDate: Date
-    let quantity: Int
+    let productID: Int?
+    let providerID: Int?
+    let purchasePrice: Float?
+    let expirationDate: Date?
+    let quantity: Int?
     let creationDate: Date?
     var creatorID: Int?
 }
@@ -45,10 +48,29 @@ extension PublicProductInput: Codable {
             self.id = nil
         }
         
-        productID = try values.decode(Int.self, forKey: .productID)
-        providerID = try values.decode(Int.self, forKey: .providerID)
-        purchasePrice = try values.decode(Float.self, forKey: .purchasePrice)
-        quantity = try values.decode(Int.self, forKey: .quantity)
+        if let productID = try? values.decode(Int.self, forKey: .productID) {
+            self.productID = productID
+        } else {
+            self.productID = nil
+        }
+        
+        if let providerID = try? values.decode(Int.self, forKey: .providerID) {
+            self.providerID = providerID
+        } else {
+            self.providerID = nil
+        }
+        
+        if let purchasePrice = try? values.decode(Float.self, forKey: .purchasePrice) {
+            self.purchasePrice = purchasePrice
+        } else {
+            self.purchasePrice = nil
+        }
+        
+        if let quantity = try? values.decode(Int.self, forKey: .quantity) {
+            self.quantity = quantity
+        } else {
+            self.quantity = nil
+        }
         
         if let creatorID = try? values.decode(Int.self, forKey: .creatorID) {
             self.creatorID = creatorID
@@ -56,8 +78,11 @@ extension PublicProductInput: Codable {
             self.creatorID = nil
         }
         
-        let expirationDateString = try values.decode(String.self, forKey: .expirationDate)
-        expirationDate = DateFormatter.normalDate.date(from: expirationDateString)!
+        if let expirationDateString = try? values.decode(String.self, forKey: .expirationDate) {
+            expirationDate = DateFormatter.normalDate.date(from: expirationDateString)!
+        } else {
+            self.expirationDate = nil
+        }
         
         if let creationDataString = try? values.decode(String.self, forKey: .creationDate) {
             creationDate = DateFormatter.datetime.date(from: creationDataString)
@@ -77,13 +102,15 @@ extension PublicProductInput: Codable {
         try container.encode(quantity, forKey: .quantity)
         try container.encode(creatorID, forKey: .creatorID)
         
-        let expirationDateString = DateFormatter.normalDate.string(from: expirationDate)
-        try container.encode(expirationDateString, forKey: .expirationDate)
-        
-        guard let creationDate = creationDate else { return }
-        
-        let creationDataString = DateFormatter.datetime.string(from: creationDate)
-        try container.encode(creationDataString, forKey: .creationDate)
+        if let expirationDate = expirationDate {
+            let expirationDateString = DateFormatter.normalDate.string(from: expirationDate)
+            try container.encode(expirationDateString, forKey: .expirationDate)
+        }
+    
+        if let creationDate = creationDate {
+            let creationDataString = DateFormatter.datetime.string(from: creationDate)
+            try container.encode(creationDataString, forKey: .creationDate)
+        }
     }
 }
 
@@ -91,13 +118,22 @@ extension PublicProductInput: Codable {
 
 extension ProductInput {
     
-    init(from: PublicProductInput) {
+    init?(from: PublicProductInput) {
         self.id = from.id
-        self.productID = from.productID
-        self.providerID = from.providerID
-        self.purchasePrice = from.purchasePrice
-        self.expirationDate = from.expirationDate
-        self.quantity = from.quantity
+        
+        guard let productID = from.productID,
+            let providerID = from.providerID,
+            let purchasePrice = from.purchasePrice,
+            let expirationDate = from.expirationDate,
+            let quantity = from.quantity else {
+                return nil
+        }
+        
+        self.productID = productID
+        self.providerID = providerID
+        self.purchasePrice = purchasePrice
+        self.expirationDate = expirationDate
+        self.quantity = quantity
         self.creationDate = from.creationDate
         self.creatorID = from.creatorID
     }
@@ -122,7 +158,7 @@ extension PublicProductInput {
         self.creatorID = model.creatorID
     }
     
-    func toModel() -> ProductInput {
-        return ProductInput.init(from: self)
+    func toModel() -> ProductInput? {
+        return ProductInput(from: self)
     }
 }
