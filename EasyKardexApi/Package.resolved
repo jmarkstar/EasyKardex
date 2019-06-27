@@ -227,6 +227,15 @@
         }
       },
       {
+        "package": "SimpleFileLogger",
+        "repositoryURL": "https://github.com/hallee/vapor-simple-file-logger.git",
+        "state": {
+          "branch": null,
+          "revision": "82459a9f22652b07311500da416d3a0ec407c0aa",
+          "version": "1.0.1"
+        }
+      },
+      {
         "package": "WebSocket",
         "repositoryURL": "https://github.com/vapor/websocket.git",
         "state": {

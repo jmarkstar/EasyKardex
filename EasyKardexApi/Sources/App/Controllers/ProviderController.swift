@@ -7,7 +7,7 @@
 
 import Vapor
 import Fluent
-
+/*
 final class ProviderController: BasicController<ProductProvider>, RouteCollection {
     
     func boot(router: Router) throws {
@@ -38,4 +38,4 @@ final class ProviderController: BasicController<ProductProvider>, RouteCollectio
             }).update(on: req)
         }
     }
-}
+}*/

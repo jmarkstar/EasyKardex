@@ -5,7 +5,7 @@
 import Foundation
 import Vapor
 import Fluent
-
+/*
 final class ProductCategoryController: BasicController<ProductCategory>, RouteCollection {
 
     func boot(router: Router) throws {
@@ -39,3 +39,4 @@ final class ProductCategoryController: BasicController<ProductCategory>, RouteCo
         }
     }
 }
+*/

@@ -3,6 +3,7 @@ import FluentMySQL
 import Vapor
 import Authentication
 import LingoVapor
+import SimpleFileLogger
 
 /// Called before your application initializes.
 public func configure(_ config: inout Config, _ env: inout Environment, _ services: inout Services) throws {
@@ -32,14 +33,18 @@ public func configure(_ config: inout Config, _ env: inout Environment, _ servic
     contentConfig.use(encoder: jsonEncoder, for: .json)
     services.register(contentConfig)
     
-    let fluentProvider = FluentMySQLProvider()
-    
-    
-    try services.register(fluentProvider)
+    try services.register(FluentMySQLProvider())
     try services.register(AuthenticationProvider())
     
     let lingoProvider = LingoProvider(defaultLocale: "en")
     try services.register(lingoProvider)
+    
+    services.register(Logger.self) { container -> SimpleFileLogger in
+        
+        return SimpleFileLogger(executableName: "EasyKardexApi", includeTimestamps: true)
+    }
+    
+    config.prefer(SimpleFileLogger.self, for: Logger.self)
 
     let mysqlConfig = MySQLDatabaseConfig(
             hostname: "127.0.0.1",

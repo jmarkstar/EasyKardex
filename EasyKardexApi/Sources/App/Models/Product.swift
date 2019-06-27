@@ -10,7 +10,7 @@ import Vapor
 import FluentMySQL
 import Authentication
 
-final class Product: Codable {
+struct Product: FilterableByCreationDate {
     
     static let entity = "product"
     
@@ -23,26 +23,6 @@ final class Product: Codable {
     var thumb: String?
     var description: String?
     var creationDate: Date?
-    
-    init(id: Int? = nil,
-         brandID: ProductBrand.ID,
-         categoryID: ProductCategory.ID,
-         unitID: ProductUnit.ID,
-         name: String,
-         image: String? = nil,
-         thumb: String? = nil,
-         description: String? = nil,
-         creationDate: Date? = nil) {
-        self.id = id
-        self.brandID = brandID
-        self.categoryID = categoryID
-        self.unitID = unitID
-        self.name = name
-        self.image = image
-        self.thumb = thumb
-        self.description = description
-        self.creationDate = creationDate
-    }
     
     enum CodingKeys: String, CodingKey {
         case id = "id_prod"
@@ -74,13 +54,4 @@ extension Product {
 
 extension Product: MySQLModel {}
 
-extension Product: Parameter {}
 
-extension Product: Content {}
-
-extension Product {
-    struct ProductPublic: Content {
-        let id: Int
-        let username: String
-    }
-}

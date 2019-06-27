@@ -7,7 +7,7 @@
 
 import Vapor
 import Fluent
-
+/*
 final class ProductUnitController: BasicController<ProductUnit>, RouteCollection {
     
     func boot(router: Router) throws {
@@ -40,5 +40,5 @@ final class ProductUnitController: BasicController<ProductUnit>, RouteCollection
             }).update(on: req)
         }
     }
-}
+}*/
 

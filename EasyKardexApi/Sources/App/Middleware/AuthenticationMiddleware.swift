@@ -16,6 +16,9 @@ final class AuthenticationMiddleware: Middleware {
     
     func respond(to request: Request, chainingTo next: Responder) throws -> EventLoopFuture<Response> {
         
+        let logger = try request.make(Logger.self)
+        logger.debug(request.description)
+        
         guard let bearerAuthorization = request.http.headers.bearerAuthorization else {
             throw Abort(.badRequest, reason: request.localizedString("auth.notheader"))
         }

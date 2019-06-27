@@ -116,7 +116,9 @@ extension PublicProductInput: Codable {
 
 //MARK: Parsing
 
-extension ProductInput {
+extension ProductInput: Publishable {
+    
+    typealias T = PublicProductInput
     
     init?(from: PublicProductInput) {
         self.id = from.id
@@ -144,7 +146,7 @@ extension ProductInput {
     }
 }
 
-extension PublicProductInput {
+extension PublicProductInput: Modelable {
     
     init(model: ProductInput) {
         

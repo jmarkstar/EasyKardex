@@ -7,7 +7,7 @@
 
 import Vapor
 import Fluent
-
+/*
 final class ProductController: BasicController<Product>, RouteCollection {
     
     func boot(router: Router) throws {
@@ -39,3 +39,4 @@ final class ProductController: BasicController<Product>, RouteCollection {
         }
     }
 }
+*/
