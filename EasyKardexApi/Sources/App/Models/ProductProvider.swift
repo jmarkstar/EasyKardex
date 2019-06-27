@@ -9,7 +9,7 @@ import Foundation
 import Vapor
 import FluentMySQL
 
-final class ProductProvider: Codable {
+struct ProductProvider: MySQLModel {
     
     static let entity = "provider"
     
@@ -18,14 +18,6 @@ final class ProductProvider: Codable {
     var contactName: String
     var contactPhoneNumber: String
     var creationDate: Date?
-    
-    init(id: Int? = nil, companyName: String, contactName: String, contactPhoneNumber: String, creationDate: Date? = nil) {
-        self.id = id
-        self.companyName = companyName
-        self.contactName = contactName
-        self.contactPhoneNumber = contactPhoneNumber
-        self.creationDate = creationDate
-    }
     
     enum CodingKeys: String, CodingKey {
         case id = "id_provider"
@@ -36,8 +28,6 @@ final class ProductProvider: Codable {
     }
 }
 
-extension ProductProvider: MySQLModel {}
+extension ProductProvider: FilterableByCreationDate {}
 
-extension ProductProvider: Content {}
 
-extension ProductProvider: Parameter {}

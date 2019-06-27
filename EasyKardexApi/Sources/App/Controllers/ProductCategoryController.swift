@@ -1,3 +1,24 @@
+// MIT License
+//
+// Copyright (c) 2019 Marco Antonio Estrella Cardenas
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
 //
 // Created by jmarkstar on 19/06/19.
 //
@@ -5,7 +26,7 @@
 import Foundation
 import Vapor
 import Fluent
-/*
+
 final class ProductCategoryController: BasicController<ProductCategory>, RouteCollection {
 
     func boot(router: Router) throws {
@@ -14,29 +35,8 @@ final class ProductCategoryController: BasicController<ProductCategory>, RouteCo
 
         categories.post(use: create)
         categories.get(use: index)
-        categories.get(ProductCategory.parameter, use: getById)
-        categories.put(ProductCategory.parameter, use: update)
-        categories.delete(ProductCategory.parameter, use: delete)
-    }
-    
-    func update(_ req: Request) throws -> Future<ProductCategory> {
-
-        guard let futureCategory = try? req.parameters.next(ProductCategory.self) else {
-            throw Abort(.badRequest)
-        }
-
-        return try req.content.decode(ProductCategory.self).flatMap { updatedCategory in
-
-            return futureCategory.map(to: ProductCategory.self, { category in
-
-                guard !updatedCategory.name.isEmpty else {
-                    throw Abort(.badRequest)
-                }
-
-                category.name = updatedCategory.name
-                return category
-            }).update(on: req)
-        }
+        categories.get(Int.parameter, use: getById)
+        categories.put(Int.parameter, use: update)
+        categories.delete(Int.parameter, use: delete)
     }
 }
-*/

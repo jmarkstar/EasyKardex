@@ -9,19 +9,13 @@ import Foundation
 import Vapor
 import FluentMySQL
 
-final class ProductUnit: Codable {
+struct ProductUnit: MySQLModel {
     
     static let entity = "product_unit"
     
     var id: Int?
     var name: String
     var creationDate: Date?
-    
-    init(id: Int? = nil, name: String, creationDate: Date? = nil) {
-        self.id = id
-        self.name = name
-        self.creationDate = creationDate
-    }
     
     enum CodingKeys: String, CodingKey {
         case id = "id_unit"
@@ -37,8 +31,45 @@ extension ProductUnit {
     }
 }
 
-extension ProductUnit: MySQLModel {}
+extension ProductUnit: FilterableByCreationDate {}
 
-extension ProductUnit: Content {}
+extension ProductUnit: Validatable {
+    
+    static func validations() throws -> Validations<ProductUnit> {
+        var validations = Validations(ProductUnit.self)
+        try validations.add(\.name, .count(1...))
+        return validations
+    }
+}
 
-extension ProductUnit: Parameter {}
+extension ProductUnit: Publishable {
+    
+    typealias P = PublicProductUnit
+    
+    init?(from: PublicProductUnit) {
+        
+        guard let name = from.name
+            else { return nil }
+        
+        self.init(id: from.id, name: name, creationDate: from.creationDate)
+    }
+    
+    func toPublic() -> PublicProductUnit {
+        
+        return PublicProductUnit(model: self)
+    }
+}
+
+extension ProductUnit: Updatable {
+    
+    mutating func loadUpdates(_ from: PublicProductUnit) throws {
+        
+        guard let newName = from.name
+            else { throw Abort(.badRequest) }
+        
+        name = newName
+    }
+}
+
+
+

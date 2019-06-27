@@ -1,23 +1,23 @@
 //
-//  PublicProductBrand.swift
+//  PublicProductCategory.swift
 //  App
 //
-//  Created by Marco Estrella on 6/24/19.
+//  Created by Marco Estrella on 6/27/19.
 //
 
 import Foundation
 import Vapor
 
-public struct PublicProductBrand {
+public struct PublicProductCategory {
     
     let id: Int?
     let name: String?
     let creationDate: Date?
 }
 
-extension PublicProductBrand: Content {}
+extension PublicProductCategory: Content {}
 
-extension PublicProductBrand: Codable {
+extension PublicProductCategory: Codable {
     
     private enum CodingKeys : String, CodingKey {
         case id = "id"
@@ -26,18 +26,18 @@ extension PublicProductBrand: Codable {
     }
 }
 
-extension PublicProductBrand: Modelable {
+extension PublicProductCategory: Modelable {
     
-    typealias M = ProductBrand
+    typealias M = ProductCategory
     
-    init(model: ProductBrand) {
+    init(model: ProductCategory) {
         self.id = model.id
         self.name = model.name
         self.creationDate = model.creationDate
     }
     
-    func toModel() -> ProductBrand? {
+    func toModel() -> ProductCategory? {
         
-        return ProductBrand(from: self)
+        return ProductCategory(from: self)
     }
 }
