@@ -23,7 +23,7 @@
 //  ProductBrand.swift
 //  App
 //
-//  Created by Marco Estrella on 6/19/19.
+//  Created by jmarkstar on 6/19/19.
 //
 
 import Foundation
