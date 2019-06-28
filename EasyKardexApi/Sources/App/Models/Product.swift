@@ -31,7 +31,7 @@ import Vapor
 import FluentMySQL
 import Authentication
 
-struct Product: FilterableByCreationDate {
+struct Product: MySQLModel {
     
     static let entity = "product"
     
@@ -73,6 +73,51 @@ extension Product {
     }
 }
 
-extension Product: MySQLModel {}
+extension Product: FilterableByCreationDate { }
+
+extension Product: Validatable {
+    
+    static func validations() throws -> Validations<Product> {
+        var validations = Validations(Product.self)
+        try validations.add(\.name, .count(2...))
+        return validations
+    }
+}
+
+extension Product: Publishable {
+    
+    typealias P = PublicProduct
+    
+    init?(from: PublicProduct) {
+        
+        guard let brandId = from.brandId,
+            let catId = from.categoryId,
+            let unitId = from.unitId,
+            let name = from.name
+            else { return nil }
+        
+        self.init(id: from.id, brandID: brandId, categoryID: catId, unitID: unitId,
+                  name: name, image: from.image, thumb: from.thumb, description: from.description,
+                  creationDate: from.creationDate)
+    }
+    
+    func toPublic() -> PublicProduct {
+        
+        return PublicProduct(model: self)
+    }
+}
+
+extension Product: Updatable {
+    
+    mutating func loadUpdates(_ from: PublicProduct) throws {
+        
+        guard let newName = from.name
+            else { throw Abort(.badRequest) }
+        
+        name = newName
+    }
+}
+
+
 
 

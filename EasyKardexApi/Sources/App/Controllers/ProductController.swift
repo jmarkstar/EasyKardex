@@ -28,7 +28,7 @@
 
 import Vapor
 import Fluent
-/*
+
 final class ProductController: BasicController<Product>, RouteCollection {
     
     func boot(router: Router) throws {
@@ -37,27 +37,8 @@ final class ProductController: BasicController<Product>, RouteCollection {
         
         products.post(use: create)
         products.get(use: index)
-        products.get(Product.parameter, use: getById)
-        products.put(Product.parameter, use: update)
-        products.delete(Product.parameter, use: delete)
-    }
-    
-    func update(_ req: Request) throws -> Future<Product> {
-        
-        guard let future = try? req.parameters.next(Product.self) else {
-            throw Abort(.badRequest)
-        }
-        
-        return try req.content.decode(Product.self).flatMap { updated in
-            
-            return future.map(to: Product.self, { item in
-                
-                //provider.companyName = updated.companyName
-                //provider.contactName = updated.contactName
-                //provider.contactPhoneNumber = updated.contactPhoneNumber
-                return item
-            }).update(on: req)
-        }
+        products.get(Int.parameter, use: getById)
+        products.put(Int.parameter, use: update)
+        products.delete(Int.parameter, use: delete)
     }
 }
-*/

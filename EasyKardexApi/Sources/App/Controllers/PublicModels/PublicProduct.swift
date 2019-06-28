@@ -29,3 +29,54 @@
 import Foundation
 import Vapor
 
+public struct PublicProduct {
+    
+    let id: Int?
+    let brandId: Int?
+    let categoryId: Int?
+    let unitId: Int?
+    let name: String?
+    let image: String?
+    let thumb: String?
+    let description: String?
+    let creationDate: Date?
+}
+
+extension PublicProduct: Content {}
+
+extension PublicProduct: Codable {
+    
+    private enum CodingKeys : String, CodingKey {
+        case id = "idp"
+        case brandId = "idb"
+        case categoryId = "idc"
+        case unitId = "idu"
+        case name = "n"
+        case image = "i"
+        case thumb = "t"
+        case description = "d"
+        case creationDate = "cd"
+    }
+}
+
+extension PublicProduct: Modelable {
+    
+    typealias M = Product
+    
+    init(model: Product) {
+        self.id = model.id
+        self.brandId = model.brandID
+        self.categoryId = model.categoryID
+        self.unitId = model.unitID
+        self.name = model.name
+        self.image = model.image
+        self.thumb = model.thumb
+        self.description = model.description
+        self.creationDate = model.creationDate
+    }
+    
+    func toModel() -> Product? {
+        
+        return Product(from: self)
+    }
+}
