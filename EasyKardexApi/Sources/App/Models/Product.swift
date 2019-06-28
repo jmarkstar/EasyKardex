@@ -107,17 +107,6 @@ extension Product: Publishable {
     }
 }
 
-extension Product: Updatable {
-    
-    mutating func loadUpdates(_ from: PublicProduct) throws {
-        
-        guard let newName = from.name
-            else { throw Abort(.badRequest) }
-        
-        name = newName
-    }
-}
-
 
 
 

@@ -40,3 +40,14 @@ final class ProductCategoryController: BasicController<ProductCategory>, RouteCo
         categories.delete(Int.parameter, use: delete)
     }
 }
+
+extension ProductCategory: Updatable {
+    
+    mutating func loadUpdates(_ from: PublicProductCategory) throws {
+        
+        guard let newName = from.name
+            else { throw Abort(.badRequest) }
+        
+        name = newName
+    }
+}

@@ -81,14 +81,3 @@ extension ProductBrand: Publishable {
     }
 }
 
-extension ProductBrand: Updatable {
-
-    mutating func loadUpdates(_ from: PublicProductBrand) throws {
-        
-        guard let newName = from.name
-            else { throw Abort(.badRequest) }
-        
-        name = newName
-    }
-}
-

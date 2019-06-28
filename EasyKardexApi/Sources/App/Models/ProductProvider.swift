@@ -77,16 +77,3 @@ extension ProductProvider: Publishable {
         return PublicProductProvider(model: self)
     }
 }
-
-extension ProductProvider: Updatable {
-    
-    mutating func loadUpdates(_ from: PublicProductProvider) throws {
-        
-        guard let newCompanyName = from.companyName
-            else { throw Abort(.badRequest) }
-        
-        self.companyName = newCompanyName
-        self.contactName = from.contactName
-        self.contactPhoneNumber = from.contactPhone
-    }
-}

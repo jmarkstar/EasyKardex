@@ -81,16 +81,5 @@ extension ProductUnit: Publishable {
     }
 }
 
-extension ProductUnit: Updatable {
-    
-    mutating func loadUpdates(_ from: PublicProductUnit) throws {
-        
-        guard let newName = from.name
-            else { throw Abort(.badRequest) }
-        
-        name = newName
-    }
-}
-
 
 

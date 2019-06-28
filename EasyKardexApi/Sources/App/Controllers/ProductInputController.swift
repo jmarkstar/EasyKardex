@@ -75,60 +75,6 @@ final class ProductInputController: BasicController<ProductInput>, RouteCollecti
             }
         }
     }
-    
-    /*
-    func getById(_ req: Request) throws -> Future<PublicProductInput> {
-        
-        guard let inputId = try? req.parameters.next(Int.self) else {
-            throw Abort(HTTPStatus.badRequest, reason: req.localizedString("input.notid"))
-        }
-        
-        return ProductInput.find(inputId, on: req).flatMap { foundInput in
-            
-            guard let input = foundInput else {
-                throw Abort(HTTPStatus.notFound, reason: req.localizedString("input.notfound"))
-            }
-            
-            return Future.map(on: req) {
-                return input.toPublic()
-            }
-        }
-    }
-    
-    func delete(_ req: Request) throws -> Future<HTTPStatus> {
-        
-        guard let inputId = try? req.parameters.next(Int.self) else {
-            throw Abort(.badRequest, reason: req.localizedString("input.notid"))
-        }
-        
-        return ProductInput.find(inputId, on: req).flatMap(to: Void.self) { foundInput in
-            
-            guard let input = foundInput else {
-                throw Abort(.notFound, reason: req.localizedString("input.notfound"))
-            }
-            
-            return input.delete(on: req)
-        }.transform(to: .noContent)
-    }
-    
-    func update(_ req: Request, editedInput: PublicProductInput) throws -> Future<HTTPStatus> {
-        
-        guard let inputId = try? req.parameters.next(Int.self) else {
-            throw Abort(.badRequest, reason: req.localizedString("input.notid"))
-        }
-        
-        return ProductInput.find(inputId, on: req)
-            .flatMap(to: ProductInput.self) { foundInput in
-                
-                guard var input = foundInput else {
-                    throw Abort(.notFound, reason: req.localizedString("input.notfound"))
-                }
-                
-                
-                
-                return input.save(on: req)
-        }.transform(to: .noContent)
-    }*/
 }
 
 extension ProductInput: Updatable {

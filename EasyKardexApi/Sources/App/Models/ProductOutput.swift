@@ -73,3 +73,30 @@ extension ProductOutput {
 }
 
 extension ProductOutput: FilterableByCreationDate {}
+
+extension ProductOutput: Validatable {
+    
+    static func validations() throws -> Validations<ProductOutput> {
+        var validations = Validations(ProductOutput.self)
+        try validations.add(\.quantity, .range(1...))
+        return validations
+    }
+}
+
+extension ProductOutput: Publishable {
+    
+    typealias T = PublicProductOutput
+    
+    init?(from: PublicProductOutput) {
+        self.id = from.id
+        self.prodInputID = from.productInputID
+        self.quantity = from.quantity
+        self.creationDate = from.creationDate
+        self.creatorID = from.creatorID
+    }
+    
+    public func toPublic() -> PublicProductOutput {
+        
+        return PublicProductOutput(model: self)
+    }
+}

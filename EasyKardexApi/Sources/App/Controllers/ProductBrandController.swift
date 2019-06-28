@@ -40,3 +40,14 @@ final class ProductBrandController: BasicController<ProductBrand>, RouteCollecti
         brands.delete(Int.parameter, use: delete)
     }
 }
+
+extension ProductBrand: Updatable {
+    
+    mutating func loadUpdates(_ from: PublicProductBrand) throws {
+        
+        guard let newName = from.name
+            else { throw Abort(.badRequest) }
+        
+        name = newName
+    }
+}

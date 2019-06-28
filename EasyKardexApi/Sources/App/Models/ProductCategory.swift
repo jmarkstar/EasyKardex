@@ -77,14 +77,3 @@ extension ProductCategory: Publishable {
         return PublicProductCategory(model: self)
     }
 }
-
-extension ProductCategory: Updatable {
-    
-    mutating func loadUpdates(_ from: PublicProductCategory) throws {
-        
-        guard let newName = from.name
-            else { throw Abort(.badRequest) }
-        
-        name = newName
-    }
-}

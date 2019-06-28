@@ -94,23 +94,7 @@ extension PublicProductOutput: Codable {
 
 //MARK: Parsing
 
-extension ProductOutput {
-    
-    init(from: PublicProductOutput) {
-        self.id = from.id
-        self.prodInputID = from.productInputID
-        self.quantity = from.quantity
-        self.creationDate = from.creationDate
-        self.creatorID = from.creatorID
-    }
-    
-    public func toPublic() -> PublicProductOutput {
-        
-        return PublicProductOutput(model: self)
-    }
-}
-
-extension PublicProductOutput {
+extension PublicProductOutput: Modelable {
     
     init(model: ProductOutput) {
         
@@ -121,7 +105,7 @@ extension PublicProductOutput {
         self.creatorID = model.creatorID
     }
     
-    func toModel() -> ProductOutput {
+    func toModel() -> ProductOutput? {
         return ProductOutput(from: self)
     }
 }
