@@ -5,6 +5,9 @@
     "auth.notlogin":"You must login to continue.",
     "auth.notallowed":"You are not allowed to do this.",
     
+    "generic.notid":"You must add the id of the Entity",
+    "generic.notfound":"Entity does not exists.",
+    
     "input.notid":"You must add the id of the product input.",
     "input.notparams":"You must add product id, provider id, purchase price, expiration date and quantity.",
     "input.notfound":"Product Input does not exists.",

@@ -5,6 +5,9 @@
     "auth.notlogin":"Debes logearte para continuar.",
     "auth.notallowed":"No estas permitido para hacer esto.",
     
+    "generic.notid":"Debes ingresar el ID de la entitdad.",
+    "generic.notfound":"La Entidad no existe.",
+    
     "input.notid":"Debes ingresar el ID de la entrada de producto.",
     "input.notparams":"Debes agregar los parametros id de producto, id de proveeder, precio de compra, fecha de expiracion del producto y la cantidad comprada.",
     "input.notfound":"La entrada de producto no existe.",

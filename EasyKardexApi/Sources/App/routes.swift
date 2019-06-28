@@ -34,5 +34,5 @@ public func routes(_ router: Router) throws {
     try routerVersion.register(collection: ProductUnitController())
     try routerVersion.register(collection: ProviderController())
     try routerVersion.register(collection: ProductInputController())
-    //try routerVersion.register(collection: ProductOutputController())
+    try routerVersion.register(collection: ProductOutputController())
 }
