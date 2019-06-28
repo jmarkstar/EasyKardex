@@ -30,7 +30,7 @@ import Foundation
 import Vapor
 import FluentMySQL
 
-struct ProductOutput: Codable {
+struct ProductOutput: MySQLModel {
     
     static let entity = "product_output"
     
@@ -72,4 +72,4 @@ extension ProductOutput {
     }
 }
 
-extension ProductOutput: MySQLModel {}
+extension ProductOutput: FilterableByCreationDate {}

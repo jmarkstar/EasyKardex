@@ -120,6 +120,7 @@ extension PublicProductInput: Codable {
         try container.encode(productID, forKey: .productID)
         try container.encode(providerID, forKey: .providerID)
         try container.encode(purchasePrice, forKey: .purchasePrice)
+        
         try container.encode(quantity, forKey: .quantity)
         try container.encode(creatorID, forKey: .creatorID)
         
@@ -132,38 +133,6 @@ extension PublicProductInput: Codable {
             let creationDataString = DateFormatter.datetime.string(from: creationDate)
             try container.encode(creationDataString, forKey: .creationDate)
         }
-    }
-}
-
-//MARK: Parsing
-
-extension ProductInput: Publishable {
-    
-    typealias T = PublicProductInput
-    
-    init?(from: PublicProductInput) {
-        self.id = from.id
-        
-        guard let productID = from.productID,
-            let providerID = from.providerID,
-            let purchasePrice = from.purchasePrice,
-            let expirationDate = from.expirationDate,
-            let quantity = from.quantity else {
-                return nil
-        }
-        
-        self.productID = productID
-        self.providerID = providerID
-        self.purchasePrice = purchasePrice
-        self.expirationDate = expirationDate
-        self.quantity = quantity
-        self.creationDate = from.creationDate
-        self.creatorID = from.creatorID
-    }
-    
-    public func toPublic() -> PublicProductInput {
-        
-        return PublicProductInput(model: self)
     }
 }
 

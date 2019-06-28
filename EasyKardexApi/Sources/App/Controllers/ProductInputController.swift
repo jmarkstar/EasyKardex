@@ -29,16 +29,16 @@
 import Vapor
 import Fluent
 
-final class ProductInputController: RouteCollection {
+final class ProductInputController: BasicController<ProductInput>, RouteCollection  {
     
     func boot(router: Router) throws {
         
         let inputs = router.authenticated().grouped("inputs")
         
-        inputs.get(use: getAll)
+        inputs.get(use: index)
         inputs.get(Int.parameter, use: getById)
         inputs.delete(Int.parameter, use: delete)
-        inputs.put(PublicProductInput.self, at: Int.parameter, use: update)
+        inputs.put(Int.parameter, use: update)
         inputs.post(PublicProductInput.self, use: create)
     }
     
@@ -54,7 +54,7 @@ final class ProductInputController: RouteCollection {
         return inputModel.create(on: req).transform(to: .created)
     }
     
-    func getAll(_ req: Request) throws -> Future<[PublicProductInput]> {
+    override func index(_ req: Request) throws -> Future<[PublicProductInput]> {
         
         let filters = try req.query.decode(PublicProductInput.self)
         
@@ -76,6 +76,7 @@ final class ProductInputController: RouteCollection {
         }
     }
     
+    /*
     func getById(_ req: Request) throws -> Future<PublicProductInput> {
         
         guard let inputId = try? req.parameters.next(Int.self) else {
@@ -123,21 +124,29 @@ final class ProductInputController: RouteCollection {
                     throw Abort(.notFound, reason: req.localizedString("input.notfound"))
                 }
                 
-                guard let productID = editedInput.productID,
-                    let providerID = editedInput.providerID,
-                    let purchasePrice = editedInput.purchasePrice,
-                    let expirationDate = editedInput.expirationDate,
-                    let quantity = editedInput.quantity else {
-                        throw Abort(.badRequest, reason: req.localizedString("input.notparams"))
-                }
                 
-                input.productID = productID
-                input.providerID = providerID
-                input.purchasePrice = purchasePrice
-                input.expirationDate = expirationDate
-                input.quantity = quantity
                 
                 return input.save(on: req)
         }.transform(to: .noContent)
+    }*/
+}
+
+extension ProductInput: Updatable {
+    
+    mutating func loadUpdates(_ from: PublicProductInput) throws {
+        
+        guard let productID = from.productID,
+            let providerID = from.providerID,
+            let purchasePrice = from.purchasePrice,
+            let expirationDate = from.expirationDate,
+            let quantity = from.quantity else {
+                throw Abort(.badRequest)
+        }
+        
+        self.productID = productID
+        self.providerID = providerID
+        self.purchasePrice = purchasePrice
+        self.expirationDate = expirationDate
+        self.quantity = quantity
     }
 }

@@ -30,7 +30,7 @@ import Foundation
 import Vapor
 import FluentMySQL
 
-struct ProductInput: Codable {
+struct ProductInput: MySQLModel {
     
     static let entity = "product_input"
     
@@ -55,7 +55,7 @@ struct ProductInput: Codable {
     }
 }
 
-extension ProductInput: MySQLModel {}
+extension ProductInput: FilterableByCreationDate {}
 
 extension ProductInput {
     
@@ -73,6 +73,47 @@ extension ProductInput {
     
     var outputs: Children<ProductInput, ProductOutput> {
         return children(\.prodInputID)
+    }
+}
+
+extension ProductInput: Validatable {
+    
+    static func validations() throws -> Validations<ProductInput> {
+        var validations = Validations(ProductInput.self)
+        try validations.add(\.purchasePrice, .range(0.0...))
+        try validations.add(\.expirationDate, .range(Date()...))
+        try validations.add(\.quantity, .range(1...))
+        return validations
+    }
+}
+
+extension ProductInput: Publishable {
+    
+    typealias T = PublicProductInput
+    
+    init?(from: PublicProductInput) {
+        self.id = from.id
+        
+        guard let productID = from.productID,
+            let providerID = from.providerID,
+            let purchasePrice = from.purchasePrice,
+            let expirationDate = from.expirationDate,
+            let quantity = from.quantity else {
+                return nil
+        }
+        
+        self.productID = productID
+        self.providerID = providerID
+        self.purchasePrice = purchasePrice
+        self.expirationDate = expirationDate
+        self.quantity = quantity
+        self.creationDate = from.creationDate
+        self.creatorID = from.creatorID
+    }
+    
+    public func toPublic() -> PublicProductInput {
+        
+        return PublicProductInput(model: self)
     }
 }
 
