@@ -21,30 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created by jmarkstar on 7/12/19 6:11 PM
+ * Created by jmarkstar on 7/12/19 10:45 PM
  *
  */
 
-package com.jmarkstar.easykardex.data.api
+package com.jmarkstar.easykardex.data.api.request
 
-import com.jmarkstar.easykardex.data.models.Brand
-import retrofit2.http.*
-
-interface BrandService {
-
-    @GET("v1/brands")
-    suspend fun getAll(@Query("cd") creationAt: String): List<Brand>
-
-    @GET("v1/brands/{idBrand}")
-    suspend fun getBrandById(@Path("idBrand") idBrand: Long): Brand
-
-    @POST("v1/brands")
-    suspend fun create(@Body newBrand: Brand): Brand
-
-    @DELETE("v1/brands/{idBrand}")
-    suspend fun delete(@Path("idBrand") idBrand: Long)
-
-    @PUT("v1/brands/{idBrand}")
-    suspend fun update(@Path("idBrand") idBrand: Long, @Body updatedBrand: Brand): Brand
-
-}
+data class LoginRequest(val username: String, val password: String)

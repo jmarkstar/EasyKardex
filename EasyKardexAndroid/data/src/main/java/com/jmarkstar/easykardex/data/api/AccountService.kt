@@ -27,5 +27,17 @@
 
 package com.jmarkstar.easykardex.data.api
 
+import com.jmarkstar.easykardex.data.api.request.LoginRequest
+import com.jmarkstar.easykardex.data.api.response.LoginResponse
+import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.POST
+
 interface AccountService {
+
+    @POST("v1/login")
+    suspend fun login(@Body request: LoginRequest): LoginResponse
+
+    @GET("v1/logout")
+    suspend fun logout()
 }
