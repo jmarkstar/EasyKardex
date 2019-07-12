@@ -27,6 +27,17 @@
 
 package com.jmarkstar.easykardex.data.models
 
-enum class UserRole {
-    ADMIN, OPERATOR
+enum class UserRole(val id: Int) {
+    ADMIN(1), OPERATOR(2);
+
+    companion object {
+
+        fun getRoleByID(id: Int): UserRole? {
+            return when (id) {
+                1 -> ADMIN
+                2 -> OPERATOR
+                else -> null
+            }
+        }
+    }
 }

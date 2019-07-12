@@ -36,7 +36,7 @@ interface BrandService {
     suspend fun getAll(@Query("cd") creationAt: String): List<Brand>
 
     @GET("v1/brands/{idBrand}")
-    suspend fun getBrandById(@Path("idBrand") idBrand: Long): Brand
+    suspend fun findById(@Path("idBrand") idBrand: Long): Brand?
 
     @POST("v1/brands")
     suspend fun create(@Body newBrand: Brand): Brand
