@@ -21,21 +21,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created by jmarkstar on 7/12/19 6:11 PM
+ * Created by jmarkstar on 7/12/19 7:23 PM
  *
  */
 
-package com.jmarkstar.easykardex.data.api
+package com.jmarkstar.easykardex.data.database
 
+import androidx.lifecycle.LiveData
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import com.jmarkstar.easykardex.data.models.Brand
-import kotlinx.coroutines.Deferred
-import retrofit2.http.GET
-import retrofit2.http.Query
 
-interface BrandService {
+@Dao internal interface BrandDao {
 
-    @GET("v1/brands")
-    fun getBrands(@Query("cd") creationAt: String): Deferred<List<Brand>>
+    @Query("SELECT * FROM product_brand")
+    suspend fun getBrands(): LiveData<List<Brand>>
 
-    
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(brand: Brand)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(brands: List<Brand>)
+
+    @Query("DELETE FROM product_brand")
+    suspend fun deleteBrands()
+
+    @Query("DELETE FROM product_brand WHERE id = :id")
+    suspend fun deleteBrandById(id: Long)
 }
