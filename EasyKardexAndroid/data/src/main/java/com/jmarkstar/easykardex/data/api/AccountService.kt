@@ -29,15 +29,16 @@ package com.jmarkstar.easykardex.data.api
 
 import com.jmarkstar.easykardex.data.api.request.LoginRequest
 import com.jmarkstar.easykardex.data.api.response.LoginResponse
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 
-interface AccountService {
+internal interface AccountService {
 
     @POST("v1/login")
-    suspend fun login(@Body request: LoginRequest): LoginResponse
+    suspend fun login(@Body request: LoginRequest): Response<LoginResponse>
 
     @GET("v1/logout")
-    suspend fun logout()
+    suspend fun logout(): Response<Void>
 }

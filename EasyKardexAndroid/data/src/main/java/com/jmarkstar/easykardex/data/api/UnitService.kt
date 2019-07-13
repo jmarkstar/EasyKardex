@@ -27,5 +27,5 @@
 
 package com.jmarkstar.easykardex.data.api
 
-interface UnitService {
+internal interface UnitService {
 }

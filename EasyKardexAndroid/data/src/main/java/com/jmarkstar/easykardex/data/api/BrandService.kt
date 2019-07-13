@@ -30,7 +30,7 @@ package com.jmarkstar.easykardex.data.api
 import com.jmarkstar.easykardex.data.models.Brand
 import retrofit2.http.*
 
-interface BrandService {
+internal interface BrandService {
 
     @GET("v1/brands")
     suspend fun getAll(@Query("cd") creationAt: String): List<Brand>

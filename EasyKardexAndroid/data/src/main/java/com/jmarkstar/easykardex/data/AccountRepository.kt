@@ -21,16 +21,47 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created by jmarkstar on 7/12/19 10:47 PM
+ * Created by jmarkstar on 7/13/19 8:01 AM
  *
  */
 
-package com.jmarkstar.easykardex.data.api.response
+package com.jmarkstar.easykardex.data
 
+import android.util.Log
+import com.jmarkstar.easykardex.data.api.AccountService
+import com.jmarkstar.easykardex.data.api.request.LoginRequest
+import com.jmarkstar.easykardex.data.api.response.LoginResponse
+import com.jmarkstar.easykardex.data.cache.EasyKardexCache
 import com.jmarkstar.easykardex.data.models.User
 import com.jmarkstar.easykardex.data.models.UserRole
-import com.squareup.moshi.Json
+import retrofit2.Response
+import java.lang.Exception
 
-internal data class LoginResponse(@Json(name = "t") val token: String,
-                    @Json(name = "u") val user: User,
-                    @Json(name = "r") val userRole: UserRole)
+class AccountRepository {
+
+    private lateinit var accountService: AccountService
+    private lateinit var cache: EasyKardexCache
+
+    suspend fun login(username: String, password: String) : Triple<String, User, UserRole>? {
+
+        val result : Response<LoginResponse>?
+
+        try {
+            result = accountService.login(LoginRequest(username, password))
+        } catch(ex: Exception) {
+            Log.e("AccountRepository","Error login")
+            return null
+        }
+
+        if(result.isSuccessful){
+
+            val body = checkNotNull(result.body()){
+                return null
+            }
+
+            return Triple(body.token, body.user, body.userRole)
+        } else {
+            return null
+        }
+    }
+}

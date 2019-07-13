@@ -27,4 +27,4 @@
 
 package com.jmarkstar.easykardex.data.api.request
 
-data class LoginRequest(val username: String, val password: String)
+internal data class LoginRequest(val username: String, val password: String)
