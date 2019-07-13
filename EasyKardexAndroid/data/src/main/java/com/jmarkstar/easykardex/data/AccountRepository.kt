@@ -33,7 +33,6 @@ import com.jmarkstar.easykardex.data.api.request.LoginRequest
 import com.jmarkstar.easykardex.data.api.response.LoginResponse
 import com.jmarkstar.easykardex.data.cache.EasyKardexCache
 import com.jmarkstar.easykardex.data.models.User
-import com.jmarkstar.easykardex.data.models.UserRole
 import retrofit2.Response
 import java.lang.Exception
 
@@ -42,7 +41,7 @@ class AccountRepository {
     private lateinit var accountService: AccountService
     private lateinit var cache: EasyKardexCache
 
-    suspend fun login(username: String, password: String) : Triple<String, User, UserRole>? {
+    suspend fun login(username: String, password: String) : Pair<String, User>? {
 
         val result : Response<LoginResponse>?
 
@@ -59,7 +58,7 @@ class AccountRepository {
                 return null
             }
 
-            return Triple(body.token, body.user, body.userRole)
+            return  Pair(body.token, body.user)
         } else {
             return null
         }

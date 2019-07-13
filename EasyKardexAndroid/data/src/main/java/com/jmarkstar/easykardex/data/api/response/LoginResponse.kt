@@ -28,9 +28,7 @@
 package com.jmarkstar.easykardex.data.api.response
 
 import com.jmarkstar.easykardex.data.models.User
-import com.jmarkstar.easykardex.data.models.UserRole
 import com.squareup.moshi.Json
 
 internal data class LoginResponse(@Json(name = "t") val token: String,
-                    @Json(name = "u") val user: User,
-                    @Json(name = "r") val userRole: UserRole)
+                    @Json(name = "u") val user: User)
