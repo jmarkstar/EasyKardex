@@ -21,27 +21,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created by jmarkstar on 7/12/19 6:01 PM
+ * Created by jmarkstar on 7/15/19 8:24 PM
  *
  */
 
-package com.jmarkstar.easykardex.data.models
+package com.jmarkstar.easykardex.data.repository
 
-import androidx.room.Entity
-import androidx.room.Index
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
-
-
-@Entity(tableName = "product_unit",
-    indices = [Index("id")],
-    primaryKeys = ["id"],
-    ignoredColumns = ["products"])
-
-
-@JsonClass(generateAdapter = true)
-data class Unit(val id: Long? = null,
-           @Json(name = "n") var name: String) {
-
-    var products: ArrayList<Product>? = null
+/**
+ * Status of a resource that is provided to the UI.
+ *
+ *
+ * These are usually created by the Repository classes where they return
+ * `LiveData<Resource<T>>` to pass back the latest data to the UI with its fetch status.
+ */
+enum class Status {
+    SUCCESS,
+    ERROR,
+    LOADING
 }

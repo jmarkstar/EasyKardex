@@ -21,27 +21,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created by jmarkstar on 7/12/19 6:01 PM
+ * Created by jmarkstar on 7/15/19 8:23 PM
  *
  */
 
-package com.jmarkstar.easykardex.data.models
+package com.jmarkstar.easykardex.data.repository
 
-import androidx.room.Entity
-import androidx.room.Index
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+/**
+ * A generic class that holds a value with its loading status.
+ * @param <T>
+</T> */
+data class Resource<out T>(val status: Status, val data: T?, val message: String?) {
+    companion object {
+        fun <T> success(data: T?): Resource<T> {
+            return Resource(Status.SUCCESS, data, null)
+        }
 
+        fun <T> error(msg: String, data: T?): Resource<T> {
+            return Resource(Status.ERROR, data, msg)
+        }
 
-@Entity(tableName = "product_unit",
-    indices = [Index("id")],
-    primaryKeys = ["id"],
-    ignoredColumns = ["products"])
-
-
-@JsonClass(generateAdapter = true)
-data class Unit(val id: Long? = null,
-           @Json(name = "n") var name: String) {
-
-    var products: ArrayList<Product>? = null
+        fun <T> loading(data: T?): Resource<T> {
+            return Resource(Status.LOADING, data, null)
+        }
+    }
 }

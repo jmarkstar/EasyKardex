@@ -31,6 +31,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import java.util.*
 
 /** ProductOutput will work as a Entity for store it on SQLite, for parsing the API response and for use it on the up level.
@@ -48,6 +49,7 @@ import java.util.*
     ignoredColumns = ["productInput"])
 
 
+@JsonClass(generateAdapter = true)
 class ProductOutput(var id: Long,
                     @Json(name = "idpi") var idProductInput: Long,
                     @Json(name = "q") var quantity: Int,

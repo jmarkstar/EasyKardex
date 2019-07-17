@@ -28,7 +28,9 @@
 package com.jmarkstar.easykardex.data.models
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class User(@Json(name = "idu") val userId: Long,
            @Json(name = "idr") var roleId: UserRole,
            @Json(name = "u") var username: String,

@@ -31,6 +31,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
 
 @Entity(tableName = "product",
@@ -44,6 +45,7 @@ import com.squareup.moshi.Json
     ignoredColumns = ["brand", "category", "unit", "inputs"])
 
 
+@JsonClass(generateAdapter = true)
 data class Product(@Json(name = "idp") val id: Long? = null,
               @Json(name = "idb") var brandId: Long,
               @Json(name = "idc") var categoryId: Long,

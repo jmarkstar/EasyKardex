@@ -21,11 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created by jmarkstar on 7/13/19 8:01 AM
+ * Created by jmarkstar on 7/15/19 8:02 PM
  *
  */
 
-package com.jmarkstar.easykardex.data
+package com.jmarkstar.easykardex.data.repository
 
 import android.util.Log
 import com.jmarkstar.easykardex.data.api.AccountService
@@ -33,6 +33,7 @@ import com.jmarkstar.easykardex.data.api.request.LoginRequest
 import com.jmarkstar.easykardex.data.api.response.LoginResponse
 import com.jmarkstar.easykardex.data.cache.EasyKardexCache
 import com.jmarkstar.easykardex.data.models.User
+import com.jmarkstar.easykardex.data.models.UserRole
 import retrofit2.Response
 import java.lang.Exception
 
@@ -62,5 +63,36 @@ class AccountRepository {
         } else {
             return null
         }
+    }
+
+    suspend fun logout(): Boolean {
+
+        val result : Response<Void>?
+
+        return try {
+            result = accountService.logout()
+            result.isSuccessful
+        } catch(ex: Exception) {
+            Log.e("AccountRepository","Error logout")
+            false
+        }
+    }
+
+    fun saveUserLoggedIn(user: User){
+        cache.userLoggedIn = user
+    }
+
+    fun saveSessionToken(token: String){
+        cache.token = token
+    }
+
+    fun saveUserRole(userRole: UserRole){
+        cache.role = userRole
+    }
+
+    fun deleteSessionInfo(){
+        cache.userLoggedIn = null
+        cache.token = null
+        cache.role = null
     }
 }

@@ -27,7 +27,6 @@
 
 package com.jmarkstar.easykardex.data.database
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -37,7 +36,7 @@ import com.jmarkstar.easykardex.data.models.Category
 @Dao internal interface CategoryDao {
 
     @Query("SELECT * FROM product_category")
-    suspend fun getCategories(): LiveData<List<Category>>
+    suspend fun getCategories(): List<Category>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(category: Category)

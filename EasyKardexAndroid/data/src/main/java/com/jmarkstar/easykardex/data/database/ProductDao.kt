@@ -37,7 +37,7 @@ import com.jmarkstar.easykardex.data.models.Product
 @Dao internal interface ProductDao {
 
     @Query("SELECT * FROM product")
-    suspend fun getProducts(): LiveData<List<Product>>
+    suspend fun getProducts(): List<Product>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(product: Product)

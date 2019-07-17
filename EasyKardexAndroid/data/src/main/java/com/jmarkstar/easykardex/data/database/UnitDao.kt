@@ -27,7 +27,6 @@
 
 package com.jmarkstar.easykardex.data.database
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -37,7 +36,7 @@ import com.jmarkstar.easykardex.data.models.Unit
 @Dao internal interface UnitDao {
 
     @Query("SELECT * FROM product_unit")
-    suspend fun getUnits(): LiveData<List<Unit>>
+    suspend fun getUnits(): List<Unit>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(unit: Unit)

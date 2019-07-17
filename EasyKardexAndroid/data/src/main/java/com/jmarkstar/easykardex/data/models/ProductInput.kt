@@ -31,6 +31,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -50,6 +51,7 @@ import kotlin.collections.ArrayList
     ignoredColumns = ["product", "provider", "outputs"])
 
 
+@JsonClass(generateAdapter = true)
 data class ProductInput(var id: Long,
                         @Json(name = "idpd")  var idProduct: Long,
                         @Json(name = "idpv")  var idProvider: Long,

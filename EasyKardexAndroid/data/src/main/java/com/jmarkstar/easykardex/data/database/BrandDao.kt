@@ -27,7 +27,6 @@
 
 package com.jmarkstar.easykardex.data.database
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -37,7 +36,7 @@ import com.jmarkstar.easykardex.data.models.Brand
 @Dao internal interface BrandDao {
 
     @Query("SELECT * FROM product_brand")
-    suspend fun getBrands(): LiveData<List<Brand>>
+    suspend fun getBrands(): List<Brand>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(brand: Brand)
