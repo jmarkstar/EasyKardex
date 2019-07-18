@@ -37,8 +37,6 @@ import com.squareup.moshi.JsonClass
     indices = [Index("id")],
     primaryKeys = ["id"],
     ignoredColumns = ["products"])
-
-
 @JsonClass(generateAdapter = true)
 data class BrandEntity(val id: Long? = null,
                        @Json(name = "n") var name: String) {

@@ -38,7 +38,7 @@ import com.jmarkstar.easykardex.domain.models.User
 import retrofit2.HttpException
 import java.lang.Exception
 
-class AccountRepositoryImpl internal constructor(private val accountService: AccountService,
+internal class AccountRepositoryImpl(private val accountService: AccountService,
                             private val cache: EasyKardexCache): AccountRepository {
 
     override suspend fun login(username: String, password: String) : Result<User> = try {

@@ -21,31 +21,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created by jmarkstar on 7/18/19 1:28 PM
+ * Created by jmarkstar on 7/18/19 2:18 PM
  *
  */
 
-package com.jmarkstar.easykardex.data.api
+package com.jmarkstar.easykardex.data.database
 
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
+import androidx.room.Database
+import androidx.room.RoomDatabase
+import com.jmarkstar.easykardex.data.entities.*
 
-private fun httpClient(debug: Boolean): OkHttpClient {
-    val httpLoggingInterceptor = HttpLoggingInterceptor(HttpLoggingInterceptor.Logger.DEFAULT)
-    val clientBuilder = OkHttpClient.Builder()
-    if (debug) {
-        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-        clientBuilder.addInterceptor(httpLoggingInterceptor)
-    }
-    return clientBuilder.build()
+@Database(entities = [
+        BrandEntity::class,
+        CategoryEntity::class,
+        UnitEntity::class,
+        ProductEntity::class,
+        ProviderEntity::class,
+        ProductInputEntity::class,
+        ProductOutputEntity::class
+    ],
+    version = 1)
+
+internal abstract class EasyKardexDatabase: RoomDatabase() {
+
+    abstract val brandDao: BrandDao
+    abstract val categoryDao: CategoryDao
+    abstract val unitDao: UnitDao
+    abstract val productDao: ProductDao
+    //abstract val brandDao: Provider
+    //abstract val brandDao: BrandDao
+    //abstract val brandDao: BrandDao
+
 }
-
-private fun retrofitClient(baseUrl: String, httpClient: OkHttpClient): Retrofit =
-    Retrofit.Builder()
-        .baseUrl(baseUrl)
-        .client(httpClient)
-        .addConverterFactory(MoshiConverterFactory.create())
-        //.addCallAdapterFactory(CoroutineCallAdapterFactory())
-        .build()

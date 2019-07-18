@@ -34,7 +34,7 @@ import com.jmarkstar.easykardex.data.entities.UserRoleEntity
 import com.jmarkstar.easykardex.data.utils.LibraryConstants
 import com.squareup.moshi.Moshi
 
-class EasyKardexCache(private val context: Context, private val moshi: Moshi) {
+internal class EasyKardexCache(private val context: Context, private val moshi: Moshi) {
 
     private val TOKEN = "token"
     private val USER_ROLE = "role"
