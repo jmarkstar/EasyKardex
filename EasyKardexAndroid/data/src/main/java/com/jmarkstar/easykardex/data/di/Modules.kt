@@ -52,7 +52,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 val repositoryModule: Module = module {
 
-    single<AccountRepository> { AccountRepositoryImpl(get(), get()) }
+    single<AccountRepository> { AccountRepositoryImpl(accountService = get(), cache =  get()) }
 }
 
 /** Cache Module */

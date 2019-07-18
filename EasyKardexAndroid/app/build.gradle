@@ -65,9 +65,9 @@ dependencies {
     implementation "org.koin:koin-androidx-viewmodel:$koin_version"
     implementation "org.koin:koin-androidx-ext:$koin_version"
 
-    implementation "android.arch.lifecycle:livedata:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
-    kapt "android.arch.lifecycle:compiler:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
 
     testImplementation 'junit:junit:4.12'
     testImplementation "org.koin:koin-test:$koin_version"

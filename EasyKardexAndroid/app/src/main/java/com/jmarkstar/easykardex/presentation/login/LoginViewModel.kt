@@ -21,17 +21,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created by jmarkstar on 7/18/19 3:06 PM
+ * Created by jmarkstar on 7/18/19 3:53 PM
  *
  */
 
-package com.jmarkstar.easykardex.domain.di
+package com.jmarkstar.easykardex.presentation.login
 
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.jmarkstar.easykardex.domain.models.Result
+import com.jmarkstar.easykardex.domain.models.User
 import com.jmarkstar.easykardex.domain.usecases.LoginUseCase
-import org.koin.core.module.Module
-import org.koin.dsl.module
+import com.jmarkstar.easykardex.extensions.setLoading
+import com.jmarkstar.easykardex.models.Resource
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-val useCaseModule: Module = module {
+class LoginViewModel constructor(private val loginUserCase: LoginUseCase): ViewModel() {
 
-    factory { LoginUseCase(accountRepository = get()) }
+    val userLoggedId = MutableLiveData<Resource<User>>()
+
+    fun login(username: String, password: String){
+
+        viewModelScope.launch {
+
+            userLoggedId.setLoading()
+
+            val loginResult = withContext(Dispatchers.IO) {
+
+                when( val result = loginUserCase.login(username, password)) {
+
+                    is Result.Success -> Resource.Success(result.value)
+                    is Result.Failure -> Resource.Error(result.reason)
+                }
+            }
+
+            userLoggedId.value = loginResult
+        }
+    }
 }

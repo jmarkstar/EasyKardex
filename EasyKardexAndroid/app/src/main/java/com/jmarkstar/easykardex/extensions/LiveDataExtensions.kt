@@ -21,54 +21,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created by jmarkstar on 7/12/19 6:01 PM
+ * Created by jmarkstar on 7/18/19 3:46 PM
  *
  */
 
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+package com.jmarkstar.easykardex.extensions
 
-buildscript {
+import androidx.lifecycle.MutableLiveData
+import com.jmarkstar.easykardex.domain.models.FailureReason
+import com.jmarkstar.easykardex.models.Resource
 
-    ext {
+fun <T: Any> MutableLiveData<Resource<T>>.setSuccess(data: T) = postValue(Resource.Success(data))
 
-        // sdk and tools
-        compileSdkVersion = 28
-        minSdkVersion = 21
-        targetSdkVersion = 28
+fun <T: Any> MutableLiveData<Resource<T>>.setLoading() = postValue(Resource.Loading)
 
-        // application dependencies
-        kotlin_version = '1.3.41'
-        androidx_version = '1.0.2'
-        koin_version = "2.0.1"
-        coroutines_version = "1.3.0-M2"
-        lifecycle_version = "2.2.0-alpha02"
-        room_version = "2.1.0"
-        retrofit_version = "2.6.0"
-        okhttp_version = "4.0.1"
-        moshi_version = "1.8.0"
-    }
-
-    repositories {
-        google()
-        jcenter()
-        
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.2'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-    }
-}
-
-allprojects {
-    repositories {
-        google()
-        jcenter()
-        
-    }
-}
-
-task clean(type: Delete) {
-    delete rootProject.buildDir
-}
+fun <T: Any> MutableLiveData<Resource<T>>.setError(reason: FailureReason) = postValue(Resource.Error(reason))

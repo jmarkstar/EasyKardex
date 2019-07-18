@@ -1,6 +1,6 @@
 /*
  * The MIT License (MIT)
- *
+ *  
  * Copyright (c) 2019 Marco Antonio Estrella Cardenas
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -9,10 +9,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- *
+ *  
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- *
+ *  
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -20,55 +20,23 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
- *
- * Created by jmarkstar on 7/12/19 6:01 PM
+ *  
+ * Created by jmarkstar on 7/18/19 3:51 PM
  *
  */
 
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+package com.jmarkstar.easykardex.presentation.login
 
-buildscript {
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import com.jmarkstar.easykardex.R
 
-    ext {
+class MainActivity : AppCompatActivity() {
 
-        // sdk and tools
-        compileSdkVersion = 28
-        minSdkVersion = 21
-        targetSdkVersion = 28
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
 
-        // application dependencies
-        kotlin_version = '1.3.41'
-        androidx_version = '1.0.2'
-        koin_version = "2.0.1"
-        coroutines_version = "1.3.0-M2"
-        lifecycle_version = "2.2.0-alpha02"
-        room_version = "2.1.0"
-        retrofit_version = "2.6.0"
-        okhttp_version = "4.0.1"
-        moshi_version = "1.8.0"
+
     }
-
-    repositories {
-        google()
-        jcenter()
-        
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.2'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-    }
-}
-
-allprojects {
-    repositories {
-        google()
-        jcenter()
-        
-    }
-}
-
-task clean(type: Delete) {
-    delete rootProject.buildDir
 }

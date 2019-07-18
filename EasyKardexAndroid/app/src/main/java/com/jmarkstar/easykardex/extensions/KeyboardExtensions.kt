@@ -21,54 +21,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created by jmarkstar on 7/12/19 6:01 PM
+ * Created by jmarkstar on 7/18/19 4:32 PM
  *
  */
 
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+package com.jmarkstar.easykardex.extensions
 
-buildscript {
+import android.app.Activity
+import android.content.Context
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 
-    ext {
-
-        // sdk and tools
-        compileSdkVersion = 28
-        minSdkVersion = 21
-        targetSdkVersion = 28
-
-        // application dependencies
-        kotlin_version = '1.3.41'
-        androidx_version = '1.0.2'
-        koin_version = "2.0.1"
-        coroutines_version = "1.3.0-M2"
-        lifecycle_version = "2.2.0-alpha02"
-        room_version = "2.1.0"
-        retrofit_version = "2.6.0"
-        okhttp_version = "4.0.1"
-        moshi_version = "1.8.0"
-    }
-
-    repositories {
-        google()
-        jcenter()
-        
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.2'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-    }
+/**
+ * Use only from Activities, don't use from Fragment (with getActivity) or from Dialog/DialogFragment
+ */
+fun Activity.hideKeyboard() {
+    val imm = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+    val view = currentFocus ?: View(this)
+    imm.hideSoftInputFromWindow(view.windowToken, 0)
+    window.decorView
 }
 
-allprojects {
-    repositories {
-        google()
-        jcenter()
-        
-    }
+fun View.showKeyboard() {
+    val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
 }
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+/**
+ * Use everywhere except from Activity (Custom View, Fragment, Dialogs, DialogFragments).
+ */
+fun View.hideKeyboard() {
+    val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.hideSoftInputFromWindow(windowToken, 0)
 }
