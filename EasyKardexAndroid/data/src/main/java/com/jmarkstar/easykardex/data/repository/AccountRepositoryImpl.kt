@@ -32,8 +32,8 @@ import com.jmarkstar.easykardex.data.api.request.LoginRequest
 import com.jmarkstar.easykardex.data.cache.EasyKardexCache
 import com.jmarkstar.easykardex.data.entities.mapToDomain
 import com.jmarkstar.easykardex.domain.datasources.AccountRepository
-import com.jmarkstar.easykardex.domain.datasources.FailureReason
-import com.jmarkstar.easykardex.domain.datasources.Result
+import com.jmarkstar.easykardex.domain.models.FailureReason
+import com.jmarkstar.easykardex.domain.models.Result
 import com.jmarkstar.easykardex.domain.models.User
 import retrofit2.HttpException
 import java.lang.Exception

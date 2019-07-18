@@ -27,6 +27,7 @@
 
 package com.jmarkstar.easykardex.domain.datasources
 
+import com.jmarkstar.easykardex.domain.models.Result
 import com.jmarkstar.easykardex.domain.models.User
 
 interface AccountRepository {

@@ -21,19 +21,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created by jmarkstar on 7/18/19 10:43 AM
+ * Created by jmarkstar on 7/18/19 3:01 PM
  *
  */
 
-package com.jmarkstar.easykardex.domain.usecases
+package com.jmarkstar.easykardex.domain.models
 
-import com.jmarkstar.easykardex.domain.datasources.AccountRepository
-import com.jmarkstar.easykardex.domain.models.Result
-import com.jmarkstar.easykardex.domain.models.User
+sealed class Result<out T : Any> {
+    data class Success<out T : Any>(val value: T) : Result<T>()
+    data class Failure(val reason: FailureReason) : Result<Nothing>()
+}
 
-class LoginUseCase(private val accountRepository: AccountRepository) {
-
-    suspend fun login(username: String, password: String): Result<User> =  accountRepository.login(username, password)
-
-    suspend fun logout(): Result<Boolean> = accountRepository.logout()
+enum class FailureReason {
+    INTERNAL_ERROR,
+    INVALID_CREDENTIALS,
+    EXPIRED_TOKEN
 }

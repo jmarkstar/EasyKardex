@@ -21,19 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created by jmarkstar on 7/18/19 11:42 AM
+ * Created by jmarkstar on 7/18/19 3:06 PM
  *
  */
 
-package com.jmarkstar.easykardex.domain.datasources
+package com.jmarkstar.easykardex.domain.di
 
-sealed class Result<out T : Any> {
-    data class Success<out T : Any>(val value: T) : Result<T>()
-    data class Failure(val reason: FailureReason) : Result<Nothing>()
-}
+import com.jmarkstar.easykardex.domain.usecases.LoginUseCase
+import org.koin.core.module.Module
+import org.koin.dsl.module
 
-enum class FailureReason {
-    INTERNAL_ERROR,
-    INVALID_CREDENTIALS,
-    EXPIRED_TOKEN
+val useCasesModules: Module = module {
+
+    factory { LoginUseCase(accountRepository = get()) }
 }
