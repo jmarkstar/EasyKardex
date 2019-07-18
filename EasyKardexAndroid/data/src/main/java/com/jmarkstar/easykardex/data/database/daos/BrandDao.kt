@@ -21,18 +21,32 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created by jmarkstar on 7/13/19 7:36 AM
+ * Created by jmarkstar on 7/12/19 7:23 PM
  *
  */
 
-package com.jmarkstar.easykardex.data.utils
+package com.jmarkstar.easykardex.data.database.daos
 
-import org.threeten.bp.format.DateTimeFormatter
-import java.text.SimpleDateFormat
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import com.jmarkstar.easykardex.data.entities.BrandEntity
 
-internal object LibraryUtils {
+@Dao internal interface BrandDao {
 
-    val dateTimeFormatter = SimpleDateFormat("yyyy-mm-dd HH:mm:ss")
-    val dateFormmatter = SimpleDateFormat("yyyy-mm-dd")
-    val offsetDateTimeFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
+    @Query("SELECT * FROM product_brand")
+    suspend fun getBrands(): List<BrandEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(brand: BrandEntity)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(brands: List<BrandEntity>)
+
+    @Query("DELETE FROM product_brand")
+    suspend fun deleteBrands()
+
+    @Query("DELETE FROM product_brand WHERE id = :id")
+    suspend fun deleteBrandById(id: Long)
 }

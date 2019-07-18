@@ -28,6 +28,7 @@
 package com.jmarkstar.easykardex
 
 import android.app.Application
+import com.jakewharton.threetenabp.AndroidThreeTen
 import com.jmarkstar.easykardex.data.di.cacheModule
 import com.jmarkstar.easykardex.data.di.databaseModule
 import com.jmarkstar.easykardex.data.di.networkModule
@@ -36,6 +37,7 @@ import com.jmarkstar.easykardex.di.viewModelModule
 import com.jmarkstar.easykardex.domain.di.useCaseModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidFileProperties
+import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 
 class EasyKardexApplication : Application() {
@@ -43,15 +45,17 @@ class EasyKardexApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
+        AndroidThreeTen.init(this)
+
         startKoin {
             androidContext(this@EasyKardexApplication)
-            androidFileProperties()
-            listOf(networkModule,
+            androidLogger()
+            /*listOf(networkModule,
                 databaseModule,
                 cacheModule,
                 repositoryModule,
                 useCaseModule,
-                viewModelModule)
+                viewModelModule)*/
         }
 
     }

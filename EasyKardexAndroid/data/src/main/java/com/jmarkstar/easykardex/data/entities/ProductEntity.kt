@@ -29,20 +29,20 @@ package com.jmarkstar.easykardex.data.entities
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Ignore
 import androidx.room.Index
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 
 @Entity(tableName = "product",
-    indices = [Index("id")],
+    indices = [Index("id"), Index("brandId"), Index("categoryId"), Index("unitId")],
     primaryKeys = ["id"],
     foreignKeys = [
         ForeignKey(entity = BrandEntity::class, parentColumns = ["id"], childColumns = ["brandId"]),
         ForeignKey(entity = CategoryEntity::class, parentColumns = ["id"], childColumns = ["categoryId"]),
         ForeignKey(entity = UnitEntity::class, parentColumns = ["id"], childColumns = ["unitId"])
-    ],
-    ignoredColumns = ["brand", "category", "unit", "inputs"])
+    ])
 
 
 @JsonClass(generateAdapter = true)
@@ -55,8 +55,8 @@ data class ProductEntity(@Json(name = "idp") val id: Long? = null,
                          @Json(name = "i")   var image: String,
                          @Json(name = "d")   var description: String) {
 
-    var brand: BrandEntity? = null
-    var category: CategoryEntity? = null
-    var unit: UnitEntity? = null
-    var inputs: ArrayList<ProductInputEntity>? = null
+    @Ignore var brand: BrandEntity? = null
+    @Ignore var category: CategoryEntity? = null
+    @Ignore var unit: UnitEntity? = null
+    @Ignore var inputs: ArrayList<ProductInputEntity>? = null
 }

@@ -38,12 +38,12 @@ import com.jmarkstar.easykardex.data.cache.EasyKardexCache
 import com.jmarkstar.easykardex.data.database.EasyKardexDatabase
 import com.jmarkstar.easykardex.data.repository.AccountRepositoryImpl
 import com.jmarkstar.easykardex.domain.datasources.AccountRepository
-import com.jmarkstar.easykardex.domain.models.Brand
 import com.squareup.moshi.Moshi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.Module
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -52,7 +52,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 val repositoryModule: Module = module {
 
-    single<AccountRepository> { AccountRepositoryImpl(accountService = get(), cache =  get()) }
+    single { AccountRepositoryImpl(accountService = get(), cache =  get()) as AccountRepository }
 }
 
 /** Cache Module */
@@ -87,7 +87,7 @@ val networkModule: Module = module {
     //Services
 
     single { get<Retrofit>().create(AccountService::class.java) }
-    single { get<Retrofit>().create(Brand::class.java) }
+    single { get<Retrofit>().create(BrandService::class.java) }
     single { get<Retrofit>().create(CategoryService::class.java) }
     single { get<Retrofit>().create(ProductInputService::class.java) }
     single { get<Retrofit>().create(ProductOutputService::class.java) }
@@ -106,7 +106,7 @@ val networkModule: Module = module {
 
         val httpLoggingInterceptor = HttpLoggingInterceptor(HttpLoggingInterceptor.Logger.DEFAULT)
         val clientBuilder = OkHttpClient.Builder()
-        if (getProperty("debug")) {
+        if (get(named("debug"))) {
             httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
             clientBuilder.addInterceptor(httpLoggingInterceptor)
         }
@@ -115,7 +115,7 @@ val networkModule: Module = module {
 
     single {
         Retrofit.Builder()
-            .baseUrl(getProperty<String>("base_url"))
+            .baseUrl(get<String>(named("baseUrl")))
             .client(get())
             .addConverterFactory(MoshiConverterFactory.create())
             .build()

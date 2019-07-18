@@ -28,6 +28,7 @@
 package com.jmarkstar.easykardex.data.entities
 
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.Index
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
@@ -35,8 +36,7 @@ import com.squareup.moshi.JsonClass
 
 @Entity(tableName = "provider",
     indices = [Index("id")],
-    primaryKeys = ["id"],
-    ignoredColumns = ["inputs"])
+    primaryKeys = ["id"])
 
 
 @JsonClass(generateAdapter = true)
@@ -45,5 +45,5 @@ data class ProviderEntity(var id: Long,
                           @Json(name = "cn") var contactName: String,
                           @Json(name = "cp") var contactPhoneNumber: String) {
 
-    var inputs: ArrayList<ProductInputEntity>? = null
+    @Ignore var inputs: List<ProductInputEntity>? = null
 }

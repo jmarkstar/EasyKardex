@@ -27,4 +27,4 @@
 
 package com.jmarkstar.easykardex.domain.models
 
-class User(val userId: Long, var roleId: UserRole, var username: String, var fullname: String)
+data class User(val userId: Long, var roleId: UserRole, var username: String, var fullname: String)

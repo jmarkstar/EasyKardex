@@ -46,6 +46,7 @@ buildscript {
         retrofit_version = "2.6.0"
         okhttp_version = "4.0.1"
         moshi_version = "1.8.0"
+        threetenabp_version= "1.2.1"
     }
 
     repositories {

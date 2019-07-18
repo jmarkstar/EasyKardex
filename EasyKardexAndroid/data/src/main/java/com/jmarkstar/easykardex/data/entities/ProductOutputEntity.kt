@@ -27,12 +27,10 @@
 
 package com.jmarkstar.easykardex.data.entities
 
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.Index
+import androidx.room.*
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import java.util.*
+import org.threeten.bp.OffsetDateTime
 
 /** ProductOutputEntity will work as a Entity for store it on SQLite, for parsing the API response and for use it on the up level.
  *
@@ -41,20 +39,28 @@ import java.util.*
 
 
 @Entity(tableName = "product_output",
-    indices = [Index("id")],
+    indices = [Index("id"), Index("idProductInput")],
     primaryKeys = ["id"],
     foreignKeys = [
         ForeignKey(entity = ProductInputEntity::class, parentColumns = ["id"], childColumns = ["idProductInput"])
-    ],
-    ignoredColumns = ["productInput"])
+    ])
 
 
 @JsonClass(generateAdapter = true)
 class ProductOutputEntity(var id: Long,
-                          @Json(name = "idpi") var idProductInput: Long,
-                          @Json(name = "q") var quantity: Int,
-                          @Json(name = "cuid") var creatorId: Long,
-                          @Json(name = "cd")  var createAt: Date) {
 
-    var productInput: ProductInputEntity? = null
+                          @Json(name = "idpi")
+                          var idProductInput: Long,
+
+                          @Json(name = "q")
+                          var quantity: Int,
+
+                          @Json(name = "cuid")
+                          var creatorId: Long,
+
+                          @Json(name = "cd")
+                          var createAt: OffsetDateTime
+) {
+
+    @Ignore var productInput: ProductInputEntity? = null
 }

@@ -21,32 +21,32 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created by jmarkstar on 7/12/19 7:23 PM
+ * Created by jmarkstar on 7/19/19 12:56 AM
  *
  */
 
-package com.jmarkstar.easykardex.data.database
+package com.jmarkstar.easykardex.data.database.daos
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.jmarkstar.easykardex.data.entities.BrandEntity
+import com.jmarkstar.easykardex.data.entities.ProductEntity
 
-@Dao internal interface BrandDao {
+@Dao internal interface ProductDao {
 
-    @Query("SELECT * FROM product_brand")
-    suspend fun getBrands(): List<BrandEntity>
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(brand: BrandEntity)
+    @Query("SELECT * FROM product")
+    suspend fun getProducts(): List<ProductEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(brands: List<BrandEntity>)
+    suspend fun insert(product: ProductEntity)
 
-    @Query("DELETE FROM product_brand")
-    suspend fun deleteBrands()
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(products: List<ProductEntity>)
 
-    @Query("DELETE FROM product_brand WHERE id = :id")
-    suspend fun deleteBrandById(id: Long)
+    @Query("DELETE FROM product")
+    suspend fun deleteProducts()
+
+    @Query("DELETE FROM product WHERE id = :id")
+    suspend fun deleteProductById(id: Long)
 }

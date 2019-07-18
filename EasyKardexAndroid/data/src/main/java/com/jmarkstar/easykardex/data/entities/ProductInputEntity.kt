@@ -27,11 +27,10 @@
 
 package com.jmarkstar.easykardex.data.entities
 
-import androidx.room.Entity
-import androidx.room.ForeignKey
-import androidx.room.Index
+import androidx.room.*
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import org.threeten.bp.OffsetDateTime
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -42,26 +41,40 @@ import kotlin.collections.ArrayList
 
 
 @Entity(tableName = "product_input",
-    indices = [Index("id")],
+    indices = [Index("id"), Index("idProduct"), Index("idProvider")],
     primaryKeys = ["id"],
     foreignKeys = [
         ForeignKey(entity = ProductEntity::class, parentColumns = ["id"], childColumns = ["idProduct"]),
         ForeignKey(entity = ProviderEntity::class, parentColumns = ["id"], childColumns = ["idProvider"])
-    ],
-    ignoredColumns = ["product", "provider", "outputs"])
+    ])
 
 
 @JsonClass(generateAdapter = true)
 data class ProductInputEntity(var id: Long,
-                              @Json(name = "idpd")  var idProduct: Long,
-                              @Json(name = "idpv")  var idProvider: Long,
-                              @Json(name = "pp")  var purchasePrice: Double,
-                              @Json(name = "ed")  var expirationDate: Date,
-                              @Json(name = "q")  var quantity: Int,
-                              @Json(name = "cuid")  var creatorId: Long,
-                              @Json(name = "cd")  var createAt: Date) {
 
-    var product: ProductEntity? = null
-    var provider: ProviderEntity? = null
-    var outputs: ArrayList<ProductOutputEntity>? = null
+                              @Json(name = "idpd")
+                              var idProduct: Long,
+
+                              @Json(name = "idpv")
+                              var idProvider: Long,
+
+                              @Json(name = "pp")
+                              var purchasePrice: Double,
+
+                              @Json(name = "ed")
+                              var expirationDate: Date,
+
+                              @Json(name = "q")
+                              var quantity: Int,
+
+                              @Json(name = "cuid")
+                              var creatorId: Long,
+
+                              @Json(name = "cd")
+                              var createAt: OffsetDateTime
+) {
+
+    @Ignore var product: ProductEntity? = null
+    @Ignore var provider: ProviderEntity? = null
+    @Ignore var outputs: ArrayList<ProductOutputEntity>? = null
 }

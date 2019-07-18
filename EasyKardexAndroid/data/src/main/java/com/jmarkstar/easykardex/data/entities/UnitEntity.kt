@@ -28,6 +28,7 @@
 package com.jmarkstar.easykardex.data.entities
 
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.Index
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
@@ -35,13 +36,12 @@ import com.squareup.moshi.JsonClass
 
 @Entity(tableName = "product_unit",
     indices = [Index("id")],
-    primaryKeys = ["id"],
-    ignoredColumns = ["products"])
+    primaryKeys = ["id"])
 
 
 @JsonClass(generateAdapter = true)
 data class UnitEntity(val id: Long? = null,
                       @Json(name = "n") var name: String) {
 
-    var products: ArrayList<ProductEntity>? = null
+    @Ignore var products: List<ProductEntity>? = null
 }

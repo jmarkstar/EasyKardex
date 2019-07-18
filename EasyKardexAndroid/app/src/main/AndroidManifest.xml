@@ -30,6 +30,8 @@
           xmlns:dist="http://schemas.android.com/apk/distribution"
           package="com.jmarkstar.easykardex">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <dist:module dist:instant="true"/>
 
     <application

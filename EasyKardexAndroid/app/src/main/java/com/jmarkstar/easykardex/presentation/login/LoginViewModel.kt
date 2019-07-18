@@ -49,7 +49,7 @@ class LoginViewModel constructor(private val loginUserCase: LoginUseCase): ViewM
 
             userLoggedId.setLoading()
 
-            val loginResult = withContext(Dispatchers.IO) {
+            val loginResult = withContext(Dispatchers.Default) {
 
                 when( val result = loginUserCase.login(username, password)) {
 

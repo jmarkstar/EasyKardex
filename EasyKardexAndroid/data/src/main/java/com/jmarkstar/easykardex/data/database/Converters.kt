@@ -21,32 +21,48 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created by jmarkstar on 7/12/19 7:42 PM
+ * Created by jmarkstar on 7/19/19 12:35 AM
  *
  */
 
 package com.jmarkstar.easykardex.data.database
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
-import com.jmarkstar.easykardex.data.entities.UnitEntity
+import androidx.room.TypeConverter
+import com.jmarkstar.easykardex.data.utils.LibraryUtils
+import org.threeten.bp.OffsetDateTime
+import java.util.*
 
-@Dao internal interface UnitDao {
+class Converters {
 
-    @Query("SELECT * FROM product_unit")
-    suspend fun getUnits(): List<UnitEntity>
+    companion object {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(unit: UnitEntity)
+        @TypeConverter
+        @JvmStatic
+        fun toOffsetDateTime(value: String?): OffsetDateTime? {
+            return value?.let {
+                return LibraryUtils.offsetDateTimeFormatter.parse(it, OffsetDateTime::from)
+            }
+        }
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(units: List<UnitEntity>)
+        @TypeConverter
+        @JvmStatic
+        fun fromOffsetDateTime(date: OffsetDateTime?): String? {
+            return date?.format(LibraryUtils.offsetDateTimeFormatter)
+        }
 
-    @Query("DELETE FROM product_unit")
-    suspend fun deleteUnits()
+        @TypeConverter
+        @JvmStatic
+        fun toDate(timestamp: Long?): Date? {
+            return when (timestamp) {
+                null -> null
+                else -> Date(timestamp)
+            }
+        }
 
-    @Query("DELETE FROM product_unit WHERE id = :id")
-    suspend fun deleteUnitById(id: Long)
+        @TypeConverter
+        @JvmStatic
+        fun toMillis(date: Date?): Long? {
+            return date?.time
+        }
+    }
 }

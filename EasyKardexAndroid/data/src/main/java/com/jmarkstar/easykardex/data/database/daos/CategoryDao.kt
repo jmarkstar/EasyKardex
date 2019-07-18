@@ -25,7 +25,7 @@
  *
  */
 
-package com.jmarkstar.easykardex.data.database
+package com.jmarkstar.easykardex.data.database.daos
 
 import androidx.room.Dao
 import androidx.room.Insert

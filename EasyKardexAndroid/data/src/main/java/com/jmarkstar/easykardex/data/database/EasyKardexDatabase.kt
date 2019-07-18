@@ -29,6 +29,11 @@ package com.jmarkstar.easykardex.data.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.jmarkstar.easykardex.data.database.daos.BrandDao
+import com.jmarkstar.easykardex.data.database.daos.CategoryDao
+import com.jmarkstar.easykardex.data.database.daos.ProductDao
+import com.jmarkstar.easykardex.data.database.daos.UnitDao
 import com.jmarkstar.easykardex.data.entities.*
 
 @Database(entities = [
@@ -40,8 +45,9 @@ import com.jmarkstar.easykardex.data.entities.*
         ProductInputEntity::class,
         ProductOutputEntity::class
     ],
-    version = 1)
-
+    version = 1,
+    exportSchema = false)
+@TypeConverters(Converters::class)
 internal abstract class EasyKardexDatabase: RoomDatabase() {
 
     abstract val brandDao: BrandDao
