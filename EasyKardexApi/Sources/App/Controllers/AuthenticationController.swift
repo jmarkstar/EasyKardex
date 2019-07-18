@@ -33,13 +33,13 @@ final class AuthenticationController: RouteCollection {
 
     func boot(router: Router) throws {
 
-        router.post("register", use: register)
+        //router.post("register", use: register)
         router.post("login", use: login)
 
         router.authenticated().get("logout", use: logout)
     }
 
-    func register(_ req: Request) throws -> Future<User.UserPublic> {
+    /*func register(_ req: Request) throws -> Future<User.UserPublic> {
 
         return try req.content.decode(User.self).flatMap { user in
 
@@ -57,35 +57,41 @@ final class AuthenticationController: RouteCollection {
                 return User.UserPublic(id: try storedUser.requireID(), username: storedUser.username)
             }
         }
-    }
+    }*/
 
-    func login(_ req: Request) throws -> Future<UserToken> {
-
+    func login(_ req: Request) throws -> Future<PublicUserLoggedIn> {
+        
         return try req.content.decode(User.self).flatMap { user in
-
+            
             return User.query(on: req).filter(\.username == user.username).first().flatMap { fetchedUser in
-
+                
                 guard let existingUser = fetchedUser else {
                     throw Abort(HTTPStatus.notFound)
                 }
-
+                
                 let hasher = try req.make(BCryptDigest.self)
-
+                
                 if try hasher.verify(user.password, created: existingUser.password) {
-
+                    
                     return try UserToken
-                            .query(on: req)
-                            .filter(\UserToken.userID, .equal, existingUser.requireID())
-                            .delete()
-                            .flatMap { _ in
-
-                        let tokenString = try URandom().generateData(count: 32).base64EncodedString()
-
-                        let token = try UserToken(string: tokenString, userID: existingUser.requireID())
-                        return token.save(on: req)
+                        .query(on: req)
+                        .filter(\UserToken.userID, .equal, existingUser.requireID())
+                        .delete()
+                        .flatMap { _ in
+                            
+                            let tokenString = try URandom().generateData(count: 32).base64EncodedString()
+                            
+                            let token = try UserToken(string: tokenString, userID: existingUser.requireID())
+                            
+                            return token.save(on: req).flatMap(to: PublicUserLoggedIn.self) { userToken in
+                                
+                                return Future.map(on: req) {
+                                    return PublicUserLoggedIn(token: userToken.string, user: existingUser.toPublic())
+                                }
+                            }
                     }
                 } else {
-
+                    
                     throw Abort(.unauthorized)
                 }
             }

@@ -29,14 +29,35 @@ package com.jmarkstar.easykardex.presentation.login
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.lifecycle.Observer
 import com.jmarkstar.easykardex.R
+import com.jmarkstar.easykardex.models.Resource
+import kotlinx.android.synthetic.main.activity_main.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
+
+    private val loginViewModel: LoginViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        loginViewModel.userLoggedId.observe(this, Observer {
 
+            when( it ){
+                is Resource.Loading ->
+                    textHello.text = "It's loading"
+                is Resource.Success ->
+                    textHello.text = it.value.username
+                is Resource.Error ->
+                    textHello.text = "Got and Error"
+            }
+        })
+
+        textHello.setOnClickListener {
+
+            loginViewModel.login("jmarkstar","abc123")
+        }
     }
 }

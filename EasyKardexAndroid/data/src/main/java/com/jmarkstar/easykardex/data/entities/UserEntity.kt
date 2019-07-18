@@ -35,8 +35,8 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class UserEntity(@Json(name = "idu") val userId: Long,
                       @Json(name = "idr") var roleId: UserRoleEntity,
-                      @Json(name = "u") var username: String,
-                      @Json(name = "f") var fullname: String)
+                      @Json(name = "un") var username: String,
+                      @Json(name = "fn") var fullname: String)
 
 fun UserEntity.mapToDomain(): User {
 

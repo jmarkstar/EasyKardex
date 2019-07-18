@@ -28,7 +28,7 @@ import Vapor
 import FluentMySQL
 import Authentication
 
-final class User: Codable {
+struct User: MySQLModel {
     
     static let entity = "user"
 
@@ -38,15 +38,6 @@ final class User: Codable {
     var fullname: String?
     var roleID: Role.ID?
     var creationDate: Date?
-
-    init(id: Int? = nil, username: String, password: String, fullname: String? = nil, roleID: Role.ID? = nil, creationDate: Date? = nil) {
-        self.id = id
-        self.username = username
-        self.password = password
-        self.fullname = fullname
-        self.roleID = roleID
-        self.creationDate = creationDate
-    }
 
     enum CodingKeys: String, CodingKey {
         case id = "id_user"
@@ -65,17 +56,25 @@ extension User {
     }
 }
 
-extension User: MySQLModel {}
+extension User: FilterableByCreationDate { }
+
+extension User: Publishable {
+    
+    typealias P = PublicUser
+    
+    init?(from: PublicUser) {
+        
+        self.init(id: from.id, username: from.username, password: "", fullname: from.fullname, roleID: from.roleID, creationDate: from.creationDate)
+    }
+    
+    func toPublic() -> PublicUser {
+        
+        return PublicUser(model: self)
+    }
+}
 
 extension User: TokenAuthenticatable {
     typealias TokenType = UserToken
-}
-
-extension User {
-    struct UserPublic: Content {
-        let id: Int
-        let username: String
-    }
 }
 
 enum UserType: Int {
