@@ -29,8 +29,8 @@ package com.jmarkstar.easykardex.data.cache
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.jmarkstar.easykardex.data.models.User
-import com.jmarkstar.easykardex.data.models.UserRole
+import com.jmarkstar.easykardex.data.entities.UserEntity
+import com.jmarkstar.easykardex.data.entities.UserRoleEntity
 import com.jmarkstar.easykardex.data.utils.LibraryConstants
 import com.squareup.moshi.Moshi
 
@@ -54,10 +54,10 @@ class EasyKardexCache(private val context: Context, private val moshi: Moshi) {
             }
         }
 
-    var role: UserRole?
+    var role: UserRoleEntity?
         get() {
             val roleId = sharedPreferences.getInt(USER_ROLE, 0)
-            return UserRole.getRoleByID(roleId)
+            return UserRoleEntity.getRoleByID(roleId)
         }
         set(value){
             if(value != null){
@@ -67,18 +67,18 @@ class EasyKardexCache(private val context: Context, private val moshi: Moshi) {
             }
         }
 
-    var userLoggedIn: User?
+    var userLoggedIn: UserEntity?
         get() {
 
             val userJson = sharedPreferences.getString(USER_LOGGED_IN, LibraryConstants.EMPTY) ?: return null
 
-            val jsonAdapter = moshi.adapter(User::class.java)
+            val jsonAdapter = moshi.adapter(UserEntity::class.java)
             return jsonAdapter.fromJson(userJson)
         }
         set(value) {
 
             if(value != null){
-                val jsonAdapter = moshi.adapter(User::class.java)
+                val jsonAdapter = moshi.adapter(UserEntity::class.java)
                 val userJson = jsonAdapter.toJson(value)
 
                 sharedPreferences.edit().putString(USER_LOGGED_IN, userJson).apply()

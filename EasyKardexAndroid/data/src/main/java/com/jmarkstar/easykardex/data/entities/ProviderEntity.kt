@@ -21,30 +21,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created by jmarkstar on 7/12/19 6:11 PM
+ * Created by jmarkstar on 7/12/19 6:01 PM
  *
  */
 
-package com.jmarkstar.easykardex.data.api
+package com.jmarkstar.easykardex.data.entities
 
-import com.jmarkstar.easykardex.data.entities.BrandEntity
-import retrofit2.http.*
+import androidx.room.Entity
+import androidx.room.Index
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-internal interface BrandService {
 
-    @GET("v1/brands")
-    suspend fun getAll(@Query("cd") creationAt: String): List<BrandEntity>
+@Entity(tableName = "provider",
+    indices = [Index("id")],
+    primaryKeys = ["id"],
+    ignoredColumns = ["inputs"])
 
-    @GET("v1/brands/{idBrand}")
-    suspend fun findById(@Path("idBrand") idBrand: Long): BrandEntity?
 
-    @POST("v1/brands")
-    suspend fun create(@Body newBrand: BrandEntity): BrandEntity
+@JsonClass(generateAdapter = true)
+data class ProviderEntity(var id: Long,
+                          @Json(name = "cpn") var companyName: String,
+                          @Json(name = "cn") var contactName: String,
+                          @Json(name = "cp") var contactPhoneNumber: String) {
 
-    @DELETE("v1/brands/{idBrand}")
-    suspend fun delete(@Path("idBrand") idBrand: Long)
-
-    @PUT("v1/brands/{idBrand}")
-    suspend fun update(@Path("idBrand") idBrand: Long, @Body updatedBrand: BrandEntity): BrandEntity
-
+    var inputs: ArrayList<ProductInputEntity>? = null
 }

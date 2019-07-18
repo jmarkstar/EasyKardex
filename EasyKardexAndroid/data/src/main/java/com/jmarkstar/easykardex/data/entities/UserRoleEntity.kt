@@ -21,30 +21,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created by jmarkstar on 7/12/19 6:11 PM
+ * Created by jmarkstar on 7/12/19 6:01 PM
  *
  */
 
-package com.jmarkstar.easykardex.data.api
+package com.jmarkstar.easykardex.data.entities
 
-import com.jmarkstar.easykardex.data.entities.BrandEntity
-import retrofit2.http.*
+enum class UserRoleEntity(val id: Int) {
+    ADMIN(1), OPERATOR(2);
 
-internal interface BrandService {
+    companion object {
 
-    @GET("v1/brands")
-    suspend fun getAll(@Query("cd") creationAt: String): List<BrandEntity>
-
-    @GET("v1/brands/{idBrand}")
-    suspend fun findById(@Path("idBrand") idBrand: Long): BrandEntity?
-
-    @POST("v1/brands")
-    suspend fun create(@Body newBrand: BrandEntity): BrandEntity
-
-    @DELETE("v1/brands/{idBrand}")
-    suspend fun delete(@Path("idBrand") idBrand: Long)
-
-    @PUT("v1/brands/{idBrand}")
-    suspend fun update(@Path("idBrand") idBrand: Long, @Body updatedBrand: BrandEntity): BrandEntity
-
+        fun getRoleByID(id: Int): UserRoleEntity? {
+            return when (id) {
+                1 -> ADMIN
+                2 -> OPERATOR
+                else -> null
+            }
+        }
+    }
 }

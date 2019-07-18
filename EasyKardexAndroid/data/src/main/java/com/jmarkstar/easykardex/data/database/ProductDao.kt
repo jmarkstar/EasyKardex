@@ -32,18 +32,18 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.jmarkstar.easykardex.data.models.Product
+import com.jmarkstar.easykardex.data.entities.ProductEntity
 
 @Dao internal interface ProductDao {
 
     @Query("SELECT * FROM product")
-    suspend fun getProducts(): List<Product>
+    suspend fun getProducts(): List<ProductEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(product: Product)
+    suspend fun insert(product: ProductEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(products: List<Product>)
+    suspend fun insertAll(products: List<ProductEntity>)
 
     @Query("DELETE FROM product")
     suspend fun deleteProducts()

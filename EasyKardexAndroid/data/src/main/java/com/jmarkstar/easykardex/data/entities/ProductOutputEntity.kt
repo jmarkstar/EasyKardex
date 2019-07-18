@@ -25,38 +25,36 @@
  *
  */
 
-package com.jmarkstar.easykardex.data.models
+package com.jmarkstar.easykardex.data.entities
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import java.util.*
+
+/** ProductOutputEntity will work as a Entity for store it on SQLite, for parsing the API response and for use it on the up level.
+ *
+ *  @creatorId Field does not have foreigh key because the users are not going to be stored.
+ * */
 
 
-@Entity(tableName = "product",
+@Entity(tableName = "product_output",
     indices = [Index("id")],
     primaryKeys = ["id"],
     foreignKeys = [
-        ForeignKey(entity = Brand::class, parentColumns = ["id"], childColumns = ["brandId"]),
-        ForeignKey(entity = Category::class, parentColumns = ["id"], childColumns = ["categoryId"]),
-        ForeignKey(entity = Unit::class, parentColumns = ["id"], childColumns = ["unitId"])
+        ForeignKey(entity = ProductInputEntity::class, parentColumns = ["id"], childColumns = ["idProductInput"])
     ],
-    ignoredColumns = ["brand", "category", "unit", "inputs"])
+    ignoredColumns = ["productInput"])
 
 
 @JsonClass(generateAdapter = true)
-data class Product(@Json(name = "idp") val id: Long? = null,
-              @Json(name = "idb") var brandId: Long,
-              @Json(name = "idc") var categoryId: Long,
-              @Json(name = "idu") var unitId: Long,
-              @Json(name = "n")   var name: String,
-              @Json(name = "t")   var thumb: String,
-              @Json(name = "i")   var image: String,
-              @Json(name = "d")   var description: String) {
+class ProductOutputEntity(var id: Long,
+                          @Json(name = "idpi") var idProductInput: Long,
+                          @Json(name = "q") var quantity: Int,
+                          @Json(name = "cuid") var creatorId: Long,
+                          @Json(name = "cd")  var createAt: Date) {
 
-    var brand: Brand? = null
-    var category: Category? = null
-    var unit: Unit? = null
-    var inputs: ArrayList<ProductInput>? = null
+    var productInput: ProductInputEntity? = null
 }

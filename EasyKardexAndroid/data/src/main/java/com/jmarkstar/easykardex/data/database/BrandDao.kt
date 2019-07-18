@@ -31,18 +31,18 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.jmarkstar.easykardex.data.models.Brand
+import com.jmarkstar.easykardex.data.entities.BrandEntity
 
 @Dao internal interface BrandDao {
 
     @Query("SELECT * FROM product_brand")
-    suspend fun getBrands(): List<Brand>
+    suspend fun getBrands(): List<BrandEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(brand: Brand)
+    suspend fun insert(brand: BrandEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(brands: List<Brand>)
+    suspend fun insertAll(brands: List<BrandEntity>)
 
     @Query("DELETE FROM product_brand")
     suspend fun deleteBrands()

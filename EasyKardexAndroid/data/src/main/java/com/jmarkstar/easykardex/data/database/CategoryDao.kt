@@ -31,18 +31,18 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.jmarkstar.easykardex.data.models.Category
+import com.jmarkstar.easykardex.data.entities.CategoryEntity
 
 @Dao internal interface CategoryDao {
 
     @Query("SELECT * FROM product_category")
-    suspend fun getCategories(): List<Category>
+    suspend fun getCategories(): List<CategoryEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(category: Category)
+    suspend fun insert(category: CategoryEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(categories: List<Category>)
+    suspend fun insertAll(categories: List<CategoryEntity>)
 
     @Query("DELETE FROM product_category")
     suspend fun deleteCategories()

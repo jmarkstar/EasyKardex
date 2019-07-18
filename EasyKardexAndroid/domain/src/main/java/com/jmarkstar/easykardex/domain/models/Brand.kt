@@ -21,12 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created by jmarkstar on 7/15/19 8:01 PM
+ * Created by jmarkstar on 7/18/19 10:40 AM
  *
  */
 
-package com.jmarkstar.easykardex.data.usecases
+package com.jmarkstar.easykardex.domain.models
 
-class LoginUseCase {
-
-}
+class Brand(val id: Long? = null, var name: String)

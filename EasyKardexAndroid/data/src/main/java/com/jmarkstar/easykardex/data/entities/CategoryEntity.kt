@@ -25,7 +25,7 @@
  *
  */
 
-package com.jmarkstar.easykardex.data.models
+package com.jmarkstar.easykardex.data.entities
 
 import androidx.room.Entity
 import androidx.room.Index
@@ -33,15 +33,15 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 
-@Entity(tableName = "product_brand",
+@Entity(tableName = "product_category",
     indices = [Index("id")],
     primaryKeys = ["id"],
     ignoredColumns = ["products"])
 
 
 @JsonClass(generateAdapter = true)
-data class Brand(val id: Long? = null,
-            @Json(name = "n") var name: String) {
+data class CategoryEntity(val id: Long? = null,
+                          @Json(name = "n") var name: String) {
 
-    var products: ArrayList<Product>? = null
+    var products: ArrayList<ProductEntity>? = null
 }

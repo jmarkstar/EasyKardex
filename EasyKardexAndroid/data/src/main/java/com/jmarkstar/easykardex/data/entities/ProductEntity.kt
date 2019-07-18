@@ -25,25 +25,38 @@
  *
  */
 
-package com.jmarkstar.easykardex.data.models
+package com.jmarkstar.easykardex.data.entities
 
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.Index
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 
-@Entity(tableName = "provider",
+@Entity(tableName = "product",
     indices = [Index("id")],
     primaryKeys = ["id"],
-    ignoredColumns = ["inputs"])
+    foreignKeys = [
+        ForeignKey(entity = BrandEntity::class, parentColumns = ["id"], childColumns = ["brandId"]),
+        ForeignKey(entity = CategoryEntity::class, parentColumns = ["id"], childColumns = ["categoryId"]),
+        ForeignKey(entity = UnitEntity::class, parentColumns = ["id"], childColumns = ["unitId"])
+    ],
+    ignoredColumns = ["brand", "category", "unit", "inputs"])
 
 
 @JsonClass(generateAdapter = true)
-data class Provider(var id: Long,
-                    @Json(name = "cpn") var companyName: String,
-                    @Json(name = "cn") var contactName: String,
-                    @Json(name = "cp") var contactPhoneNumber: String) {
+data class ProductEntity(@Json(name = "idp") val id: Long? = null,
+                         @Json(name = "idb") var brandId: Long,
+                         @Json(name = "idc") var categoryId: Long,
+                         @Json(name = "idu") var unitId: Long,
+                         @Json(name = "n")   var name: String,
+                         @Json(name = "t")   var thumb: String,
+                         @Json(name = "i")   var image: String,
+                         @Json(name = "d")   var description: String) {
 
-    var inputs: ArrayList<ProductInput>? = null
+    var brand: BrandEntity? = null
+    var category: CategoryEntity? = null
+    var unit: UnitEntity? = null
+    var inputs: ArrayList<ProductInputEntity>? = null
 }

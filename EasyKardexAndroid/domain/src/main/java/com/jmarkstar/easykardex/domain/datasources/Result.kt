@@ -21,17 +21,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created by jmarkstar on 7/12/19 6:01 PM
+ * Created by jmarkstar on 7/18/19 11:42 AM
  *
  */
 
-package com.jmarkstar.easykardex.data.models
+package com.jmarkstar.easykardex.domain.datasources
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+sealed class Result<out T : Any> {
+    data class Success<out T : Any>(val value: T) : Result<T>()
+    data class Failure(val reason: FailureReason) : Result<Nothing>()
+}
 
-@JsonClass(generateAdapter = true)
-data class User(@Json(name = "idu") val userId: Long,
-           @Json(name = "idr") var roleId: UserRole,
-           @Json(name = "u") var username: String,
-           @Json(name = "f") var fullname: String)
+enum class FailureReason {
+    INTERNAL_ERROR,
+    INVALID_CREDENTIALS,
+    EXPIRED_TOKEN
+}

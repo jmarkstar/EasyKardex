@@ -21,28 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created by jmarkstar on 7/15/19 8:23 PM
+ * Created by jmarkstar on 7/12/19 6:01 PM
  *
  */
 
-package com.jmarkstar.easykardex.data.repository
+package com.jmarkstar.easykardex.data.entities
 
-/**
- * A generic class that holds a value with its loading status.
- * @param <T>
-</T> */
-data class Resource<out T>(val status: Status, val data: T?, val message: String?) {
-    companion object {
-        fun <T> success(data: T?): Resource<T> {
-            return Resource(Status.SUCCESS, data, null)
-        }
+import com.jmarkstar.easykardex.domain.models.User
+import com.jmarkstar.easykardex.domain.models.UserRole
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-        fun <T> error(msg: String, data: T?): Resource<T> {
-            return Resource(Status.ERROR, data, msg)
-        }
+@JsonClass(generateAdapter = true)
+data class UserEntity(@Json(name = "idu") val userId: Long,
+                      @Json(name = "idr") var roleId: UserRoleEntity,
+                      @Json(name = "u") var username: String,
+                      @Json(name = "f") var fullname: String)
 
-        fun <T> loading(data: T?): Resource<T> {
-            return Resource(Status.LOADING, data, null)
-        }
-    }
+fun UserEntity.mapToDomain(): User {
+
+    val role = if (roleId == UserRoleEntity.ADMIN) UserRole.ADMIN else UserRole.OPERATOR
+    return User(userId, role, username, fullname )
 }

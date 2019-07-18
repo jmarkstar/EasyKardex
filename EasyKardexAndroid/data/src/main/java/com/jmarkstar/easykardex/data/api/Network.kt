@@ -21,23 +21,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created by jmarkstar on 7/12/19 6:01 PM
+ * Created by jmarkstar on 7/18/19 1:28 PM
  *
  */
 
-package com.jmarkstar.easykardex.data.models
+package com.jmarkstar.easykardex.data.api
 
-enum class UserRole(val id: Int) {
-    ADMIN(1), OPERATOR(2);
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
 
-    companion object {
-
-        fun getRoleByID(id: Int): UserRole? {
-            return when (id) {
-                1 -> ADMIN
-                2 -> OPERATOR
-                else -> null
-            }
-        }
+private fun httpClient(debug: Boolean): OkHttpClient {
+    val httpLoggingInterceptor = HttpLoggingInterceptor(HttpLoggingInterceptor.Logger.DEFAULT)
+    val clientBuilder = OkHttpClient.Builder()
+    if (debug) {
+        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+        clientBuilder.addInterceptor(httpLoggingInterceptor)
     }
+    return clientBuilder.build()
 }
+
+private fun retrofitClient(baseUrl: String, httpClient: OkHttpClient): Retrofit =
+    Retrofit.Builder()
+        .baseUrl(baseUrl)
+        .client(httpClient)
+        .addConverterFactory(MoshiConverterFactory.create())
+        //.addCallAdapterFactory(CoroutineCallAdapterFactory())
+        .build()

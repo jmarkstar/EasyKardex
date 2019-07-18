@@ -21,27 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created by jmarkstar on 7/12/19 6:01 PM
+ * Created by jmarkstar on 7/18/19 10:48 AM
  *
  */
 
-package com.jmarkstar.easykardex.data.models
+package com.jmarkstar.easykardex.domain.models
 
-import androidx.room.Entity
-import androidx.room.Index
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
-
-
-@Entity(tableName = "product_category",
-    indices = [Index("id")],
-    primaryKeys = ["id"],
-    ignoredColumns = ["products"])
-
-
-@JsonClass(generateAdapter = true)
-data class Category(val id: Long? = null,
-               @Json(name = "n") var name: String) {
-
-    var products: ArrayList<Product>? = null
-}
+class User(val userId: Long, var roleId: UserRole, var username: String, var fullname: String)

@@ -21,21 +21,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created by jmarkstar on 7/15/19 8:24 PM
+ * Created by jmarkstar on 7/18/19 10:45 AM
  *
  */
 
-package com.jmarkstar.easykardex.data.repository
+package com.jmarkstar.easykardex.domain.datasources
 
-/**
- * Status of a resource that is provided to the UI.
- *
- *
- * These are usually created by the Repository classes where they return
- * `LiveData<Resource<T>>` to pass back the latest data to the UI with its fetch status.
- */
-enum class Status {
-    SUCCESS,
-    ERROR,
-    LOADING
+interface BrandRepository {
 }
