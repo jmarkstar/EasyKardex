@@ -28,22 +28,23 @@
 package com.jmarkstar.easykardex.data.api
 
 import com.jmarkstar.easykardex.data.entities.CategoryEntity
+import retrofit2.Response
 import retrofit2.http.*
 
 internal interface CategoryService {
 
     @GET("categories")
-    suspend fun getAll(@Query("cd") creationAt: String): List<CategoryEntity>
+    suspend fun getAll(@Query("cd") creationAt: String): Response<List<CategoryEntity>>
 
     @GET("categories/{idCategory}")
-    suspend fun findById(@Path("idCategory") idCategory: Long): CategoryEntity?
+    suspend fun findById(@Path("idCategory") idCategory: Long): Response<CategoryEntity>
 
     @POST("categories")
-    suspend fun create(@Body newBrand: CategoryEntity): CategoryEntity
+    suspend fun create(@Body newBrand: CategoryEntity): Response<CategoryEntity>
 
     @DELETE("categories/{idCategory}")
-    suspend fun delete(@Path("idCategory") idCategory: Long)
+    suspend fun delete(@Path("idCategory") idCategory: Long): Response<Void>
 
     @PUT("categories/{idCategory}")
-    suspend fun update(@Path("idCategory") idCategory: Long, @Body updatedCategory: CategoryEntity): CategoryEntity
+    suspend fun update(@Path("idCategory") idCategory: Long, @Body updatedCategory: CategoryEntity): Response<CategoryEntity>
 }

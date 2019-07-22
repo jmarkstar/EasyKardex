@@ -28,22 +28,23 @@
 package com.jmarkstar.easykardex.data.api
 
 import com.jmarkstar.easykardex.data.entities.UnitEntity
+import retrofit2.Response
 import retrofit2.http.*
 
 internal interface UnitService {
 
     @GET("units")
-    suspend fun getAll(@Query("cd") creationAt: String): List<UnitEntity>
+    suspend fun getAll(@Query("cd") creationAt: String): Response<List<UnitEntity>>
 
     @GET("units/{idUnit}")
-    suspend fun findById(@Path("idUnit") idUnit: Long): UnitEntity?
+    suspend fun findById(@Path("idUnit") idUnit: Long): Response<UnitEntity>
 
     @POST("units")
-    suspend fun create(@Body newBrand: UnitEntity): UnitEntity
+    suspend fun create(@Body newBrand: UnitEntity): Response<UnitEntity>
 
     @DELETE("units/{idUnit}")
-    suspend fun delete(@Path("idUnit") idUnit: Long)
+    suspend fun delete(@Path("idUnit") idUnit: Long): Response<Void>
 
     @PUT("units/{idUnit}")
-    suspend fun update(@Path("idUnit") idUnit: Long, @Body updatedUnit: UnitEntity): UnitEntity
+    suspend fun update(@Path("idUnit") idUnit: Long, @Body updatedUnit: UnitEntity): Response<UnitEntity>
 }

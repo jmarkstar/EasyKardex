@@ -28,23 +28,24 @@
 package com.jmarkstar.easykardex.data.api
 
 import com.jmarkstar.easykardex.data.entities.BrandEntity
+import retrofit2.Response
 import retrofit2.http.*
 
 internal interface BrandService {
 
     @GET("brands")
-    suspend fun getAll(@Query("cd") creationAt: String): List<BrandEntity>
+    suspend fun getAll(@Query("cd") creationAt: String): Response<List<BrandEntity>>
 
     @GET("brands/{idBrand}")
-    suspend fun findById(@Path("idBrand") idBrand: Long): BrandEntity?
+    suspend fun findById(@Path("idBrand") idBrand: Long): Response<BrandEntity>
 
     @POST("brands")
-    suspend fun create(@Body newBrand: BrandEntity): BrandEntity
+    suspend fun create(@Body newBrand: BrandEntity): Response<BrandEntity>
 
     @DELETE("brands/{idBrand}")
-    suspend fun delete(@Path("idBrand") idBrand: Long)
+    suspend fun delete(@Path("idBrand") idBrand: Long): Response<Void>
 
     @PUT("brands/{idBrand}")
-    suspend fun update(@Path("idBrand") idBrand: Long, @Body updatedBrand: BrandEntity): BrandEntity
+    suspend fun update(@Path("idBrand") idBrand: Long, @Body updatedBrand: BrandEntity): Response<BrandEntity>
 
 }
