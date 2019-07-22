@@ -27,5 +27,9 @@
 
 package com.jmarkstar.easykardex.data.repository
 
-class CategoryRepositoryImpl {
+import com.jmarkstar.easykardex.data.api.CategoryService
+import com.jmarkstar.easykardex.data.database.daos.CategoryDao
+
+internal class CategoryRepositoryImpl(private val categoryDao: CategoryDao, private val categoryService: CategoryService) {
+    
 }

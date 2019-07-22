@@ -27,5 +27,27 @@
 
 package com.jmarkstar.easykardex.data.repository
 
-class BrandRepositoryImpl {
+import com.jmarkstar.easykardex.data.api.BrandService
+import com.jmarkstar.easykardex.data.database.daos.BrandDao
+import com.jmarkstar.easykardex.domain.datasources.BrandRepository
+import com.jmarkstar.easykardex.domain.models.ProductProperty
+import com.jmarkstar.easykardex.domain.models.Result
+
+internal class BrandRepositoryImpl(private val brandDao: BrandDao, private val brandService: BrandService): BrandRepository {
+
+    override suspend fun getAll(refresh: Boolean): Result<List<ProductProperty>> {
+
+    }
+
+    override suspend fun insert(brand: ProductProperty): Result<ProductProperty> {
+
+    }
+
+    override suspend fun update(brand: ProductProperty): Result<ProductProperty> {
+
+    }
+
+    override suspend fun delete(brand: ProductProperty): Result<Boolean> {
+
+    }
 }

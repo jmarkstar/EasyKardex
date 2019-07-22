@@ -33,8 +33,13 @@ sealed class Result<out T : Any> {
 }
 
 enum class FailureReason {
+
+    //common errors
     INTERNAL_ERROR,
-    INVALID_CREDENTIALS,
+
+    //account erros
+    WRONG_USER,
+    WRONG_PASSWORD,
     EXPIRED_TOKEN,
     THERE_IS_NOT_USER_LOGGED_IN
 }

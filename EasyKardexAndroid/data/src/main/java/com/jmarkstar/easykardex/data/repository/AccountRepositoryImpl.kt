@@ -36,7 +36,6 @@ import com.jmarkstar.easykardex.domain.datasources.AccountRepository
 import com.jmarkstar.easykardex.domain.models.FailureReason
 import com.jmarkstar.easykardex.domain.models.Result
 import com.jmarkstar.easykardex.domain.models.User
-import retrofit2.HttpException
 import java.lang.Exception
 
 internal class AccountRepositoryImpl(private val accountService: AccountService,
@@ -52,29 +51,26 @@ internal class AccountRepositoryImpl(private val accountService: AccountService,
 
             val result = accountService.login(LoginRequest(username, password))
 
-            if(result.isSuccessful && result.body() != null){
+            when(result.code()){
+                200 -> {
 
-                val body = result.body()!!
+                    val body = checkNotNull(result.body()){
+                        return Result.Failure(FailureReason.INTERNAL_ERROR)
+                    }
 
-                Log.v("AccountRepository","user: ${body.user}")
+                    Log.v("AccountRepository","user: ${body.user}")
 
-                cache.userLoggedIn = body.user
-                cache.token = body.token
-                cache.role = body.user.roleId
+                    cache.userLoggedIn = body.user
+                    cache.token = body.token
+                    cache.role = body.user.roleId
 
-                Result.Success(body.user.mapToDomain())
-            } else {
-                Result.Failure(FailureReason.INTERNAL_ERROR)
+                    Result.Success(body.user.mapToDomain())
+                }
+                401 -> Result.Failure(FailureReason.WRONG_PASSWORD)
+                404 -> Result.Failure(FailureReason.WRONG_USER)
+                else -> Result.Failure(FailureReason.INTERNAL_ERROR)
             }
 
-        } catch(httpEx: HttpException) {
-            httpEx.printStackTrace()
-
-            if(httpEx.code() == 404){
-                Result.Failure(FailureReason.INVALID_CREDENTIALS)
-            } else {
-                Result.Failure(FailureReason.INTERNAL_ERROR)
-            }
         } catch(ex: Exception) {
             ex.printStackTrace()
             Result.Failure(FailureReason.INTERNAL_ERROR)

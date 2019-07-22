@@ -27,5 +27,9 @@
 
 package com.jmarkstar.easykardex.data.repository
 
-class UnitRepositoryImpl {
+import com.jmarkstar.easykardex.data.api.UnitService
+import com.jmarkstar.easykardex.data.database.daos.UnitDao
+
+internal class UnitRepositoryImpl(private val unitDao: UnitDao, private val unitService: UnitService) {
+
 }

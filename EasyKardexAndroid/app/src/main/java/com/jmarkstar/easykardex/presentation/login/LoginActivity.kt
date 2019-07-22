@@ -62,13 +62,13 @@ class LoginActivity : AppCompatActivity() {
                 is Resource.Success ->
                     textHello.text = it.value.username
                 is Resource.Error ->
-                    textHello.text = "Got and Error"
+                    textHello.text = "Got an Error: ${it.reason}"
             }
         })
 
         textHello.setOnClickListener {
 
-            loginViewModel.login("jmarkstar","abc123")
+            loginViewModel.login("jmarkstar","abc1234")
         }
     }
 }
