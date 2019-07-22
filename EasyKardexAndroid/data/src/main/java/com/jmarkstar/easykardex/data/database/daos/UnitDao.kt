@@ -39,14 +39,14 @@ import com.jmarkstar.easykardex.data.entities.UnitEntity
     suspend fun getUnits(): List<UnitEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(unit: UnitEntity)
+    suspend fun insert(unit: UnitEntity): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(units: List<UnitEntity>)
+    suspend fun insertAll(units: List<UnitEntity>): List<Long>
 
     @Query("DELETE FROM product_unit")
-    suspend fun deleteUnits()
+    suspend fun deleteUnits(): Int
 
     @Query("DELETE FROM product_unit WHERE id = :id")
-    suspend fun deleteUnitById(id: Long)
+    suspend fun deleteUnitById(id: Long): Int
 }

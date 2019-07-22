@@ -39,14 +39,14 @@ import com.jmarkstar.easykardex.data.entities.CategoryEntity
     suspend fun getCategories(): List<CategoryEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(category: CategoryEntity)
+    suspend fun insert(category: CategoryEntity): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(categories: List<CategoryEntity>)
+    suspend fun insertAll(categories: List<CategoryEntity>): List<Long>
 
     @Query("DELETE FROM product_category")
-    suspend fun deleteCategories()
+    suspend fun deleteCategories(): Int
 
     @Query("DELETE FROM product_category WHERE id = :id")
-    suspend fun deleteCategoryById(id: Long)
+    suspend fun deleteCategoryById(id: Long): Int
 }

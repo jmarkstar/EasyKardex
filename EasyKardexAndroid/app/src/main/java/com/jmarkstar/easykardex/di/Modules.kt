@@ -39,7 +39,7 @@ val constantModule: Module = module {
 
     single(named("debug")) { BuildConfig.DEBUG }
 
-    single(named("baseUrl")) { "http://a3a0b447.ngrok.io/v1/" }
+    single(named("baseUrl")) { "http://984bb36d.ngrok.io/v1/" }
 }
 
 val viewModelModule: Module = module {

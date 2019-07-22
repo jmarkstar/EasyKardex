@@ -39,14 +39,14 @@ import com.jmarkstar.easykardex.data.entities.BrandEntity
     suspend fun getBrands(): List<BrandEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(brand: BrandEntity)
+    suspend fun insert(brand: BrandEntity): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(brands: List<BrandEntity>)
+    suspend fun insertAll(brands: List<BrandEntity>): List<Long>
 
     @Query("DELETE FROM product_brand")
-    suspend fun deleteBrands()
+    suspend fun deleteBrands(): Int
 
     @Query("DELETE FROM product_brand WHERE id = :id")
-    suspend fun deleteBrandById(id: Long)
+    suspend fun deleteBrandById(id: Long): Int
 }
