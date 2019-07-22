@@ -36,6 +36,7 @@ enum class FailureReason {
 
     //common errors
     INTERNAL_ERROR,
+    WRONG_VALUES_ON_PARAMETERS,
 
     //account erros
     WRONG_USER,

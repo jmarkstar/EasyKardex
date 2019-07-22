@@ -30,6 +30,8 @@ package com.jmarkstar.easykardex.data.entities
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.Index
+import com.jmarkstar.easykardex.domain.models.ProductProperty
+import com.jmarkstar.easykardex.domain.models.ProductPropertyType
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -45,3 +47,5 @@ data class UnitEntity(val id: Long? = null,
 
     @Ignore var products: List<ProductEntity>? = null
 }
+
+fun UnitEntity.mapToDomain(): ProductProperty = ProductProperty(id, ProductPropertyType.UNIT, name)
