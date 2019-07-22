@@ -27,6 +27,7 @@
 
 package com.jmarkstar.easykardex.data.repository
 
+import android.util.Log
 import com.jmarkstar.easykardex.data.api.AccountService
 import com.jmarkstar.easykardex.data.api.request.LoginRequest
 import com.jmarkstar.easykardex.data.cache.EasyKardexCache
@@ -48,6 +49,8 @@ internal class AccountRepositoryImpl(private val accountService: AccountService,
             if(result.isSuccessful && result.body() != null){
 
                 val body = result.body()!!
+
+                Log.v("AccountRepository","user: ${body.user}")
 
                 cache.userLoggedIn = body.user
                 cache.token = body.token

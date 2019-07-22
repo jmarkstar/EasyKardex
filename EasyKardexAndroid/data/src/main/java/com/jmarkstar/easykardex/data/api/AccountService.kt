@@ -36,9 +36,9 @@ import retrofit2.http.POST
 
 internal interface AccountService {
 
-    @POST("v1/login")
+    @POST("login")
     suspend fun login(@Body request: LoginRequest): Response<LoginResponse>
 
-    @GET("v1/logout")
+    @GET("logout")
     suspend fun logout(): Response<Void>
 }

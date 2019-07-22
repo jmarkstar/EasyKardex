@@ -36,6 +36,7 @@ import com.jmarkstar.easykardex.data.api.ProductOutputService
 import com.jmarkstar.easykardex.data.api.ProductService
 import com.jmarkstar.easykardex.data.cache.EasyKardexCache
 import com.jmarkstar.easykardex.data.database.EasyKardexDatabase
+import com.jmarkstar.easykardex.data.entities.adapters.UserRoleAdapter
 import com.jmarkstar.easykardex.data.repository.AccountRepositoryImpl
 import com.jmarkstar.easykardex.domain.datasources.AccountRepository
 import com.squareup.moshi.Moshi
@@ -48,11 +49,11 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
-/** Repository */
+/** Repository Module */
 
 val repositoryModule: Module = module {
 
-    single { AccountRepositoryImpl(accountService = get(), cache =  get()) as AccountRepository }
+    single<AccountRepository> { AccountRepositoryImpl(accountService = get(), cache =  get()) }
 }
 
 /** Cache Module */
@@ -97,8 +98,9 @@ val networkModule: Module = module {
 
     //HTTP Client
 
-    single { Moshi.Builder()
-            //TODO: add adapters
+    single {
+        Moshi.Builder()
+            .add(UserRoleAdapter())
             .build()
     }
 
@@ -114,10 +116,11 @@ val networkModule: Module = module {
     }
 
     single {
+
         Retrofit.Builder()
             .baseUrl(get<String>(named("baseUrl")))
             .client(get())
-            .addConverterFactory(MoshiConverterFactory.create())
+            .addConverterFactory(MoshiConverterFactory.create(get()))
             .build()
     }
 }

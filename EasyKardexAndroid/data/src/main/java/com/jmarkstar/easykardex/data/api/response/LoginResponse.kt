@@ -29,6 +29,8 @@ package com.jmarkstar.easykardex.data.api.response
 
 import com.jmarkstar.easykardex.data.entities.UserEntity
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 internal data class LoginResponse(@Json(name = "t") val token: String,
                     @Json(name = "u") val user: UserEntity)

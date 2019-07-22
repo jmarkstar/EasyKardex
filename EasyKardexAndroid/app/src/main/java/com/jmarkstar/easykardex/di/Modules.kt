@@ -28,36 +28,17 @@
 package com.jmarkstar.easykardex.di
 
 import com.jmarkstar.easykardex.BuildConfig
-import com.jmarkstar.easykardex.data.di.cacheModule
-import com.jmarkstar.easykardex.data.di.databaseModule
-import com.jmarkstar.easykardex.data.di.networkModule
-import com.jmarkstar.easykardex.data.di.repositoryModule
-import com.jmarkstar.easykardex.domain.di.useCaseModule
 import com.jmarkstar.easykardex.presentation.login.LoginViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.core.context.loadKoinModules
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
-
-
-fun injectFeature() = loadFeature
-
-private val loadFeature by lazy {
-    loadKoinModules(listOf(networkModule,
-        databaseModule,
-        cacheModule,
-        repositoryModule,
-        useCaseModule,
-        viewModelModule,
-        constantModule))
-}
 
 val constantModule: Module = module {
 
     single(named("debug")) { BuildConfig.DEBUG }
 
-    single(named("baseUrl")) { "http://10.0.2.2:8080/" }
+    single(named("baseUrl")) { "http://3e090af2.ngrok.io/v1/" }
 }
 
 val viewModelModule: Module = module {

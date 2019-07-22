@@ -43,3 +43,22 @@ fun UserEntity.mapToDomain(): User {
     val role = if (roleId == UserRoleEntity.ADMIN) UserRole.ADMIN else UserRole.OPERATOR
     return User(userId, role, username, fullname )
 }
+
+/*
+@JsonClass(generateAdapter = true)
+data class UserJson(@Json(name = "idu") val userId: Long,
+                    @Json(name = "idr") var roleId: Int,
+                    @Json(name = "un") var username: String,
+                    @Json(name = "fn") var fullname: String)
+
+class UserAdapter {
+
+    @ToJson fun toJson(user: UserEntity): UserJson {
+        return UserJson(user.userId, user.roleId.id, user.username, user.fullname)
+    }
+
+    @FromJson fun fromJson(json: UserJson): UserEntity {
+        Log.v("UserAdapter","json: $json")
+        return UserEntity(json.userId, UserRoleEntity.getRoleByID(json.roleId)!!, json.username, json.fullname)
+    }
+}*/

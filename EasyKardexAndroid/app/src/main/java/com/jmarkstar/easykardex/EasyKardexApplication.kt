@@ -33,10 +33,10 @@ import com.jmarkstar.easykardex.data.di.cacheModule
 import com.jmarkstar.easykardex.data.di.databaseModule
 import com.jmarkstar.easykardex.data.di.networkModule
 import com.jmarkstar.easykardex.data.di.repositoryModule
+import com.jmarkstar.easykardex.di.constantModule
 import com.jmarkstar.easykardex.di.viewModelModule
 import com.jmarkstar.easykardex.domain.di.useCaseModule
 import org.koin.android.ext.koin.androidContext
-import org.koin.android.ext.koin.androidFileProperties
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 
@@ -50,12 +50,14 @@ class EasyKardexApplication : Application() {
         startKoin {
             androidContext(this@EasyKardexApplication)
             androidLogger()
-            /*listOf(networkModule,
+
+            modules(listOf(networkModule,
                 databaseModule,
                 cacheModule,
                 repositoryModule,
                 useCaseModule,
-                viewModelModule)*/
+                viewModelModule,
+                constantModule))
         }
 
     }

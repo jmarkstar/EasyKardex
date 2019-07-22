@@ -32,19 +32,19 @@ import retrofit2.http.*
 
 internal interface BrandService {
 
-    @GET("v1/brands")
+    @GET("brands")
     suspend fun getAll(@Query("cd") creationAt: String): List<BrandEntity>
 
-    @GET("v1/brands/{idBrand}")
+    @GET("brands/{idBrand}")
     suspend fun findById(@Path("idBrand") idBrand: Long): BrandEntity?
 
-    @POST("v1/brands")
+    @POST("brands")
     suspend fun create(@Body newBrand: BrandEntity): BrandEntity
 
-    @DELETE("v1/brands/{idBrand}")
+    @DELETE("brands/{idBrand}")
     suspend fun delete(@Path("idBrand") idBrand: Long)
 
-    @PUT("v1/brands/{idBrand}")
+    @PUT("brands/{idBrand}")
     suspend fun update(@Path("idBrand") idBrand: Long, @Body updatedBrand: BrandEntity): BrandEntity
 
 }
