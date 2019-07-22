@@ -27,21 +27,32 @@
 
 package com.jmarkstar.easykardex.presentation.login
 
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.jmarkstar.easykardex.R
 import com.jmarkstar.easykardex.models.Resource
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_login.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity() {
+
+    companion object {
+
+        fun start(context: Context){
+
+            val intent = Intent(context, LoginActivity::class.java)
+            context.startActivity(intent)
+        }
+    }
 
     private val loginViewModel: LoginViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_login)
 
         loginViewModel.userLoggedId.observe(this, Observer {
 

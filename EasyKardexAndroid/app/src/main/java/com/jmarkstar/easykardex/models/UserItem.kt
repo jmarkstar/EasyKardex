@@ -21,19 +21,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created by jmarkstar on 7/18/19 3:06 PM
+ * Created by jmarkstar on 7/22/19 12:42 PM
  *
  */
 
-package com.jmarkstar.easykardex.domain.di
+package com.jmarkstar.easykardex.models
+import android.os.Parcelable
+import com.jmarkstar.easykardex.domain.models.User
+import com.jmarkstar.easykardex.domain.models.UserRole
+import kotlinx.android.parcel.Parcelize
 
-import com.jmarkstar.easykardex.domain.usecases.GetUserLoggedInUseCase
-import com.jmarkstar.easykardex.domain.usecases.LoginUseCase
-import org.koin.core.module.Module
-import org.koin.dsl.module
+@Parcelize
+data class UserItem(val userId: Long, var roleItemId: UserRoleItem, var username: String, var fullname: String): Parcelable
 
-val useCaseModule: Module = module {
-
-    factory { LoginUseCase(accountRepository = get()) }
-    factory { GetUserLoggedInUseCase(accountRepository = get()) }
-}
+fun User.mapToPresentation(): UserItem = UserItem(userId,
+                if (roleId == UserRole.ADMIN) UserRoleItem.ADMIN else UserRoleItem.OPERATOR,
+                username,
+                fullname)

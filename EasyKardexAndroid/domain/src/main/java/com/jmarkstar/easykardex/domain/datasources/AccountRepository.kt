@@ -34,4 +34,5 @@ interface AccountRepository {
 
     suspend fun login(username: String, password: String) : Result<User>
     suspend fun logout(): Result<Boolean>
+    suspend fun getUserLoggedIn(): Result<User>
 }

@@ -21,19 +21,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created by jmarkstar on 7/18/19 3:06 PM
+ * Created by jmarkstar on 7/22/19 12:06 PM
  *
  */
 
-package com.jmarkstar.easykardex.domain.di
+package com.jmarkstar.easykardex.presentation.home
 
-import com.jmarkstar.easykardex.domain.usecases.GetUserLoggedInUseCase
-import com.jmarkstar.easykardex.domain.usecases.LoginUseCase
-import org.koin.core.module.Module
-import org.koin.dsl.module
+import android.content.Context
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import com.jmarkstar.easykardex.R
+import com.jmarkstar.easykardex.models.UserItem
 
-val useCaseModule: Module = module {
+class HomeActivity : AppCompatActivity() {
 
-    factory { LoginUseCase(accountRepository = get()) }
-    factory { GetUserLoggedInUseCase(accountRepository = get()) }
+    companion object {
+
+        private const val USER_LOGGED_IN = "user_logged_in"
+
+        fun start(context: Context, user: UserItem){
+
+            val intent = Intent(context, HomeActivity::class.java)
+            intent.putExtra(USER_LOGGED_IN, user)
+            context.startActivity(intent)
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_home)
+    }
 }

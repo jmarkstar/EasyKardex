@@ -29,6 +29,7 @@ package com.jmarkstar.easykardex.data.cache
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import com.jmarkstar.easykardex.data.entities.UserEntity
 import com.jmarkstar.easykardex.data.entities.UserRoleEntity
 import com.jmarkstar.easykardex.data.utils.LibraryConstants
@@ -70,10 +71,13 @@ internal class EasyKardexCache(private val context: Context, private val moshi: 
     var userLoggedIn: UserEntity?
         get() {
 
-            val userJson = sharedPreferences.getString(USER_LOGGED_IN, LibraryConstants.EMPTY) ?: return null
-
-            val jsonAdapter = moshi.adapter(UserEntity::class.java)
-            return jsonAdapter.fromJson(userJson)
+            val userJson = sharedPreferences.getString(USER_LOGGED_IN, LibraryConstants.EMPTY)
+            return if ( userJson == null || userJson == LibraryConstants.EMPTY){
+                null
+            } else {
+                val jsonAdapter = moshi.adapter(UserEntity::class.java)
+                jsonAdapter.fromJson(userJson)
+            }
         }
         set(value) {
 

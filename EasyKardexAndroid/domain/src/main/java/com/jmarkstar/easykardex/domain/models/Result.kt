@@ -35,5 +35,6 @@ sealed class Result<out T : Any> {
 enum class FailureReason {
     INTERNAL_ERROR,
     INVALID_CREDENTIALS,
-    EXPIRED_TOKEN
+    EXPIRED_TOKEN,
+    THERE_IS_NOT_USER_LOGGED_IN
 }

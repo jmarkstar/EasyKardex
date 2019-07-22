@@ -21,19 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created by jmarkstar on 7/18/19 3:06 PM
+ * Created by jmarkstar on 7/22/19 12:42 PM
  *
  */
 
-package com.jmarkstar.easykardex.domain.di
+package com.jmarkstar.easykardex.models
 
-import com.jmarkstar.easykardex.domain.usecases.GetUserLoggedInUseCase
-import com.jmarkstar.easykardex.domain.usecases.LoginUseCase
-import org.koin.core.module.Module
-import org.koin.dsl.module
-
-val useCaseModule: Module = module {
-
-    factory { LoginUseCase(accountRepository = get()) }
-    factory { GetUserLoggedInUseCase(accountRepository = get()) }
+enum class UserRoleItem {
+    ADMIN, OPERATOR
 }

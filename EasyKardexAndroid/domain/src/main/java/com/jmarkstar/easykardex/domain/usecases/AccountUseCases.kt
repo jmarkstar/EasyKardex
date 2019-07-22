@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created by jmarkstar on 7/18/19 10:43 AM
+ * Created by jmarkstar on 7/22/19 12:23 PM
  *
  */
 
@@ -34,6 +34,14 @@ import com.jmarkstar.easykardex.domain.models.User
 class LoginUseCase(private val accountRepository: AccountRepository) {
 
     suspend fun login(username: String, password: String): Result<User> =  accountRepository.login(username, password)
+}
+
+class LogoutUseCase(private val accountRepository: AccountRepository) {
 
     suspend fun logout(): Result<Boolean> = accountRepository.logout()
+}
+
+class GetUserLoggedInUseCase(private val accountRepository: AccountRepository) {
+
+    suspend fun getUser(): Result<User> =  accountRepository.getUserLoggedIn()
 }

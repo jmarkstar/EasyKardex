@@ -29,6 +29,7 @@ package com.jmarkstar.easykardex.di
 
 import com.jmarkstar.easykardex.BuildConfig
 import com.jmarkstar.easykardex.presentation.login.LoginViewModel
+import com.jmarkstar.easykardex.presentation.splash.SplashViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
@@ -38,11 +39,12 @@ val constantModule: Module = module {
 
     single(named("debug")) { BuildConfig.DEBUG }
 
-    single(named("baseUrl")) { "http://3e090af2.ngrok.io/v1/" }
+    single(named("baseUrl")) { "http://a3a0b447.ngrok.io/v1/" }
 }
 
 val viewModelModule: Module = module {
 
     viewModel { LoginViewModel( loginUserCase = get()) }
+    viewModel { SplashViewModel( getUserLoggedInUseCase = get()) }
 
 }

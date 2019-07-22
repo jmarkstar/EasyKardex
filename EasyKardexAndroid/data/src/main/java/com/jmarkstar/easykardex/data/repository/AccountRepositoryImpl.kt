@@ -42,6 +42,12 @@ import java.lang.Exception
 internal class AccountRepositoryImpl(private val accountService: AccountService,
                             private val cache: EasyKardexCache): AccountRepository {
 
+
+    override suspend fun getUserLoggedIn(): Result<User> {
+        val user = cache.userLoggedIn ?: return Result.Failure(FailureReason.THERE_IS_NOT_USER_LOGGED_IN)
+        return Result.Success(user.mapToDomain())
+    }
+
     override suspend fun login(username: String, password: String) : Result<User> = try {
 
             val result = accountService.login(LoginRequest(username, password))
