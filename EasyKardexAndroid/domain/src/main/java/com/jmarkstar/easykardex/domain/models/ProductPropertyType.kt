@@ -21,10 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created by jmarkstar on 7/18/19 10:40 AM
+ * Created by jmarkstar on 7/22/19 2:48 PM
  *
  */
 
 package com.jmarkstar.easykardex.domain.models
 
-class Brand(val id: Long? = null, var name: String)
+enum class ProductPropertyType {
+    BRAND, CATEGORY, UNIT
+}

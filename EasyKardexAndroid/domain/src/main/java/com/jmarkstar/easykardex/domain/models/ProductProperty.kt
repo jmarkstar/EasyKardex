@@ -21,23 +21,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created by jmarkstar on 7/18/19 3:06 PM
+ * Created by jmarkstar on 7/22/19 2:42 PM
  *
  */
 
-package com.jmarkstar.easykardex.domain.di
+package com.jmarkstar.easykardex.domain.models
 
-import com.jmarkstar.easykardex.domain.usecases.*
-import org.koin.core.module.Module
-import org.koin.dsl.module
-
-val useCaseModule: Module = module {
-
-    factory { LoginUseCase(accountRepository = get()) }
-    factory { LogoutUseCase(accountRepository = get()) }
-    factory { GetUserLoggedInUseCase(accountRepository = get()) }
-    factory { InsertNewProductPropertyUseCase(brandRepository = get(), categoryRepository = get(), unitRepository = get()) }
-    factory { UpdateProductPropertyUseCase(brandRepository = get(), categoryRepository = get(), unitRepository = get()) }
-    factory { DeleteProductPropertyUseCase(brandRepository = get(), categoryRepository = get(), unitRepository = get()) }
-    factory { GetProductPropertiesUseCase(brandRepository = get(), categoryRepository = get(), unitRepository = get()) }
-}
+class ProductProperty(val id: Long? = null, val type: ProductPropertyType, var name: String)

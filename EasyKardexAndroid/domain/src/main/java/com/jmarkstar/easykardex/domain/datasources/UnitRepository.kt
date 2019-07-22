@@ -21,23 +21,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created by jmarkstar on 7/18/19 3:06 PM
+ * Created by jmarkstar on 7/22/19 2:33 PM
  *
  */
 
-package com.jmarkstar.easykardex.domain.di
+package com.jmarkstar.easykardex.domain.datasources
 
-import com.jmarkstar.easykardex.domain.usecases.*
-import org.koin.core.module.Module
-import org.koin.dsl.module
+import com.jmarkstar.easykardex.domain.models.ProductProperty
+import com.jmarkstar.easykardex.domain.models.Result
 
-val useCaseModule: Module = module {
+interface UnitRepository {
 
-    factory { LoginUseCase(accountRepository = get()) }
-    factory { LogoutUseCase(accountRepository = get()) }
-    factory { GetUserLoggedInUseCase(accountRepository = get()) }
-    factory { InsertNewProductPropertyUseCase(brandRepository = get(), categoryRepository = get(), unitRepository = get()) }
-    factory { UpdateProductPropertyUseCase(brandRepository = get(), categoryRepository = get(), unitRepository = get()) }
-    factory { DeleteProductPropertyUseCase(brandRepository = get(), categoryRepository = get(), unitRepository = get()) }
-    factory { GetProductPropertiesUseCase(brandRepository = get(), categoryRepository = get(), unitRepository = get()) }
+    suspend fun getAll(refresh: Boolean): Result<List<ProductProperty>>
+    suspend fun insert(brand: ProductProperty): Result<ProductProperty>
+    suspend fun update(brand: ProductProperty): Result<ProductProperty>
+    suspend fun delete(brand: ProductProperty): Result<Boolean>
 }

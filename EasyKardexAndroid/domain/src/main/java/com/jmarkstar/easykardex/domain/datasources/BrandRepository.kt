@@ -27,5 +27,13 @@
 
 package com.jmarkstar.easykardex.domain.datasources
 
+import com.jmarkstar.easykardex.domain.models.ProductProperty
+import com.jmarkstar.easykardex.domain.models.Result
+
 interface BrandRepository {
+
+    suspend fun getAll(refresh: Boolean): Result<List<ProductProperty>>
+    suspend fun insert(brand: ProductProperty): Result<ProductProperty>
+    suspend fun update(brand: ProductProperty): Result<ProductProperty>
+    suspend fun delete(brand: ProductProperty): Result<Boolean>
 }

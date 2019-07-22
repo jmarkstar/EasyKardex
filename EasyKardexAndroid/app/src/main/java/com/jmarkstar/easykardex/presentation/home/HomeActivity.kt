@@ -31,6 +31,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.jmarkstar.easykardex.R
 import com.jmarkstar.easykardex.models.UserItem
 
@@ -51,5 +52,9 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+
+        val user: UserItem = intent.getParcelableExtra(USER_LOGGED_IN)
+
+        Log.v("home","user: $user")
     }
 }
