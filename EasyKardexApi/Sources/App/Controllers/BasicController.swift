@@ -130,6 +130,8 @@ class BasicController<M: Publishable> where M: FilterableByLastUpdateDate, M: Va
                 
                 try foundModel.validate()
                 
+                foundModel.lastUpdateDate = Date()
+                
                 return foundModel.update(on: req).flatMap(to: Response.self) { _ in
                     
                     let response = Response(http: HTTPResponse(status: .ok), using: req)
@@ -158,6 +160,7 @@ class BasicController<M: Publishable> where M: FilterableByLastUpdateDate, M: Va
             }
             
             model.status = 0
+            model.lastUpdateDate = Date()
             
             return model.update(on: req).transform(to: .noContent)
         }
