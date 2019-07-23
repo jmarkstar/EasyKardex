@@ -35,5 +35,6 @@ interface BrandRepository {
     suspend fun getBrands(refresh: Boolean = false): Result<List<ProductProperty>>
     suspend fun insert(brand: ProductProperty): Result<ProductProperty>
     suspend fun update(id: Long, brand: ProductProperty): Result<ProductProperty>
+    suspend fun getBrandById(id: Long): Result<ProductProperty>
     suspend fun delete(brand: ProductProperty): Result<Boolean>
 }

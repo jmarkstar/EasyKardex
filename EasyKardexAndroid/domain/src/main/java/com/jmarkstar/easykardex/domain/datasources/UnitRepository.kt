@@ -36,4 +36,5 @@ interface UnitRepository {
     suspend fun insert(brand: ProductProperty): Result<ProductProperty>
     suspend fun update(id: Long, brand: ProductProperty): Result<ProductProperty>
     suspend fun delete(brand: ProductProperty): Result<Boolean>
+    suspend fun getUnitById(id: Long): Result<ProductProperty>
 }

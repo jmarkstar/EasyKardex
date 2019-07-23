@@ -32,12 +32,13 @@ import com.jmarkstar.easykardex.data.api.AccountService
 import com.jmarkstar.easykardex.data.api.request.LoginRequest
 import com.jmarkstar.easykardex.data.cache.EasyKardexCache
 import com.jmarkstar.easykardex.data.entities.mapToDomain
+import com.jmarkstar.easykardex.data.utils.processError
 import com.jmarkstar.easykardex.data.utils.processNetworkResult
 import com.jmarkstar.easykardex.domain.datasources.AccountRepository
 import com.jmarkstar.easykardex.domain.models.FailureReason
 import com.jmarkstar.easykardex.domain.models.Result
 import com.jmarkstar.easykardex.domain.models.User
-import java.lang.Exception
+import kotlin.Exception
 
 internal class AccountRepositoryImpl(private val accountService: AccountService,
                             private val cache: EasyKardexCache): AccountRepository {
@@ -73,18 +74,19 @@ internal class AccountRepositoryImpl(private val accountService: AccountService,
             }
 
         } catch(ex: Exception) {
-            ex.printStackTrace()
-            Result.Failure(FailureReason.INTERNAL_ERROR)
+            processError(ex)
         }
 
-    override suspend fun logout(): Result<Boolean> {
+    override suspend fun logout(): Result<Boolean> = try {
 
         val result = accountService.logout()
 
-        return processNetworkResult(result.code()) {
+        processNetworkResult(result.code()) {
 
             cache.clear()
             Result.Success(result.isSuccessful)
         }
+    } catch (ex: Exception) {
+        processError(ex)
     }
 }

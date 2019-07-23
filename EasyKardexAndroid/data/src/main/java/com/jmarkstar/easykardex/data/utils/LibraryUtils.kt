@@ -30,6 +30,8 @@ package com.jmarkstar.easykardex.data.utils
 import com.jmarkstar.easykardex.domain.models.FailureReason
 import com.jmarkstar.easykardex.domain.models.Result
 import org.threeten.bp.format.DateTimeFormatter
+import java.lang.Exception
+import java.net.UnknownHostException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -40,9 +42,8 @@ internal object LibraryUtils {
     val offsetDateTimeFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
 }
 
-suspend fun <T: Any>processNetworkResult(resultCode: Int, sucessResult: suspend () -> Result<T>): Result<T> = try {
-
-    when(resultCode){
+suspend fun <T: Any>processNetworkResult(resultCode: Int, sucessResult: suspend () -> Result<T>): Result<T> {
+    return when(resultCode){
         in 200..204 -> {
 
             sucessResult.invoke()
@@ -51,7 +52,12 @@ suspend fun <T: Any>processNetworkResult(resultCode: Int, sucessResult: suspend 
         403 -> Result.Failure(FailureReason.WRONG_VALUES_ON_PARAMETERS)
         else -> Result.Failure(FailureReason.INTERNAL_ERROR)
     }
-} catch(ex: Exception) {
-    ex.printStackTrace()
-    Result.Failure(FailureReason.INTERNAL_ERROR)
+}
+
+fun <T: Any>processError(exception: Exception): Result<T> {
+    exception.printStackTrace()
+    return when(exception){
+        is UnknownHostException -> Result.Failure(FailureReason.SERVER_COULDNT_BE_FOUND)
+        else -> Result.Failure(FailureReason.INTERNAL_ERROR)
+    }
 }

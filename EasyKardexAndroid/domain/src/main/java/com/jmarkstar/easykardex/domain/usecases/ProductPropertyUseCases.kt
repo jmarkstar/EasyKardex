@@ -71,9 +71,20 @@ class GetProductPropertiesUseCase(private val  brandRepository: BrandRepository,
 
     suspend fun getAll(propertyType: ProductPropertyType, refresh: Boolean = false) : Result<List<ProductProperty>> {
         return when (propertyType) {
-            ProductPropertyType.BRAND -> brandRepository.getAll(refresh)
+            ProductPropertyType.BRAND -> brandRepository.getBrands(refresh)
             ProductPropertyType.CATEGORY -> categoryRepository.getAll(refresh)
             ProductPropertyType.UNIT -> unitRepository.getAll(refresh)
+        }
+    }
+}
+
+class GetProductPropertyByIdUseCase(private val  brandRepository: BrandRepository, private val  categoryRepository: CategoryRepository, private val  unitRepository: UnitRepository){
+
+    suspend fun getProperty(propertyType: ProductPropertyType, propertyId: Long) : Result<ProductProperty> {
+        return when (propertyType) {
+            ProductPropertyType.BRAND -> brandRepository.getBrandById(propertyId)
+            ProductPropertyType.CATEGORY -> categoryRepository.getCategoryById(propertyId)
+            ProductPropertyType.UNIT -> unitRepository.getUnitById(propertyId)
         }
     }
 }

@@ -35,6 +35,9 @@ import com.jmarkstar.easykardex.data.entities.BrandEntity
 
 @Dao internal interface BrandDao {
 
+    @Query("SELECT * FROM product_brand WHERE id = :id")
+    suspend fun getBrandById(id: Long): BrandEntity?
+
     @Query("SELECT * FROM product_brand")
     suspend fun getBrands(): List<BrandEntity>
 

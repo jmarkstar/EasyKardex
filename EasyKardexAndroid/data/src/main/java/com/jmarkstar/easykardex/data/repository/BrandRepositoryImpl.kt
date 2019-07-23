@@ -34,6 +34,7 @@ import com.jmarkstar.easykardex.data.entities.BrandEntity
 import com.jmarkstar.easykardex.data.entities.EntityStatus
 import com.jmarkstar.easykardex.data.entities.mapToDomain
 import com.jmarkstar.easykardex.data.utils.LibraryUtils
+import com.jmarkstar.easykardex.data.utils.processError
 import com.jmarkstar.easykardex.data.utils.processNetworkResult
 import com.jmarkstar.easykardex.domain.datasources.BrandRepository
 import com.jmarkstar.easykardex.domain.models.FailureReason
@@ -44,16 +45,38 @@ import kotlin.collections.ArrayList
 
 internal class BrandRepositoryImpl(private val cache: EasyKardexCache, private val brandDao: BrandDao, private val brandService: BrandService): BrandRepository {
 
-    override suspend fun getBrands(refresh: Boolean): Result<List<ProductProperty>> {
+    override suspend fun getBrandById(id: Long): Result<ProductProperty> = try {
+
+        val localBrand = brandDao.getBrandById(id)
+
+        if(localBrand != null){
+            Result.Success(localBrand.mapToDomain())
+        }
+
+        val result = brandService.findById(id)
+
+        processNetworkResult(result.code()) {
+
+            val foundBrand = checkNotNull(result.body()){
+                Result.Failure(FailureReason.INTERNAL_ERROR)
+            }
+
+            Result.Success(foundBrand.mapToDomain())
+        }
+    } catch (ex: Exception){
+        processError(ex)
+    }
+
+    override suspend fun getBrands(refresh: Boolean): Result<List<ProductProperty>> = try {
 
         if(!refresh){
             val localBrands = brandDao.getBrands().mapToDomain()
-            return Result.Success(localBrands)
+            Result.Success(localBrands)
         }
 
         val result = brandService.getAll(cache.brandsLastUpdateDate)
 
-        return processNetworkResult(result.code()) {
+        processNetworkResult(result.code()) {
 
             val newBrandsResult = result.body() ?: ArrayList()
 
@@ -74,14 +97,16 @@ internal class BrandRepositoryImpl(private val cache: EasyKardexCache, private v
 
             Result.Success(brandDao.getBrands().mapToDomain())
         }
+    } catch (ex: Exception) {
+        processError(ex)
     }
 
 
-    override suspend fun insert(brand: ProductProperty): Result<ProductProperty> {
+    override suspend fun insert(brand: ProductProperty): Result<ProductProperty> = try {
 
         val result = brandService.create(BrandEntity(brand))
 
-        return processNetworkResult(result.code()) {
+        processNetworkResult(result.code()) {
 
             val createdBrand = checkNotNull(result.body()){
                 Result.Failure(FailureReason.INTERNAL_ERROR)
@@ -93,13 +118,15 @@ internal class BrandRepositoryImpl(private val cache: EasyKardexCache, private v
                 Result.Success(createdBrand.mapToDomain())
             }
         }
+    } catch (ex: Exception) {
+        processError(ex)
     }
 
-    override suspend fun update(id: Long, brand: ProductProperty): Result<ProductProperty> {
+    override suspend fun update(id: Long, brand: ProductProperty): Result<ProductProperty> = try {
 
         val result = brandService.update(id, BrandEntity(brand) )
 
-        return processNetworkResult(result.code()) {
+        processNetworkResult(result.code()) {
 
             val updatedBrand = checkNotNull(result.body()){
                 Result.Failure(FailureReason.INTERNAL_ERROR)
@@ -111,9 +138,11 @@ internal class BrandRepositoryImpl(private val cache: EasyKardexCache, private v
                 Result.Success(updatedBrand.mapToDomain())
             }
         }
+    } catch (ex: Exception) {
+        processError(ex)
     }
 
-    override suspend fun delete(brand: ProductProperty): Result<Boolean> {
+    override suspend fun delete(brand: ProductProperty): Result<Boolean> = try {
 
         val id = checkNotNull(brand.id){
             return Result.Failure(FailureReason.WRONG_VALUES_ON_PARAMETERS)
@@ -121,7 +150,7 @@ internal class BrandRepositoryImpl(private val cache: EasyKardexCache, private v
 
         val result = brandService.delete(id)
 
-        return processNetworkResult(result.code()) {
+        processNetworkResult(result.code()) {
 
             if(brandDao.deleteBrandById(id) < 1L) {
                 Result.Failure(FailureReason.DATABASE_OPERATION_ERROR)
@@ -129,5 +158,7 @@ internal class BrandRepositoryImpl(private val cache: EasyKardexCache, private v
                 Result.Success(result.isSuccessful)
             }
         }
+    } catch (ex: Exception) {
+        processError(ex)
     }
 }

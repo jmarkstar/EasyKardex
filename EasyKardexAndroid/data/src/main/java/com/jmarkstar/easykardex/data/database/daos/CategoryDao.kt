@@ -35,6 +35,9 @@ import com.jmarkstar.easykardex.data.entities.CategoryEntity
 
 @Dao internal interface CategoryDao {
 
+    @Query("SELECT * FROM product_category WHERE id = :id")
+    suspend fun getCategoryById(id: Long): CategoryEntity?
+
     @Query("SELECT * FROM product_category")
     suspend fun getCategories(): List<CategoryEntity>
 

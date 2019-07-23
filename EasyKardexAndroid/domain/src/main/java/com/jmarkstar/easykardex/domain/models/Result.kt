@@ -37,6 +37,7 @@ enum class FailureReason {
     //common errors
     DATABASE_OPERATION_ERROR,
     INTERNAL_ERROR,
+    SERVER_COULDNT_BE_FOUND,
     WRONG_VALUES_ON_PARAMETERS,
 
     //account erros

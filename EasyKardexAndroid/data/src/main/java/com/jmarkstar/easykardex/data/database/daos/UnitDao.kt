@@ -35,6 +35,9 @@ import com.jmarkstar.easykardex.data.entities.UnitEntity
 
 @Dao internal interface UnitDao {
 
+    @Query("SELECT * FROM product_unit WHERE id = :id")
+    suspend fun getUnitById(id: Long): UnitEntity?
+
     @Query("SELECT * FROM product_unit")
     suspend fun getUnits(): List<UnitEntity>
 

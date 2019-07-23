@@ -39,7 +39,9 @@ import com.jmarkstar.easykardex.data.database.EasyKardexDatabase
 import com.jmarkstar.easykardex.data.entities.adapters.EntityStatusAdapter
 import com.jmarkstar.easykardex.data.entities.adapters.UserRoleAdapter
 import com.jmarkstar.easykardex.data.repository.AccountRepositoryImpl
+import com.jmarkstar.easykardex.data.repository.BrandRepositoryImpl
 import com.jmarkstar.easykardex.domain.datasources.AccountRepository
+import com.jmarkstar.easykardex.domain.datasources.BrandRepository
 import com.squareup.moshi.Moshi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -55,6 +57,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 val repositoryModule: Module = module {
 
     single<AccountRepository> { AccountRepositoryImpl(accountService = get(), cache =  get()) }
+    single<BrandRepository> { BrandRepositoryImpl( cache =  get(), brandDao = get(), brandService = get()) }
 }
 
 /** Cache Module */

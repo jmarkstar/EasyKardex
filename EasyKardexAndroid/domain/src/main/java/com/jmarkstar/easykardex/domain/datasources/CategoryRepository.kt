@@ -36,4 +36,5 @@ interface CategoryRepository {
     suspend fun insert(brand: ProductProperty): Result<ProductProperty>
     suspend fun update(id: Long, brand: ProductProperty): Result<ProductProperty>
     suspend fun delete(brand: ProductProperty): Result<Boolean>
+    suspend fun getCategoryById(id: Long): Result<ProductProperty>
 }

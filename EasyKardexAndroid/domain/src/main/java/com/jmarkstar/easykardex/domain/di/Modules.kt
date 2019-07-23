@@ -40,4 +40,5 @@ val useCaseModule: Module = module {
     factory { UpdateProductPropertyUseCase(brandRepository = get(), categoryRepository = get(), unitRepository = get()) }
     factory { DeleteProductPropertyUseCase(brandRepository = get(), categoryRepository = get(), unitRepository = get()) }
     factory { GetProductPropertiesUseCase(brandRepository = get(), categoryRepository = get(), unitRepository = get()) }
+    factory { GetProductPropertyByIdUseCase(brandRepository = get(), categoryRepository = get(), unitRepository = get()) }
 }
