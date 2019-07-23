@@ -29,7 +29,6 @@ package com.jmarkstar.easykardex.data.cache
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.util.Log
 import com.jmarkstar.easykardex.data.entities.UserEntity
 import com.jmarkstar.easykardex.data.entities.UserRoleEntity
 import com.jmarkstar.easykardex.data.utils.LibraryConstants
@@ -40,6 +39,9 @@ internal class EasyKardexCache(private val context: Context, private val moshi: 
     private val TOKEN = "token"
     private val USER_ROLE = "role"
     private val USER_LOGGED_IN = "user_logged_in"
+    private val BRANDS_LAST_UPDATE_DATE = "brands_last_update_date"
+    private val CATEGORIES_LAST_UPDATE_DATE = "categories_last_update_date"
+    private val UNITS_LAST_UPDATE_DATE = "units_last_update_date"
 
     private val sharedPreferences: SharedPreferences by lazy {
         context.getSharedPreferences("easykardex", Context.MODE_PRIVATE)
@@ -90,4 +92,26 @@ internal class EasyKardexCache(private val context: Context, private val moshi: 
                 sharedPreferences.edit().remove(USER_LOGGED_IN).apply()
             }
         }
+
+    var brandsLastUpdateDate: String?
+        get() = sharedPreferences.getString(BRANDS_LAST_UPDATE_DATE, LibraryConstants.EMPTY)
+        set(value) {
+            sharedPreferences.edit().putString(BRANDS_LAST_UPDATE_DATE, value).apply()
+        }
+
+    var categoriesLastUpdateDate: String?
+        get() = sharedPreferences.getString(CATEGORIES_LAST_UPDATE_DATE, LibraryConstants.EMPTY)
+        set(value) {
+            sharedPreferences.edit().putString(CATEGORIES_LAST_UPDATE_DATE, value).apply()
+        }
+
+    var unitsLastUpdateDate: String?
+        get() = sharedPreferences.getString(UNITS_LAST_UPDATE_DATE, LibraryConstants.EMPTY)
+        set(value) {
+            sharedPreferences.edit().putString(UNITS_LAST_UPDATE_DATE, value).apply()
+        }
+
+    fun clear(){
+        sharedPreferences.edit().clear().apply()
+    }
 }

@@ -34,7 +34,7 @@ import retrofit2.http.*
 internal interface BrandService {
 
     @GET("brands")
-    suspend fun getAll(@Query("cd") creationAt: String): Response<List<BrandEntity>>
+    suspend fun getAll(@Query("lud") lastUpdateDate: String? = null): Response<List<BrandEntity>>
 
     @GET("brands/{idBrand}")
     suspend fun findById(@Path("idBrand") idBrand: Long): Response<BrandEntity>

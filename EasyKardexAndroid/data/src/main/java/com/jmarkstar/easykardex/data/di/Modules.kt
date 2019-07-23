@@ -36,6 +36,7 @@ import com.jmarkstar.easykardex.data.api.ProductOutputService
 import com.jmarkstar.easykardex.data.api.ProductService
 import com.jmarkstar.easykardex.data.cache.EasyKardexCache
 import com.jmarkstar.easykardex.data.database.EasyKardexDatabase
+import com.jmarkstar.easykardex.data.entities.adapters.EntityStatusAdapter
 import com.jmarkstar.easykardex.data.entities.adapters.UserRoleAdapter
 import com.jmarkstar.easykardex.data.repository.AccountRepositoryImpl
 import com.jmarkstar.easykardex.domain.datasources.AccountRepository
@@ -101,6 +102,7 @@ val networkModule: Module = module {
     single {
         Moshi.Builder()
             .add(UserRoleAdapter())
+            .add(EntityStatusAdapter())
             .build()
     }
 

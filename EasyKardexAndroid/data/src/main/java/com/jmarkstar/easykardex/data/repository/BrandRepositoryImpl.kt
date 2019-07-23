@@ -28,50 +28,106 @@
 package com.jmarkstar.easykardex.data.repository
 
 import com.jmarkstar.easykardex.data.api.BrandService
+import com.jmarkstar.easykardex.data.cache.EasyKardexCache
 import com.jmarkstar.easykardex.data.database.daos.BrandDao
 import com.jmarkstar.easykardex.data.entities.BrandEntity
+import com.jmarkstar.easykardex.data.entities.EntityStatus
 import com.jmarkstar.easykardex.data.entities.mapToDomain
+import com.jmarkstar.easykardex.data.utils.LibraryUtils
+import com.jmarkstar.easykardex.data.utils.processNetworkResult
 import com.jmarkstar.easykardex.domain.datasources.BrandRepository
 import com.jmarkstar.easykardex.domain.models.FailureReason
 import com.jmarkstar.easykardex.domain.models.ProductProperty
 import com.jmarkstar.easykardex.domain.models.Result
+import java.util.*
+import kotlin.collections.ArrayList
 
-internal class BrandRepositoryImpl(private val brandDao: BrandDao, private val brandService: BrandService): BrandRepository {
+internal class BrandRepositoryImpl(private val cache: EasyKardexCache, private val brandDao: BrandDao, private val brandService: BrandService): BrandRepository {
 
-    override suspend fun getAll(refresh: Boolean): Result<List<ProductProperty>> {
-        return Result.Failure(FailureReason.INTERNAL_ERROR)
-    }
+    override suspend fun getBrands(refresh: Boolean): Result<List<ProductProperty>> {
 
-    override suspend fun insert(brand: ProductProperty): Result<ProductProperty> =  try {
-            val result = brandService.create(BrandEntity(brand))
-
-            when(result.code()){
-                200 -> {
-
-                    val createdBrand = checkNotNull(result.body()){
-                        return Result.Failure(FailureReason.INTERNAL_ERROR)
-                    }
-    
-                    if(brandDao.insert(createdBrand) < 0L) {
-                        Result.Failure(FailureReason.INTERNAL_ERROR)
-                    } else {
-                        Result.Success(createdBrand.mapToDomain())
-                    }
-                }
-                401 -> Result.Failure(FailureReason.EXPIRED_TOKEN)
-                403 -> Result.Failure(FailureReason.WRONG_VALUES_ON_PARAMETERS)
-                else -> Result.Failure(FailureReason.INTERNAL_ERROR)
-            }
-        } catch(ex: Exception) {
-            ex.printStackTrace()
-            Result.Failure(FailureReason.INTERNAL_ERROR)
+        if(!refresh){
+            val localBrands = brandDao.getBrands().mapToDomain()
+            return Result.Success(localBrands)
         }
 
-    override suspend fun update(brand: ProductProperty): Result<ProductProperty> {
-        return Result.Failure(FailureReason.INTERNAL_ERROR)
+        val result = brandService.getAll(cache.brandsLastUpdateDate)
+
+        return processNetworkResult(result.code()) {
+
+            val newBrandsResult = result.body() ?: ArrayList()
+
+            newBrandsResult.forEach {
+
+                when(it.status) {
+                    EntityStatus.ACTIVE -> brandDao.insert(it)
+                    EntityStatus.INACTIVE -> {
+
+                        if(it.id != null) {
+                            brandDao.deleteBrandById(it.id)
+                        }
+                    }
+                }
+            }
+
+            cache.brandsLastUpdateDate = LibraryUtils.dateTimeFormatter.format(Date())
+
+            Result.Success(brandDao.getBrands().mapToDomain())
+        }
+    }
+
+
+    override suspend fun insert(brand: ProductProperty): Result<ProductProperty> {
+
+        val result = brandService.create(BrandEntity(brand))
+
+        return processNetworkResult(result.code()) {
+
+            val createdBrand = checkNotNull(result.body()){
+                Result.Failure(FailureReason.INTERNAL_ERROR)
+            }
+
+            if(brandDao.insert(createdBrand) < 0L) {
+                Result.Failure(FailureReason.DATABASE_OPERATION_ERROR)
+            } else {
+                Result.Success(createdBrand.mapToDomain())
+            }
+        }
+    }
+
+    override suspend fun update(id: Long, brand: ProductProperty): Result<ProductProperty> {
+
+        val result = brandService.update(id, BrandEntity(brand) )
+
+        return processNetworkResult(result.code()) {
+
+            val updatedBrand = checkNotNull(result.body()){
+                Result.Failure(FailureReason.INTERNAL_ERROR)
+            }
+
+            if(brandDao.insert(updatedBrand) < 0L) {
+                Result.Failure(FailureReason.DATABASE_OPERATION_ERROR)
+            } else {
+                Result.Success(updatedBrand.mapToDomain())
+            }
+        }
     }
 
     override suspend fun delete(brand: ProductProperty): Result<Boolean> {
-        return Result.Failure(FailureReason.INTERNAL_ERROR)
+
+        val id = checkNotNull(brand.id){
+            return Result.Failure(FailureReason.WRONG_VALUES_ON_PARAMETERS)
+        }
+
+        val result = brandService.delete(id)
+
+        return processNetworkResult(result.code()) {
+
+            if(brandDao.deleteBrandById(id) < 1L) {
+                Result.Failure(FailureReason.DATABASE_OPERATION_ERROR)
+            } else {
+                Result.Success(result.isSuccessful)
+            }
+        }
     }
 }

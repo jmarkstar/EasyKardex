@@ -27,12 +27,31 @@
 
 package com.jmarkstar.easykardex.data.utils
 
+import com.jmarkstar.easykardex.domain.models.FailureReason
+import com.jmarkstar.easykardex.domain.models.Result
 import org.threeten.bp.format.DateTimeFormatter
 import java.text.SimpleDateFormat
+import java.util.*
 
 internal object LibraryUtils {
 
-    val dateTimeFormatter = SimpleDateFormat("yyyy-mm-dd HH:mm:ss")
-    val dateFormmatter = SimpleDateFormat("yyyy-mm-dd")
+    val dateTimeFormatter = SimpleDateFormat("yyyy-mm-dd HH:mm:ss", Locale.getDefault())
+    val dateFormmatter = SimpleDateFormat("yyyy-mm-dd", Locale.getDefault())
     val offsetDateTimeFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
+}
+
+suspend fun <T: Any>processNetworkResult(resultCode: Int, sucessResult: suspend () -> Result<T>): Result<T> = try {
+
+    when(resultCode){
+        in 200..204 -> {
+
+            sucessResult.invoke()
+        }
+        401 -> Result.Failure(FailureReason.EXPIRED_TOKEN)
+        403 -> Result.Failure(FailureReason.WRONG_VALUES_ON_PARAMETERS)
+        else -> Result.Failure(FailureReason.INTERNAL_ERROR)
+    }
+} catch(ex: Exception) {
+    ex.printStackTrace()
+    Result.Failure(FailureReason.INTERNAL_ERROR)
 }

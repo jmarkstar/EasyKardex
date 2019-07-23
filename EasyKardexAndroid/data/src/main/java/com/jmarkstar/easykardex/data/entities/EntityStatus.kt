@@ -21,19 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created by jmarkstar on 7/18/19 10:45 AM
+ * Created by jmarkstar on 7/23/19 4:57 PM
  *
  */
 
-package com.jmarkstar.easykardex.domain.datasources
+package com.jmarkstar.easykardex.data.entities
 
-import com.jmarkstar.easykardex.domain.models.ProductProperty
-import com.jmarkstar.easykardex.domain.models.Result
-
-interface BrandRepository {
-
-    suspend fun getBrands(refresh: Boolean = false): Result<List<ProductProperty>>
-    suspend fun insert(brand: ProductProperty): Result<ProductProperty>
-    suspend fun update(id: Long, brand: ProductProperty): Result<ProductProperty>
-    suspend fun delete(brand: ProductProperty): Result<Boolean>
+enum class EntityStatus(val value: Int) {
+    ACTIVE(1), INACTIVE(0)
 }

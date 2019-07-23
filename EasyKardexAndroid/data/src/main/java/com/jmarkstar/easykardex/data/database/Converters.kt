@@ -28,6 +28,7 @@
 package com.jmarkstar.easykardex.data.database
 
 import androidx.room.TypeConverter
+import com.jmarkstar.easykardex.data.entities.EntityStatus
 import com.jmarkstar.easykardex.data.utils.LibraryUtils
 import org.threeten.bp.OffsetDateTime
 import java.util.*
@@ -35,6 +36,8 @@ import java.util.*
 class Converters {
 
     companion object {
+
+        //DATE TIME
 
         @TypeConverter
         @JvmStatic
@@ -50,6 +53,8 @@ class Converters {
             return date?.format(LibraryUtils.offsetDateTimeFormatter)
         }
 
+        // DATE
+
         @TypeConverter
         @JvmStatic
         fun toDate(timestamp: Long?): Date? {
@@ -63,6 +68,20 @@ class Converters {
         @JvmStatic
         fun toMillis(date: Date?): Long? {
             return date?.time
+        }
+
+        // STATUS
+
+        @TypeConverter
+        @JvmStatic
+        fun toStatus(status: EntityStatus?): Int? {
+            return status?.value
+        }
+
+        @TypeConverter
+        @JvmStatic
+        fun toEntityStatus(status: Int?): EntityStatus? {
+            return if (status == 1) EntityStatus.ACTIVE else EntityStatus.INACTIVE
         }
     }
 }

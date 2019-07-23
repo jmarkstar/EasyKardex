@@ -47,11 +47,11 @@ class InsertNewProductPropertyUseCase(private val brandRepository: BrandReposito
 
 class UpdateProductPropertyUseCase(private val  brandRepository: BrandRepository, private val  categoryRepository: CategoryRepository, private val  unitRepository: UnitRepository){
 
-    suspend fun update(productProperty: ProductProperty): Result<ProductProperty> {
+    suspend fun update(propertyId: Long, productProperty: ProductProperty): Result<ProductProperty> {
         return when (productProperty.type) {
-            ProductPropertyType.BRAND -> brandRepository.update(productProperty)
-            ProductPropertyType.CATEGORY -> categoryRepository.update(productProperty)
-            ProductPropertyType.UNIT -> unitRepository.update(productProperty)
+            ProductPropertyType.BRAND -> brandRepository.update(propertyId, productProperty)
+            ProductPropertyType.CATEGORY -> categoryRepository.update(propertyId, productProperty)
+            ProductPropertyType.UNIT -> unitRepository.update(propertyId, productProperty)
         }
     }
 }

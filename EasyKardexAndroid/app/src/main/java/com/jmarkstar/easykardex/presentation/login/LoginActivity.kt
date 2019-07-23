@@ -68,7 +68,7 @@ class LoginActivity : AppCompatActivity() {
 
         textHello.setOnClickListener {
 
-            loginViewModel.login("jmarkstar","abc1234")
+            loginViewModel.login("jmarkstar","abc123")
         }
     }
 }

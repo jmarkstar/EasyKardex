@@ -45,8 +45,8 @@ import com.jmarkstar.easykardex.data.entities.BrandEntity
     suspend fun insertAll(brands: List<BrandEntity>): List<Long>
 
     @Query("DELETE FROM product_brand")
-    suspend fun deleteBrands(): Int
+    suspend fun clearTable(): Int
 
-    @Query("DELETE FROM product_brand WHERE id = :id")
+    @Query("UPDATE product_brand SET status = 0 WHERE id = :id")
     suspend fun deleteBrandById(id: Long): Int
 }

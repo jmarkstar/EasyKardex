@@ -21,19 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created by jmarkstar on 7/18/19 10:45 AM
+ * Created by jmarkstar on 7/23/19 4:58 PM
  *
  */
 
-package com.jmarkstar.easykardex.domain.datasources
+package com.jmarkstar.easykardex.data.entities.adapters
 
-import com.jmarkstar.easykardex.domain.models.ProductProperty
-import com.jmarkstar.easykardex.domain.models.Result
+import com.jmarkstar.easykardex.data.entities.EntityStatus
+import com.squareup.moshi.FromJson
+import com.squareup.moshi.ToJson
 
-interface BrandRepository {
+class EntityStatusAdapter {
 
-    suspend fun getBrands(refresh: Boolean = false): Result<List<ProductProperty>>
-    suspend fun insert(brand: ProductProperty): Result<ProductProperty>
-    suspend fun update(id: Long, brand: ProductProperty): Result<ProductProperty>
-    suspend fun delete(brand: ProductProperty): Result<Boolean>
+    @ToJson
+    fun toJson(userRole: EntityStatus): Int {
+        return userRole.value
+    }
+
+    @FromJson
+    fun fromJson(roleId: Int): EntityStatus {
+        return if (roleId == 1) EntityStatus.ACTIVE else EntityStatus.INACTIVE
+    }
 }

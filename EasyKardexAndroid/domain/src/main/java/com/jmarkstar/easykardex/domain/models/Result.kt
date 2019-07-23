@@ -35,6 +35,7 @@ sealed class Result<out T : Any> {
 enum class FailureReason {
 
     //common errors
+    DATABASE_OPERATION_ERROR,
     INTERNAL_ERROR,
     WRONG_VALUES_ON_PARAMETERS,
 
