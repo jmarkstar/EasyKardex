@@ -34,11 +34,15 @@ struct ProductCategory: MySQLModel {
     var id: Int?
     var name: String
     var creationDate: Date?
+    var lastUpdateDate: Date?
+    var status: Int?
 
     enum CodingKeys: String, CodingKey {
         case id = "id_category"
         case name = "name"
         case creationDate = "creation_date"
+        case lastUpdateDate = "last_update_date"
+        case status
     }
 }
 
@@ -49,7 +53,7 @@ extension ProductCategory {
     }
 }
 
-extension ProductCategory: FilterableByCreationDate {}
+extension ProductCategory: FilterableByLastUpdateDate {}
 
 extension ProductCategory: Validatable {
 
@@ -69,7 +73,7 @@ extension ProductCategory: Publishable {
         guard let name = from.name
             else { return nil }
         
-        self.init(id: from.id, name: name, creationDate: from.creationDate)
+        self.init(id: from.id, name: name, creationDate: from.creationDate, lastUpdateDate: from.lastUpdateDate, status: from.status)
     }
     
     func toPublic() -> PublicProductCategory {

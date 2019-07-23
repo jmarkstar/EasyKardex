@@ -39,6 +39,8 @@ struct ProductProvider: MySQLModel {
     var contactName: String?
     var contactPhoneNumber: String?
     var creationDate: Date?
+    var lastUpdateDate: Date?
+    var status: Int?
     
     enum CodingKeys: String, CodingKey {
         case id = "id_provider"
@@ -46,10 +48,12 @@ struct ProductProvider: MySQLModel {
         case contactName = "contact_name"
         case contactPhoneNumber = "contact_phone"
         case creationDate = "creation_date"
+        case lastUpdateDate = "last_update_date"
+        case status
     }
 }
 
-extension ProductProvider: FilterableByCreationDate {}
+extension ProductProvider: FilterableByLastUpdateDate {}
 
 extension ProductProvider: Validatable {
     
@@ -69,7 +73,7 @@ extension ProductProvider: Publishable {
         guard let companyName = from.companyName
             else { return nil }
         
-        self.init(id: from.id, companyName: companyName, contactName: from.contactName, contactPhoneNumber: from.contactPhone, creationDate: from.creationDate)
+        self.init(id: from.id, companyName: companyName, contactName: from.contactName, contactPhoneNumber: from.contactPhone, creationDate: from.creationDate, lastUpdateDate: from.lastUpdateDate, status: from.status)
     }
     
     func toPublic() -> PublicProductProvider {

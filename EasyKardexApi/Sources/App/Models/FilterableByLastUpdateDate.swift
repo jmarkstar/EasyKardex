@@ -20,7 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 //
-//  FilterableByCreationDate.swift
+//  FilterableByLastUpdateDate.swift
 //  App
 //
 //  Created by jmarkstar on 6/24/19.
@@ -28,9 +28,10 @@
 
 import Foundation
 
-protocol FilterableByCreationDate {
+protocol FilterableByLastUpdateDate {
     
-    var creationDate: Date? { get set }
+    var lastUpdateDate: Date? { get set }
+    var status: Int? { get set }
 }
 
-extension FilterableByCreationDate { }
+extension FilterableByLastUpdateDate { }

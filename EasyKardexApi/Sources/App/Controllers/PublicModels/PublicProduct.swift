@@ -40,6 +40,8 @@ public struct PublicProduct {
     let thumb: String?
     let description: String?
     let creationDate: Date?
+    var lastUpdateDate: Date?
+    var status: Int?
 }
 
 extension PublicProduct: Content {}
@@ -56,6 +58,8 @@ extension PublicProduct: Codable {
         case thumb = "t"
         case description = "d"
         case creationDate = "cd"
+        case lastUpdateDate = "lud"
+        case status = "s"
     }
 }
 
@@ -73,6 +77,8 @@ extension PublicProduct: Modelable {
         self.thumb = model.thumb
         self.description = model.description
         self.creationDate = model.creationDate
+        self.lastUpdateDate = model.lastUpdateDate
+        self.status = model.status
     }
     
     func toModel() -> Product? {

@@ -15,6 +15,8 @@ public struct PublicUser {
     var fullname: String?
     var roleID: Role.ID?
     var creationDate: Date?
+    var lastUpdateDate: Date?
+    var status: Int?
 }
 
 extension PublicUser: Content {}
@@ -27,6 +29,8 @@ extension PublicUser: Codable {
         case fullname = "fn"
         case roleID = "idr"
         case creationDate = "cd"
+        case lastUpdateDate = "lud"
+        case status = "s"
     }
 }
 
@@ -40,6 +44,8 @@ extension PublicUser: Modelable {
         self.fullname = model.fullname
         self.roleID = model.roleID
         self.creationDate = model.creationDate
+        self.lastUpdateDate = model.lastUpdateDate
+        self.status = model.status
     }
     
     func toModel() -> User? {

@@ -39,17 +39,23 @@ struct ProductOutput: MySQLModel {
     var quantity: Int
     var creationDate: Date?
     var creatorID: User.ID?
+    var lastUpdateDate: Date?
+    var status: Int?
     
     init(id: Int? = nil,
          prodInputID: ProductInput.ID,
          quantity: Int,
          creationDate: Date? = nil,
-         creatorID: User.ID? = nil) {
+         creatorID: User.ID? = nil,
+         lastUpdateDate: Date? = nil,
+         status: Int? = nil) {
         self.id = id
         self.prodInputID = prodInputID
         self.quantity = quantity
         self.creationDate = creationDate
         self.creatorID = creatorID
+        self.lastUpdateDate = lastUpdateDate
+        self.status = status
     }
     
     enum CodingKeys: String, CodingKey {
@@ -58,6 +64,8 @@ struct ProductOutput: MySQLModel {
         case quantity = "quantity"
         case creationDate = "creation_date"
         case creatorID = "creation_user_id"
+        case lastUpdateDate = "last_update_date"
+        case status
     }
 }
 
@@ -72,7 +80,7 @@ extension ProductOutput {
     }
 }
 
-extension ProductOutput: FilterableByCreationDate {}
+extension ProductOutput: FilterableByLastUpdateDate {}
 
 extension ProductOutput: Validatable {
     

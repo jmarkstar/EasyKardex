@@ -36,6 +36,8 @@ public struct PublicProductProvider {
     let contactName: String?
     let contactPhone: String?
     let creationDate: Date?
+    var lastUpdateDate: Date?
+    var status: Int?
 }
 
 extension PublicProductProvider: Content {}
@@ -48,6 +50,8 @@ extension PublicProductProvider: Codable {
         case contactName = "cn"
         case contactPhone = "cp"
         case creationDate = "cd"
+        case lastUpdateDate = "lud"
+        case status = "s"
     }
 }
 
@@ -61,6 +65,8 @@ extension PublicProductProvider: Modelable {
         self.contactName = model.contactName
         self.contactPhone = model.contactPhoneNumber
         self.creationDate = model.creationDate
+        self.lastUpdateDate = model.lastUpdateDate
+        self.status = model.status
     }
     
     func toModel() -> ProductProvider? {

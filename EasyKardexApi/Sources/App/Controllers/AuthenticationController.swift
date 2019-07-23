@@ -33,13 +33,13 @@ final class AuthenticationController: RouteCollection {
 
     func boot(router: Router) throws {
 
-        //router.post("register", use: register)
+        router.post("register", use: register)
         router.post("login", use: login)
 
         router.authenticated().get("logout", use: logout)
     }
 
-    /*func register(_ req: Request) throws -> Future<User.UserPublic> {
+    func register(_ req: Request) throws -> Future<PublicUserLoggedIn> {
 
         return try req.content.decode(User.self).flatMap { user in
 
@@ -52,12 +52,28 @@ final class AuthenticationController: RouteCollection {
             
             let newUser = User(username: user.username, password: passwordHashed, fullname: user.fullname, roleID: roleID)
 
-            return newUser.save(on: req).map { storedUser in
+            return newUser.save(on: req).flatMap { storedUser in
 
-                return User.UserPublic(id: try storedUser.requireID(), username: storedUser.username)
+                return try UserToken
+                    .query(on: req)
+                    .filter(\UserToken.userID, .equal, storedUser.requireID())
+                    .delete()
+                    .flatMap { _ in
+                        
+                        let tokenString = try URandom().generateData(count: 32).base64EncodedString()
+                        
+                        let token = try UserToken(string: tokenString, userID: storedUser.requireID())
+                        
+                        return token.save(on: req).flatMap(to: PublicUserLoggedIn.self) { userToken in
+                            
+                            return Future.map(on: req) {
+                                return PublicUserLoggedIn(token: userToken.string, user: storedUser.toPublic())
+                            }
+                        }
+                }
             }
         }
-    }*/
+    }
 
     func login(_ req: Request) throws -> Future<PublicUserLoggedIn> {
         

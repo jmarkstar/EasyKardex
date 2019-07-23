@@ -64,8 +64,8 @@ final class ProductInputController: BasicController<ProductInput>, RouteCollecti
             queryBuilder.filter(\.productID == productId)
         }
         
-        if let creationDate = filters.creationDate {
-            queryBuilder.filter(\.creationDate >= creationDate)
+        if let lastUpdateDate = filters.lastUpdateDate {
+            queryBuilder.filter(\.lastUpdateDate >= lastUpdateDate)
         }
         
         return queryBuilder.all().flatMap { inputs in

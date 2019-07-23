@@ -44,6 +44,8 @@ struct Product: MySQLModel {
     var thumb: String?
     var description: String?
     var creationDate: Date?
+    var lastUpdateDate: Date?
+    var status: Int?
     
     enum CodingKeys: String, CodingKey {
         case id = "id_prod"
@@ -55,6 +57,8 @@ struct Product: MySQLModel {
         case thumb = "thumb"
         case description = "description"
         case creationDate = "creation_date"
+        case lastUpdateDate = "last_update_date"
+        case status
     }
 }
 
@@ -73,7 +77,7 @@ extension Product {
     }
 }
 
-extension Product: FilterableByCreationDate { }
+extension Product: FilterableByLastUpdateDate { }
 
 extension Product: Validatable {
     
@@ -98,7 +102,7 @@ extension Product: Publishable {
         
         self.init(id: from.id, brandID: brandId, categoryID: catId, unitID: unitId,
                   name: name, image: from.image, thumb: from.thumb, description: from.description,
-                  creationDate: from.creationDate)
+                  creationDate: from.creationDate, lastUpdateDate: from.lastUpdateDate, status: from.status)
     }
     
     func toPublic() -> PublicProduct {

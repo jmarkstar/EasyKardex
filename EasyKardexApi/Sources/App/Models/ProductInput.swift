@@ -42,6 +42,8 @@ struct ProductInput: MySQLModel {
     var quantity: Int
     var creationDate: Date?
     var creatorID: User.ID?
+    var lastUpdateDate: Date?
+    var status: Int?
     
     enum CodingKeys: String, CodingKey {
         case id = "id_input"
@@ -52,10 +54,12 @@ struct ProductInput: MySQLModel {
         case quantity = "quantity"
         case creationDate = "creation_date"
         case creatorID = "creation_user_id"
+        case lastUpdateDate = "last_update_date"
+        case status
     }
 }
 
-extension ProductInput: FilterableByCreationDate {}
+extension ProductInput: FilterableByLastUpdateDate {}
 
 extension ProductInput {
     

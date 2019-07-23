@@ -30,18 +30,19 @@ import Foundation
 import FluentMySQL
 import Vapor
 
-class BasicController<M: Publishable> where M: FilterableByCreationDate, M: Validatable, M: Updatable, M.P.M == M {
+class BasicController<M: Publishable> where M: FilterableByLastUpdateDate, M: Validatable, M: Updatable, M.P.M == M {
     
-    /** This methodd is able to filter by creation date.
+    /** This methodd is able to filter by the last update date.
+     * return active and inactive rows.
      */
     func index(_ req: Request) throws -> Future<[M.P]> {
         
         let queryBuilder = M.query(on: req)
         
-        if let creationDateString: String = try req.query.get(at: ["cd"]) {
-            let creationDate = DateFormatter.datetime.date(from: creationDateString)
-            if let creationDate = creationDate {
-                queryBuilder.filter(\.creationDate, ._greaterThanOrEqual, creationDate)
+        if let lastUpdateDateString: String = try req.query.get(at: ["lud"]) {
+            let lastUpdateDate = DateFormatter.datetime.date(from: lastUpdateDateString)
+            if let lastUpdateDate = lastUpdateDate {
+                queryBuilder.filter(\.lastUpdateDate, ._greaterThanOrEqual, lastUpdateDate)
             }
         }
         
@@ -51,14 +52,15 @@ class BasicController<M: Publishable> where M: FilterableByCreationDate, M: Vali
         }
     }
     
-    
+    /** Only return active rows.
+     */
     func getById(_ req: Request) throws -> Future<M.P> {
         
         guard let id = try? req.parameters.next(Int.self) else {
             throw Abort(HTTPStatus.badRequest, reason: req.localizedString("generic.notid"))
         }
         
-        return M.find(id, on: req).flatMap { found in
+        return M.query(on: req).filter(\.id, .equal, id).filter(\.status, .equal, 1).first().flatMap { found in
             
             guard let input = found else {
                 throw Abort(HTTPStatus.notFound, reason: req.localizedString("generic.notfound"))
@@ -108,13 +110,15 @@ class BasicController<M: Publishable> where M: FilterableByCreationDate, M: Vali
         }
     }
     
+    /** The update method will verify if the row is actived in the database according to the filter by id and status. Then, will load the changes, will validate the fields and will update.
+     */
     func update(_ req: Request) throws -> Future<Response> {
         
         guard let id = try? req.parameters.next(Int.self) else {
             throw Abort(HTTPStatus.badRequest, reason: req.localizedString("generic.notid"))
         }
         
-        return M.find(id, on: req).flatMap(to: Response.self) { foundModel in
+        return M.query(on: req).filter(\.id, .equal, id).filter(\.status, .equal, 1).first().flatMap(to: Response.self) { foundModel in
             
             guard var foundModel = foundModel else {
                 throw Abort(HTTPStatus.notFound, reason: req.localizedString("generic.notfound"))
@@ -139,19 +143,23 @@ class BasicController<M: Publishable> where M: FilterableByCreationDate, M: Vali
         }
     }
     
+    /** The delete method will verify if the row is actived in the database according to the filter by id and status. Then, will change the status's value.
+     */
     func delete(_ req: Request) throws -> Future<HTTPStatus> {
         
         guard let id = try? req.parameters.next(Int.self) else {
             throw Abort(HTTPStatus.badRequest, reason: req.localizedString("generic.notid"))
         }
         
-        return M.find(id, on: req).flatMap(to: HTTPStatus.self) { found in
+        return M.query(on: req).filter(\.id, .equal, id).filter(\.status, .equal, 1).first().flatMap(to: HTTPStatus.self) { found in
             
-            guard let model = found else {
+            guard var model = found else {
                 throw Abort(HTTPStatus.notFound, reason: req.localizedString("generic.notfound"))
             }
             
-            return model.delete(on: req).transform(to: .noContent)
+            model.status = 0
+            
+            return model.update(on: req).transform(to: .noContent)
         }
     }
 }

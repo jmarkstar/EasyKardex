@@ -34,6 +34,8 @@ public struct PublicProductBrand {
     let id: Int?
     let name: String?
     let creationDate: Date?
+    var lastUpdateDate: Date?
+    var status: Int?
 }
 
 extension PublicProductBrand: Content {}
@@ -44,6 +46,8 @@ extension PublicProductBrand: Codable {
         case id = "id"
         case name = "n"
         case creationDate = "cd"
+        case lastUpdateDate = "lud"
+        case status = "s"
     }
 }
 
@@ -55,6 +59,8 @@ extension PublicProductBrand: Modelable {
         self.id = model.id
         self.name = model.name
         self.creationDate = model.creationDate
+        self.lastUpdateDate = model.lastUpdateDate
+        self.status = model.status
     }
     
     func toModel() -> ProductBrand? {

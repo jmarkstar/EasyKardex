@@ -36,6 +36,8 @@ public struct PublicProductOutput {
     let quantity: Int
     let creationDate: Date?
     var creatorID: Int?
+    var lastUpdateDate: Date?
+    var status: Int?
 }
 
 extension PublicProductOutput: Content {}
@@ -48,6 +50,8 @@ extension PublicProductOutput: Codable {
         case quantity = "q"
         case creationDate = "cd"
         case creatorID = "cuid"
+        case lastUpdateDate = "lud"
+        case status = "s"
     }
     
     public init(from decoder: Decoder) throws {
@@ -103,6 +107,8 @@ extension PublicProductOutput: Modelable {
         self.quantity = model.quantity
         self.creationDate = model.creationDate
         self.creatorID = model.creatorID
+        self.lastUpdateDate = model.lastUpdateDate
+        self.status = model.status
     }
     
     func toModel() -> ProductOutput? {

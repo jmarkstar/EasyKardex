@@ -38,14 +38,30 @@ struct User: MySQLModel {
     var fullname: String?
     var roleID: Role.ID?
     var creationDate: Date?
+    var lastUpdateDate: Date?
+    var status: Int?
+    
+    init(id: Int? = nil, username: String, password: String, fullname: String? = nil, roleID: Role.ID? = nil,
+         creationDate: Date? = nil, lastUpdateDate: Date? = nil, status: Int? = nil) {
+        self.id = id
+        self.username = username
+        self.password = password
+        self.fullname = fullname
+        self.roleID = roleID
+        self.creationDate = creationDate
+        self.lastUpdateDate = lastUpdateDate
+        self.status = status
+    }
 
     enum CodingKeys: String, CodingKey {
         case id = "id_user"
-        case username = "username"
-        case password = "password"
-        case fullname = "fullname"
+        case username
+        case password
+        case fullname
         case roleID = "id_role"
         case creationDate = "creation_date"
+        case lastUpdateDate = "last_update_date"
+        case status
     }
 }
 
@@ -56,7 +72,7 @@ extension User {
     }
 }
 
-extension User: FilterableByCreationDate { }
+extension User: FilterableByLastUpdateDate { }
 
 extension User: Publishable {
     
@@ -64,7 +80,7 @@ extension User: Publishable {
     
     init?(from: PublicUser) {
         
-        self.init(id: from.id, username: from.username, password: "", fullname: from.fullname, roleID: from.roleID, creationDate: from.creationDate)
+        self.init(id: from.id, username: from.username, password: "", fullname: from.fullname, roleID: from.roleID, creationDate: from.creationDate, lastUpdateDate: from.lastUpdateDate, status: from.status)
     }
     
     func toPublic() -> PublicUser {
