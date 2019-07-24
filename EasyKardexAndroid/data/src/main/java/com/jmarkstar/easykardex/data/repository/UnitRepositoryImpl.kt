@@ -28,8 +28,140 @@
 package com.jmarkstar.easykardex.data.repository
 
 import com.jmarkstar.easykardex.data.api.UnitService
+import com.jmarkstar.easykardex.data.cache.EasyKardexCache
 import com.jmarkstar.easykardex.data.database.daos.UnitDao
+import com.jmarkstar.easykardex.data.entities.EntityStatus
+import com.jmarkstar.easykardex.data.entities.UnitEntity
+import com.jmarkstar.easykardex.data.entities.mapToDomain
+import com.jmarkstar.easykardex.data.utils.LibraryUtils
+import com.jmarkstar.easykardex.data.utils.processError
+import com.jmarkstar.easykardex.data.utils.processNetworkResult
+import com.jmarkstar.easykardex.domain.datasources.UnitRepository
+import com.jmarkstar.easykardex.domain.models.FailureReason
+import com.jmarkstar.easykardex.domain.models.ProductProperty
+import com.jmarkstar.easykardex.domain.models.Result
+import java.util.*
+import kotlin.collections.ArrayList
 
-internal class UnitRepositoryImpl(private val unitDao: UnitDao, private val unitService: UnitService) {
+internal class UnitRepositoryImpl(private val cache: EasyKardexCache,
+                                  private val unitDao: UnitDao,
+                                  private val unitService: UnitService): UnitRepository {
+
+    override suspend fun getAll(refresh: Boolean): Result<List<ProductProperty>> = try {
+
+        if(!refresh){
+            val localItems = unitDao.getUnits().mapToDomain()
+            Result.Success(localItems)
+        }
+
+        val result = unitService.getAll(cache.unitsLastUpdateDate)
+
+        processNetworkResult(result.code()) {
+
+            val newItemsResult = result.body() ?: ArrayList()
+
+            newItemsResult.forEach {
+
+                when(it.status) {
+                    EntityStatus.ACTIVE -> unitDao.insert(it)
+                    EntityStatus.INACTIVE -> {
+
+                        if(it.id != null) {
+                            unitDao.deleteUnitById(it.id)
+                        }
+                    }
+                }
+            }
+
+            cache.unitsLastUpdateDate = LibraryUtils.dateTimeFormatter.format(Date())
+
+            Result.Success(unitDao.getUnits().mapToDomain())
+        }
+    } catch (ex: Exception) {
+        processError(ex)
+    }
+
+    override suspend fun insert(unit: ProductProperty): Result<ProductProperty> = try {
+
+        val result = unitService.create(UnitEntity(unit))
+
+        processNetworkResult(result.code()) {
+
+            val createdItem = checkNotNull(result.body()){
+                Result.Failure(FailureReason.INTERNAL_ERROR)
+            }
+
+            if(unitDao.insert(createdItem) < 0L) {
+                Result.Failure(FailureReason.DATABASE_OPERATION_ERROR)
+            } else {
+                Result.Success(createdItem.mapToDomain())
+            }
+        }
+    } catch (ex: Exception) {
+        processError(ex)
+    }
+
+    override suspend fun update(id: Long, unit: ProductProperty): Result<ProductProperty> = try {
+
+        val result = unitService.update(id, UnitEntity(unit) )
+
+        processNetworkResult(result.code()) {
+
+            val updatedItem = checkNotNull(result.body()){
+                Result.Failure(FailureReason.INTERNAL_ERROR)
+            }
+
+            if(unitDao.insert(updatedItem) < 0L) {
+                Result.Failure(FailureReason.DATABASE_OPERATION_ERROR)
+            } else {
+                Result.Success(updatedItem.mapToDomain())
+            }
+        }
+    } catch (ex: Exception) {
+        processError(ex)
+    }
+
+    override suspend fun delete(unit: ProductProperty): Result<Boolean> = try {
+
+        val id = checkNotNull(unit.id){
+            return Result.Failure(FailureReason.WRONG_VALUES_ON_PARAMETERS)
+        }
+
+        val result = unitService.delete(id)
+
+        processNetworkResult(result.code()) {
+
+            if(unitDao.deleteUnitById(id) < 1L) {
+                Result.Failure(FailureReason.DATABASE_OPERATION_ERROR)
+            } else {
+                Result.Success(result.isSuccessful)
+            }
+        }
+    } catch (ex: Exception) {
+        processError(ex)
+    }
+
+    override suspend fun getUnitById(id: Long): Result<ProductProperty> = try {
+
+        val localItem = unitDao.getUnitById(id)
+
+        if(localItem != null){
+            Result.Success(localItem.mapToDomain())
+        }
+
+        val result = unitService.findById(id)
+
+        processNetworkResult(result.code()) {
+
+            val foundItem = checkNotNull(result.body()){
+                Result.Failure(FailureReason.INTERNAL_ERROR)
+            }
+
+            Result.Success(foundItem.mapToDomain())
+        }
+    } catch (ex: Exception){
+        processError(ex)
+    }
+
 
 }

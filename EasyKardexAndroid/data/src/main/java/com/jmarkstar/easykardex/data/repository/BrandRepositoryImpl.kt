@@ -43,7 +43,9 @@ import com.jmarkstar.easykardex.domain.models.Result
 import java.util.*
 import kotlin.collections.ArrayList
 
-internal class BrandRepositoryImpl(private val cache: EasyKardexCache, private val brandDao: BrandDao, private val brandService: BrandService): BrandRepository {
+internal class BrandRepositoryImpl(private val cache: EasyKardexCache,
+                                   private val brandDao: BrandDao,
+                                   private val brandService: BrandService): BrandRepository {
 
     override suspend fun getBrandById(id: Long): Result<ProductProperty> = try {
 

@@ -34,7 +34,7 @@ import retrofit2.http.*
 internal interface CategoryService {
 
     @GET("categories")
-    suspend fun getAll(@Query("cd") creationAt: String): Response<List<CategoryEntity>>
+    suspend fun getAll(@Query("lud") creationAt: String? = null): Response<List<CategoryEntity>>
 
     @GET("categories/{idCategory}")
     suspend fun findById(@Path("idCategory") idCategory: Long): Response<CategoryEntity>

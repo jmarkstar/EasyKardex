@@ -40,6 +40,8 @@ import org.threeten.bp.OffsetDateTime
 @Entity(tableName = "product_brand",
     indices = [Index("id")],
     primaryKeys = ["id"])
+
+
 @JsonClass(generateAdapter = true)
 data class BrandEntity(val id: Long? = null,
                        @Json(name = "n") var name: String,

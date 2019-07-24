@@ -33,8 +33,8 @@ import com.jmarkstar.easykardex.domain.models.Result
 interface UnitRepository {
 
     suspend fun getAll(refresh: Boolean): Result<List<ProductProperty>>
-    suspend fun insert(brand: ProductProperty): Result<ProductProperty>
-    suspend fun update(id: Long, brand: ProductProperty): Result<ProductProperty>
-    suspend fun delete(brand: ProductProperty): Result<Boolean>
+    suspend fun insert(unit: ProductProperty): Result<ProductProperty>
+    suspend fun update(id: Long, unit: ProductProperty): Result<ProductProperty>
+    suspend fun delete(unit: ProductProperty): Result<Boolean>
     suspend fun getUnitById(id: Long): Result<ProductProperty>
 }

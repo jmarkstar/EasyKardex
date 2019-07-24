@@ -34,7 +34,7 @@ import retrofit2.http.*
 internal interface UnitService {
 
     @GET("units")
-    suspend fun getAll(@Query("cd") creationAt: String): Response<List<UnitEntity>>
+    suspend fun getAll(@Query("lud") creationAt: String? = null): Response<List<UnitEntity>>
 
     @GET("units/{idUnit}")
     suspend fun findById(@Path("idUnit") idUnit: Long): Response<UnitEntity>

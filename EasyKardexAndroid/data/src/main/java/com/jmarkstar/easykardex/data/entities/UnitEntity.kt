@@ -34,6 +34,7 @@ import com.jmarkstar.easykardex.domain.models.ProductProperty
 import com.jmarkstar.easykardex.domain.models.ProductPropertyType
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import org.threeten.bp.OffsetDateTime
 
 
 @Entity(tableName = "product_unit",
@@ -43,9 +44,15 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class UnitEntity(val id: Long? = null,
-                      @Json(name = "n") var name: String) {
+                      @Json(name = "n") var name: String,
+                      @Json(name = "lud") var lastUpdateDate: OffsetDateTime? = null,
+                      @Json(name = "s") var status: EntityStatus = EntityStatus.ACTIVE) {
 
     @Ignore var products: List<ProductEntity>? = null
 }
 
+fun UnitEntity(productProperty: ProductProperty): UnitEntity = UnitEntity(productProperty.id, productProperty.name)
+
 fun UnitEntity.mapToDomain(): ProductProperty = ProductProperty(id, ProductPropertyType.UNIT, name)
+
+fun List<UnitEntity>.mapToDomain(): List<ProductProperty> = map { it.mapToDomain() }
