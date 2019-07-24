@@ -42,6 +42,8 @@ internal class EasyKardexCache(private val context: Context, private val moshi: 
     private val BRANDS_LAST_UPDATE_DATE = "brands_last_update_date"
     private val CATEGORIES_LAST_UPDATE_DATE = "categories_last_update_date"
     private val UNITS_LAST_UPDATE_DATE = "units_last_update_date"
+    private val PRODUCTS_LAST_UPDATE_DATE = "products_last_update_date"
+    private val PROVIDERS_LAST_UPDATE_DATE = "providers_last_update_date"
 
     private val sharedPreferences: SharedPreferences by lazy {
         context.getSharedPreferences("easykardex", Context.MODE_PRIVATE)
@@ -94,21 +96,68 @@ internal class EasyKardexCache(private val context: Context, private val moshi: 
         }
 
     var brandsLastUpdateDate: String?
-        get() = sharedPreferences.getString(BRANDS_LAST_UPDATE_DATE, LibraryConstants.EMPTY)
+        get() {
+            val lastUpdate = sharedPreferences.getString(BRANDS_LAST_UPDATE_DATE, LibraryConstants.EMPTY)
+            return if ( lastUpdate == null || lastUpdate == LibraryConstants.EMPTY) {
+                null
+            } else {
+                lastUpdate
+            }
+        }
         set(value) {
             sharedPreferences.edit().putString(BRANDS_LAST_UPDATE_DATE, value).apply()
         }
 
     var categoriesLastUpdateDate: String?
-        get() = sharedPreferences.getString(CATEGORIES_LAST_UPDATE_DATE, LibraryConstants.EMPTY)
+        get() {
+            val lastUpdate = sharedPreferences.getString(CATEGORIES_LAST_UPDATE_DATE, LibraryConstants.EMPTY)
+            return if ( lastUpdate == null || lastUpdate == LibraryConstants.EMPTY) {
+                null
+            } else {
+                lastUpdate
+            }
+        }
         set(value) {
             sharedPreferences.edit().putString(CATEGORIES_LAST_UPDATE_DATE, value).apply()
         }
 
     var unitsLastUpdateDate: String?
-        get() = sharedPreferences.getString(UNITS_LAST_UPDATE_DATE, LibraryConstants.EMPTY)
+        get() {
+            val lastUpdate = sharedPreferences.getString(UNITS_LAST_UPDATE_DATE, LibraryConstants.EMPTY)
+            return if ( lastUpdate == null || lastUpdate == LibraryConstants.EMPTY) {
+                null
+            } else {
+                lastUpdate
+            }
+        }
         set(value) {
             sharedPreferences.edit().putString(UNITS_LAST_UPDATE_DATE, value).apply()
+        }
+
+    var productsLastUpdateDate: String?
+        get() {
+            val lastUpdate = sharedPreferences.getString(PRODUCTS_LAST_UPDATE_DATE, LibraryConstants.EMPTY)
+            return if ( lastUpdate == null || lastUpdate == LibraryConstants.EMPTY) {
+                null
+            } else {
+                lastUpdate
+            }
+        }
+        set(value) {
+            sharedPreferences.edit().putString(PRODUCTS_LAST_UPDATE_DATE, value).apply()
+        }
+
+    var providersLastUpdateDate: String?
+        get() {
+            val lastUpdate = sharedPreferences.getString(PROVIDERS_LAST_UPDATE_DATE, LibraryConstants.EMPTY)
+            return if ( lastUpdate == null || lastUpdate == LibraryConstants.EMPTY) {
+                null
+            } else {
+                lastUpdate
+            }
+        }
+        set(value) {
+            sharedPreferences.edit().putString(PROVIDERS_LAST_UPDATE_DATE, value).apply()
         }
 
     fun clear(){

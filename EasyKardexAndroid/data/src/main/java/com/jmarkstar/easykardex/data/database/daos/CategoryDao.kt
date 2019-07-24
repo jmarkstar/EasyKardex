@@ -48,7 +48,7 @@ import com.jmarkstar.easykardex.data.entities.CategoryEntity
     suspend fun insertAll(categories: List<CategoryEntity>): List<Long>
 
     @Query("DELETE FROM product_category")
-    suspend fun deleteCategories(): Int
+    suspend fun cleanTable(): Int
 
     @Query("DELETE FROM product_category WHERE id = :id")
     suspend fun deleteCategoryById(id: Long): Int

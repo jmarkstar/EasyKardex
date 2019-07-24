@@ -31,6 +31,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Ignore
 import androidx.room.Index
+import com.jmarkstar.easykardex.domain.models.Product
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import org.threeten.bp.OffsetDateTime
@@ -64,3 +65,16 @@ data class ProductEntity(@Json(name = "idp") val id: Long? = null,
     @Ignore var unit: UnitEntity? = null
     @Ignore var inputs: ArrayList<ProductInputEntity>? = null
 }
+
+fun ProductEntity(domain: Product): ProductEntity = ProductEntity(domain.id,
+                                                                domain.brandId,
+                                                                domain.categoryId,
+                                                                domain.unitId,
+                                                                domain.name,
+                                                                domain.thumb,
+                                                                domain.image,
+                                                                domain.description)
+
+fun ProductEntity.mapToDomain(): Product = Product(id, brandId, categoryId, unitId, name, thumb, image, description)
+
+fun List<ProductEntity>.mapToDomain(): List<Product> = map { it.mapToDomain() }

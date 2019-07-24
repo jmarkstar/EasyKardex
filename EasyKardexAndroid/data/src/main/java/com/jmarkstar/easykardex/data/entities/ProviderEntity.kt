@@ -30,6 +30,7 @@ package com.jmarkstar.easykardex.data.entities
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.Index
+import com.jmarkstar.easykardex.domain.models.Provider
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import org.threeten.bp.OffsetDateTime
@@ -51,3 +52,9 @@ data class ProviderEntity(var id: Long,
 
     @Ignore var inputs: List<ProductInputEntity>? = null
 }
+
+fun ProviderEntity(provider: Provider): ProviderEntity = ProviderEntity(provider.id, provider.companyName, provider.contactName, provider.contactPhoneNumber)
+
+fun ProviderEntity.mapToDomain(): Provider = Provider(id, companyName, contactName, contactPhoneNumber)
+
+fun List<ProviderEntity>.mapToDomain(): List<Provider> = map { it.mapToDomain() }

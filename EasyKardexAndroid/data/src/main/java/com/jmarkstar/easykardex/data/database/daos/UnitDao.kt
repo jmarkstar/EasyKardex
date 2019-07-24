@@ -48,7 +48,7 @@ import com.jmarkstar.easykardex.data.entities.UnitEntity
     suspend fun insertAll(units: List<UnitEntity>): List<Long>
 
     @Query("DELETE FROM product_unit")
-    suspend fun deleteUnits(): Int
+    suspend fun cleanTable(): Int
 
     @Query("DELETE FROM product_unit WHERE id = :id")
     suspend fun deleteUnitById(id: Long): Int

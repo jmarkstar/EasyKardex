@@ -45,7 +45,7 @@ import com.jmarkstar.easykardex.data.entities.ProductEntity
     suspend fun insertAll(products: List<ProductEntity>): List<Long>
 
     @Query("DELETE FROM product")
-    suspend fun deleteProducts(): Int
+    suspend fun cleanTable(): Int
 
     @Query("DELETE FROM product WHERE id = :id")
     suspend fun deleteProductById(id: Long): Int

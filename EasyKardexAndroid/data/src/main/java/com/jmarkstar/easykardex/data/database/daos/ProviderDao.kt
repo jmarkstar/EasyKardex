@@ -21,35 +21,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created by jmarkstar on 7/12/19 7:23 PM
+ * Created by jmarkstar on 7/24/19 11:57 PM
  *
  */
 
 package com.jmarkstar.easykardex.data.database.daos
 
-import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.jmarkstar.easykardex.data.entities.BrandEntity
+import com.jmarkstar.easykardex.data.entities.ProviderEntity
 
-@Dao internal interface BrandDao {
+interface ProviderDao {
 
-    @Query("SELECT * FROM product_brand WHERE id = :id")
-    suspend fun getBrandById(id: Long): BrandEntity?
-
-    @Query("SELECT * FROM product_brand")
-    suspend fun getBrands(): List<BrandEntity>
+    @Query("SELECT * FROM provider")
+    suspend fun getProviders(): List<ProviderEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(brand: BrandEntity): Long
+    suspend fun insert(provider: ProviderEntity): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(brands: List<BrandEntity>): List<Long>
+    suspend fun insertAll(providers: List<ProviderEntity>): List<Long>
 
-    @Query("DELETE FROM product_brand")
+    @Query("DELETE FROM provider")
     suspend fun cleanTable(): Int
 
-    @Query("UPDATE product_brand SET status = 0 WHERE id = :id")
-    suspend fun deleteBrandById(id: Long): Int
+    @Query("DELETE FROM provider WHERE id = :id")
+    suspend fun deleteProviderById(id: Long): Int
 }
