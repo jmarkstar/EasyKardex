@@ -33,12 +33,33 @@ import org.koin.dsl.module
 
 val useCaseModule: Module = module {
 
+    //Account
+
     factory { LoginUseCase(accountRepository = get()) }
     factory { LogoutUseCase(accountRepository = get()) }
     factory { GetUserLoggedInUseCase(accountRepository = get()) }
+
+    // Product Property
+
     factory { InsertNewProductPropertyUseCase(brandRepository = get(), categoryRepository = get(), unitRepository = get()) }
     factory { UpdateProductPropertyUseCase(brandRepository = get(), categoryRepository = get(), unitRepository = get()) }
     factory { DeleteProductPropertyUseCase(brandRepository = get(), categoryRepository = get(), unitRepository = get()) }
     factory { GetProductPropertiesUseCase(brandRepository = get(), categoryRepository = get(), unitRepository = get()) }
     factory { GetProductPropertyByIdUseCase(brandRepository = get(), categoryRepository = get(), unitRepository = get()) }
+
+    // Product
+
+    factory { InsertNewProductUseCase(productRepository = get()) }
+    factory { UpdateProductUseCase(productRepository = get()) }
+    factory { DeleteProductUseCase(productRepository = get()) }
+    factory { GetProductsUseCase(productRepository = get()) }
+    factory { GetProductByIdUseCase(productRepository = get()) }
+
+    // Provider
+
+    factory { InsertNewProviderUseCase(providerRepository = get()) }
+    factory { UpdateProviderUseCase(providerRepository = get()) }
+    factory { DeleteProviderUseCase(providerRepository = get()) }
+    factory { GetProvidersUseCase(providerRepository = get()) }
+    factory { GetProviderByIdUseCase(providerRepository = get()) }
 }

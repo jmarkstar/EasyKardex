@@ -21,33 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created by jmarkstar on 7/12/19 6:01 PM
+ * Created by jmarkstar on 7/24/19 2:20 PM
  *
  */
 
-package com.jmarkstar.easykardex.data.entities
+package com.jmarkstar.easykardex.domain.models
 
-import androidx.room.Entity
-import androidx.room.Ignore
-import androidx.room.Index
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
-import org.threeten.bp.OffsetDateTime
-
-
-@Entity(tableName = "provider",
-    indices = [Index("id")],
-    primaryKeys = ["id"])
-
-
-@JsonClass(generateAdapter = true)
-data class ProviderEntity(var id: Long,
-                          @Json(name = "cpn") var companyName: String,
-                          @Json(name = "cn") var contactName: String,
-                          @Json(name = "cp") var contactPhoneNumber: String,
-                          @Json(name = "cd") var creationDate: OffsetDateTime? = null,
-                          @Json(name = "lud") var lastUpdateDate: OffsetDateTime? = null,
-                          @Json(name = "s") var status: EntityStatus = EntityStatus.ACTIVE) {
-
-    @Ignore var inputs: List<ProductInputEntity>? = null
-}
+class Product(val id: Long? = null,
+              var brandId: Long,
+              var categoryId: Long,
+              var unitId: Long,
+              var name: String,
+              var thumb: String,
+              var image: String,
+              var description: String)

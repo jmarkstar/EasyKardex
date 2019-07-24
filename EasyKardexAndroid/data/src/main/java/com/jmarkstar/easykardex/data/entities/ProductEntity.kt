@@ -33,6 +33,7 @@ import androidx.room.Ignore
 import androidx.room.Index
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import org.threeten.bp.OffsetDateTime
 
 
 @Entity(tableName = "product",
@@ -53,7 +54,10 @@ data class ProductEntity(@Json(name = "idp") val id: Long? = null,
                          @Json(name = "n")   var name: String,
                          @Json(name = "t")   var thumb: String,
                          @Json(name = "i")   var image: String,
-                         @Json(name = "d")   var description: String) {
+                         @Json(name = "d")   var description: String,
+                         @Json(name = "cd") var creationDate: OffsetDateTime? = null,
+                         @Json(name = "lud") var lastUpdateDate: OffsetDateTime? = null,
+                         @Json(name = "s") var status: EntityStatus = EntityStatus.ACTIVE) {
 
     @Ignore var brand: BrandEntity? = null
     @Ignore var category: CategoryEntity? = null
