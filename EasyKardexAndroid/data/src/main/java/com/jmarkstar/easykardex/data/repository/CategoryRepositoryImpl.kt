@@ -34,8 +34,8 @@ import com.jmarkstar.easykardex.data.entities.CategoryEntity
 import com.jmarkstar.easykardex.data.entities.EntityStatus
 import com.jmarkstar.easykardex.data.entities.mapToDomain
 import com.jmarkstar.easykardex.data.utils.LibraryUtils
-import com.jmarkstar.easykardex.data.utils.processError
-import com.jmarkstar.easykardex.data.utils.processNetworkResult
+import com.jmarkstar.easykardex.data.api.processError
+import com.jmarkstar.easykardex.data.api.processNetworkResult
 import com.jmarkstar.easykardex.domain.datasources.CategoryRepository
 import com.jmarkstar.easykardex.domain.models.FailureReason
 import com.jmarkstar.easykardex.domain.models.ProductProperty

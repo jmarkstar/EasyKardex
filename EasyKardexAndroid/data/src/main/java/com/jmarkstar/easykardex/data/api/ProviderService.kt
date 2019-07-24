@@ -27,5 +27,24 @@
 
 package com.jmarkstar.easykardex.data.api
 
+import com.jmarkstar.easykardex.data.entities.ProviderEntity
+import retrofit2.Response
+import retrofit2.http.*
+
 internal interface ProviderService {
+
+    @GET("providers")
+    suspend fun getAll(@Query("lud") lastUpdateDate: String? = null): Response<List<ProviderEntity>>
+
+    @GET("providers/{idProvider}")
+    suspend fun findById(@Path("idProvider") idProvider: Long): Response<ProviderEntity>
+
+    @POST("providers")
+    suspend fun create(@Body newProvider: ProviderEntity): Response<ProviderEntity>
+
+    @DELETE("providers/{idProvider}")
+    suspend fun delete(@Path("idProvider") idProvider: Long): Response<Void>
+
+    @PUT("providers/{idProvider}")
+    suspend fun update(@Path("idProvider") idProvider: Long, @Body updatedProvider: ProviderEntity): Response<ProviderEntity>
 }

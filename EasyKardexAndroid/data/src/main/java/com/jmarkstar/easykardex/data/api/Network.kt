@@ -21,30 +21,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created by jmarkstar on 7/12/19 6:12 PM
+ * Created by jmarkstar on 7/24/19 2:59 PM
  *
  */
 
 package com.jmarkstar.easykardex.data.api
 
-import com.jmarkstar.easykardex.data.entities.ProductEntity
-import retrofit2.Response
-import retrofit2.http.*
+import com.jmarkstar.easykardex.domain.models.FailureReason
+import com.jmarkstar.easykardex.domain.models.Result
+import java.lang.Exception
+import java.net.UnknownHostException
 
-internal interface ProductService {
+suspend fun <T: Any>processNetworkResult(resultCode: Int, sucessResult: suspend () -> Result<T>): Result<T> {
+    return when(resultCode){
+        in 200..204 -> {
 
-    @GET("products")
-    suspend fun getAll(@Query("lud") lastUpdateDate: String? = null): Response<List<ProductEntity>>
+            sucessResult.invoke()
+        }
+        401 -> Result.Failure(FailureReason.EXPIRED_TOKEN)
+        403 -> Result.Failure(FailureReason.WRONG_VALUES_ON_PARAMETERS)
+        else -> Result.Failure(FailureReason.INTERNAL_ERROR)
+    }
+}
 
-    @GET("products/{idProduct}")
-    suspend fun findById(@Path("idProduct") idProduct: Long): Response<ProductEntity>
-
-    @POST("products")
-    suspend fun create(@Body newProduct: ProductEntity): Response<ProductEntity>
-
-    @DELETE("products/{idProduct}")
-    suspend fun delete(@Path("idProduct") idProduct: Long): Response<Void>
-
-    @PUT("products/{idProduct}")
-    suspend fun update(@Path("idProduct") idProduct: Long, @Body updatedProduct: ProductEntity): Response<ProductEntity>
+fun <T: Any>processError(exception: Exception): Result<T> {
+    exception.printStackTrace()
+    return when(exception){
+        is UnknownHostException -> Result.Failure(FailureReason.SERVER_COULDNT_BE_FOUND)
+        else -> Result.Failure(FailureReason.INTERNAL_ERROR)
+    }
 }
