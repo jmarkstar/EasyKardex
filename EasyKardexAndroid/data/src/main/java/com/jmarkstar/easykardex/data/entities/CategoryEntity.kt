@@ -34,7 +34,7 @@ import com.jmarkstar.easykardex.domain.models.ProductProperty
 import com.jmarkstar.easykardex.domain.models.ProductPropertyType
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import org.threeten.bp.OffsetDateTime
+import org.threeten.bp.LocalDateTime
 
 
 @Entity(tableName = "product_category",
@@ -45,7 +45,7 @@ import org.threeten.bp.OffsetDateTime
 @JsonClass(generateAdapter = true)
 data class CategoryEntity(val id: Long? = null,
                           @Json(name = "n") var name: String,
-                          @Json(name = "lud") var lastUpdateDate: OffsetDateTime? = null,
+                          @Json(name = "lud") var lastUpdateDate: LocalDateTime? = null,
                           @Json(name = "s") var status: EntityStatus = EntityStatus.ACTIVE) {
 
     @Ignore var products: List<ProductEntity>? = null

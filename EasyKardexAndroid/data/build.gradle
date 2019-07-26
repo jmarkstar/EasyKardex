@@ -79,8 +79,14 @@ dependencies {
 
     implementation "com.jakewharton.threetenabp:threetenabp:$threetenabp_version"
 
-    testImplementation 'junit:junit:4.12'
+    testImplementation "junit:junit:$junit_version"
     testImplementation "org.koin:koin-test:$koin_version"
+    testImplementation "org.mockito:mockito-core:$mockito_version"
+    testImplementation("org.threeten:threetenbp:${threetenbp_version}") {
+        exclude module: "com.jakewharton.threetenabp:threetenabp:${threetenabp_version}"
+    }
 
-    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation "androidx.test:runner:$testRunner_version"
+    androidTestImplementation "org.koin:koin-test:$koin_version"
+    androidTestImplementation "org.mockito:mockito-core:$mockito_version"
 }

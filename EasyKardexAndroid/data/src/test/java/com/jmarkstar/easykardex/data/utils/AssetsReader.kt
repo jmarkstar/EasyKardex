@@ -21,24 +21,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created by jmarkstar on 7/13/19 7:36 AM
+ * Created by jmarkstar on 7/27/19 12:59 AM
  *
  */
 
 package com.jmarkstar.easykardex.data.utils
 
-import org.threeten.bp.format.DateTimeFormatter
-import java.text.SimpleDateFormat
-import java.util.*
+import java.io.BufferedReader
+import java.io.InputStreamReader
 
-internal object LibraryUtils {
-
-    val localDatetimeFormat = "yyyy-MM-dd HH:mm:ss"
-    val dateTimeFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
-
-    val localDateTimeFormater = DateTimeFormatter.ofPattern(localDatetimeFormat)
-    val zonedDateTimeFormatter = DateTimeFormatter.ofPattern(dateTimeFormat)
-    val dateTimeFormatter = SimpleDateFormat(dateTimeFormat, Locale.getDefault())
-
-    val dateFormmatter = SimpleDateFormat("yyyy-mm-dd", Locale.getDefault())
+fun readFileAsString(javaClass: Class<*>, resource: String) : String {
+    val stream = javaClass.classLoader.getResourceAsStream(resource)
+    val sb = StringBuilder()
+    var line: String?
+    val br = BufferedReader(InputStreamReader(stream))
+    line = br.readLine()
+    while (line != null) {
+        sb.append(line)
+        line = br.readLine()
+    }
+    br.close()
+    return sb.toString()
+            .trim()
 }

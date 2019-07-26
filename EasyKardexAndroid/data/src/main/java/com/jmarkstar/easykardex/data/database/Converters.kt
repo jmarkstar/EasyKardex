@@ -30,6 +30,7 @@ package com.jmarkstar.easykardex.data.database
 import androidx.room.TypeConverter
 import com.jmarkstar.easykardex.data.entities.EntityStatus
 import com.jmarkstar.easykardex.data.utils.LibraryUtils
+import org.threeten.bp.LocalDateTime
 import org.threeten.bp.OffsetDateTime
 import java.util.*
 
@@ -41,16 +42,16 @@ class Converters {
 
         @TypeConverter
         @JvmStatic
-        fun toOffsetDateTime(value: String?): OffsetDateTime? {
+        fun toLocalDateTime(value: String?): LocalDateTime? {
             return value?.let {
-                return LibraryUtils.offsetDateTimeFormatter.parse(it, OffsetDateTime::from)
+                return LocalDateTime.parse(it, LibraryUtils.localDateTimeFormater)
             }
         }
 
         @TypeConverter
         @JvmStatic
-        fun fromOffsetDateTime(date: OffsetDateTime?): String? {
-            return date?.format(LibraryUtils.offsetDateTimeFormatter)
+        fun fromLocalDateTime(date: LocalDateTime?): String? {
+            return LibraryUtils.localDateTimeFormater.format(date)
         }
 
         // DATE

@@ -30,7 +30,7 @@ package com.jmarkstar.easykardex.data.entities
 import androidx.room.*
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import org.threeten.bp.OffsetDateTime
+import org.threeten.bp.LocalDateTime
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -71,7 +71,7 @@ data class ProductInputEntity(var id: Long,
                               var creatorId: Long,
 
                               @Json(name = "cd")
-                              var createAt: OffsetDateTime
+                              var createAt: LocalDateTime
 ) {
 
     @Ignore var product: ProductEntity? = null

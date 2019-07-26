@@ -21,24 +21,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created by jmarkstar on 7/13/19 7:36 AM
+ * Created by jmarkstar on 7/25/19 11:56 PM
  *
  */
 
-package com.jmarkstar.easykardex.data.utils
+package com.jmarkstar.easykardex.data.di
 
-import org.threeten.bp.format.DateTimeFormatter
-import java.text.SimpleDateFormat
-import java.util.*
+import org.koin.core.module.Module
+import org.koin.core.qualifier.named
+import org.koin.dsl.module
 
-internal object LibraryUtils {
+val constantTestModule: Module = module {
 
-    val localDatetimeFormat = "yyyy-MM-dd HH:mm:ss"
-    val dateTimeFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+    single(named("debug")) { true }
 
-    val localDateTimeFormater = DateTimeFormatter.ofPattern(localDatetimeFormat)
-    val zonedDateTimeFormatter = DateTimeFormatter.ofPattern(dateTimeFormat)
-    val dateTimeFormatter = SimpleDateFormat(dateTimeFormat, Locale.getDefault())
-
-    val dateFormmatter = SimpleDateFormat("yyyy-mm-dd", Locale.getDefault())
+    single(named("baseUrl")) { "http://cd065281.ngrok.io/v1/" }
 }

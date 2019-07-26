@@ -30,7 +30,7 @@ package com.jmarkstar.easykardex.data.entities
 import androidx.room.*
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import org.threeten.bp.OffsetDateTime
+import org.threeten.bp.LocalDateTime
 
 /** ProductOutputEntity will work as a Entity for store it on SQLite, for parsing the API response and for use it on the up level.
  *
@@ -59,7 +59,7 @@ class ProductOutputEntity(var id: Long,
                           var creatorId: Long,
 
                           @Json(name = "cd")
-                          var createAt: OffsetDateTime
+                          var createAt: LocalDateTime
 ) {
 
     @Ignore var productInput: ProductInputEntity? = null

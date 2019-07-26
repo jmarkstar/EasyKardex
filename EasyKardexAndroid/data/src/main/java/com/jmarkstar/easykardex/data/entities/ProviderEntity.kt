@@ -33,7 +33,7 @@ import androidx.room.Index
 import com.jmarkstar.easykardex.domain.models.Provider
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import org.threeten.bp.OffsetDateTime
+import org.threeten.bp.LocalDateTime
 
 
 @Entity(tableName = "provider",
@@ -46,8 +46,8 @@ data class ProviderEntity(var id: Long,
                           @Json(name = "cpn") var companyName: String,
                           @Json(name = "cn") var contactName: String,
                           @Json(name = "cp") var contactPhoneNumber: String,
-                          @Json(name = "cd") var creationDate: OffsetDateTime? = null,
-                          @Json(name = "lud") var lastUpdateDate: OffsetDateTime? = null,
+                          @Json(name = "cd") var creationDate: LocalDateTime? = null,
+                          @Json(name = "lud") var lastUpdateDate: LocalDateTime? = null,
                           @Json(name = "s") var status: EntityStatus = EntityStatus.ACTIVE) {
 
     @Ignore var inputs: List<ProductInputEntity>? = null

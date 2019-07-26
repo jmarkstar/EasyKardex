@@ -21,24 +21,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created by jmarkstar on 7/12/19 6:01 PM
+ * Created by jmarkstar on 7/26/19 10:57 AM
  *
  */
 
-package com.jmarkstar.easykardex.data;
+package com.jmarkstar.easykardex.data.entities.adapters
 
-import org.junit.Test;
+import com.jmarkstar.easykardex.data.utils.LibraryUtils
+import com.squareup.moshi.FromJson
+import com.squareup.moshi.ToJson
+import org.threeten.bp.ZonedDateTime
+import org.threeten.bp.format.DateTimeFormatter
 
-import static org.junit.Assert.*;
+class ZonedDateTimeAdapter {
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
- */
-public class ExampleUnitTest {
-    @Test
-    public void addition_isCorrect() {
-        assertEquals(4, 2 + 2);
+    @ToJson
+    fun toJson(datetime: ZonedDateTime): String {
+        return DateTimeFormatter.ofPattern(LibraryUtils.dateTimeFormat).format(datetime)
+    }
+
+    @FromJson
+    fun fromJson(datetimeString: String): ZonedDateTime {
+        return ZonedDateTime.parse(datetimeString, LibraryUtils.zonedDateTimeFormatter)
     }
 }

@@ -47,6 +47,11 @@ buildscript {
         okhttp_version = "4.0.1"
         moshi_version = "1.8.0"
         threetenabp_version= "1.2.1"
+        threetenbp_version="1.4.0"
+
+        junit_version="4.12"
+        mockito_version="3.0.0"
+        testRunner_version="1.2.0"
     }
 
     repositories {

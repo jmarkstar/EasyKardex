@@ -31,12 +31,16 @@ import com.jmarkstar.easykardex.domain.models.User
 import com.jmarkstar.easykardex.domain.models.UserRole
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import org.threeten.bp.LocalDateTime
 
 @JsonClass(generateAdapter = true)
 data class UserEntity(@Json(name = "idu") val userId: Long,
                       @Json(name = "idr") var roleId: UserRoleEntity,
                       @Json(name = "un") var username: String,
-                      @Json(name = "fn") var fullname: String)
+                      @Json(name = "fn") var fullname: String,
+                      @Json(name = "cd") var creationDate: LocalDateTime? = null,
+                      @Json(name = "lud") var lastUpdateDate: LocalDateTime? = null,
+                      @Json(name = "s") var status: EntityStatus = EntityStatus.ACTIVE)
 
 fun UserEntity.mapToDomain(): User {
 
