@@ -48,7 +48,7 @@ import org.robolectric.annotation.Config
 @Config(sdk = [Build.VERSION_CODES.O_MR1])
 class EasyKardexCacheTest: KoinTest {
 
-    private val cache: EasyKardexCache  by inject()
+    private val cache: EasyKardexCache by inject()
 
     @Before
     fun setup() {

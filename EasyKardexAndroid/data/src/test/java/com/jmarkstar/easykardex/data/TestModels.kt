@@ -27,6 +27,7 @@
 
 package com.jmarkstar.easykardex.data
 
+import com.jmarkstar.easykardex.data.entities.BrandEntity
 import com.jmarkstar.easykardex.data.entities.EntityStatus
 import com.jmarkstar.easykardex.data.entities.UserEntity
 import com.jmarkstar.easykardex.data.entities.UserRoleEntity
@@ -36,3 +37,7 @@ val creationDate = LocalDateTime.now()
 val lastUpdateDate = LocalDateTime.now()
 
 val userEntity = UserEntity(1L, UserRoleEntity.ADMIN, "username1","full name", creationDate, lastUpdateDate, EntityStatus.ACTIVE)
+
+val brand = BrandEntity(null, "Coca cola", creationDate, lastUpdateDate, EntityStatus.ACTIVE)
+
+val brands = Array(10){ brand }

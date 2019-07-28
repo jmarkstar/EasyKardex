@@ -30,6 +30,7 @@ package com.jmarkstar.easykardex.data.database
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.jmarkstar.easykardex.data.database.daos.*
 import com.jmarkstar.easykardex.data.database.daos.BrandDao
 import com.jmarkstar.easykardex.data.database.daos.CategoryDao
 import com.jmarkstar.easykardex.data.database.daos.ProductDao
@@ -54,7 +55,7 @@ internal abstract class EasyKardexDatabase: RoomDatabase() {
     abstract val categoryDao: CategoryDao
     abstract val unitDao: UnitDao
     abstract val productDao: ProductDao
-    //abstract val brandDao: Provider
+    abstract val providerDao: ProviderDao
     //abstract val brandDao: BrandDao
     //abstract val brandDao: BrandDao
 

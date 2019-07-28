@@ -70,24 +70,27 @@ val repositoryModule: Module = module {
 /** Cache Module */
 
 val cacheModule: Module = module {
-    single { EasyKardexCache(androidContext(), get()) }
+    single { EasyKardexCache(context = androidContext(), moshi = get()) }
 }
 
 /** Database Module */
 
-val databaseModule: Module = module {
+val daoModule: Module = module {
 
     single { get<EasyKardexDatabase>().brandDao }
     single { get<EasyKardexDatabase>().categoryDao }
     single { get<EasyKardexDatabase>().productDao }
     single { get<EasyKardexDatabase>().unitDao }
-    //single { get<EasyKardexDatabase>().brandDao }
+    single { get<EasyKardexDatabase>().providerDao }
     //single { get<EasyKardexDatabase>().brandDao }
     //single { get<EasyKardexDatabase>().brandDao }
 
+}
+
+val databaseModule: Module = module {
+
     single {
         Room.databaseBuilder(androidContext(), EasyKardexDatabase::class.java, "easykardex-db")
-            //TODO: add more properties
             .build()
     }
 }

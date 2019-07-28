@@ -31,7 +31,6 @@ import androidx.room.TypeConverter
 import com.jmarkstar.easykardex.data.entities.EntityStatus
 import com.jmarkstar.easykardex.data.utils.LibraryUtils
 import org.threeten.bp.LocalDateTime
-import org.threeten.bp.OffsetDateTime
 import java.util.*
 
 class Converters {

@@ -52,6 +52,7 @@ class EasyKardexApplication : Application() {
                 commonModule,
                 networkModule,
                 databaseModule,
+                daoModule,
                 cacheModule,
                 repositoryModule,
                 useCaseModule,
