@@ -39,7 +39,6 @@ import com.jmarkstar.easykardex.data.database.EasyKardexDatabase
 import com.jmarkstar.easykardex.data.entities.adapters.EntityStatusAdapter
 import com.jmarkstar.easykardex.data.entities.adapters.LocalDateTimeAdapter
 import com.jmarkstar.easykardex.data.entities.adapters.UserRoleAdapter
-import com.jmarkstar.easykardex.data.entities.adapters.ZonedDateTimeAdapter
 import com.jmarkstar.easykardex.data.repository.AccountRepositoryImpl
 import com.jmarkstar.easykardex.data.repository.BrandRepositoryImpl
 import com.jmarkstar.easykardex.data.repository.CategoryRepositoryImpl
@@ -114,7 +113,7 @@ val networkModule: Module = module {
         Moshi.Builder()
             .add(UserRoleAdapter())
             .add(EntityStatusAdapter())
-            .add(ZonedDateTimeAdapter())
+            //.add(ZonedDateTimeAdapter())
             .add(LocalDateTimeAdapter())
             .build()
     }

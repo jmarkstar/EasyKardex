@@ -35,5 +35,5 @@ val constantTestModule: Module = module {
 
     single(named("debug")) { true }
 
-    single(named("baseUrl")) { "http://cd065281.ngrok.io/v1/" }
+    single(named("baseUrl")) { "http://741006df.ngrok.io/v1/" }
 }

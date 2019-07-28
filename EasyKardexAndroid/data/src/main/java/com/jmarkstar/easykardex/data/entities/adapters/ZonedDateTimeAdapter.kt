@@ -26,7 +26,7 @@
  */
 
 package com.jmarkstar.easykardex.data.entities.adapters
-
+/*
 import com.jmarkstar.easykardex.data.utils.LibraryUtils
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.ToJson
@@ -44,4 +44,4 @@ class ZonedDateTimeAdapter {
     fun fromJson(datetimeString: String): ZonedDateTime {
         return ZonedDateTime.parse(datetimeString, LibraryUtils.zonedDateTimeFormatter)
     }
-}
+}*/

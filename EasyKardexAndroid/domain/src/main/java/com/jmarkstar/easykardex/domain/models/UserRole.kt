@@ -27,4 +27,4 @@
 
 package com.jmarkstar.easykardex.domain.models
 
-enum class UserRole { ADMIN, OPERATOR }
+enum class UserRole(val value: Int) { ADMIN(1), OPERATOR(2) }

@@ -21,34 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created by jmarkstar on 7/25/19 11:55 PM
+ * Created by jmarkstar on 7/27/19 10:54 PM
  *
  */
 
-package com.jmarkstar.easykardex.data.api
+package com.jmarkstar.easykardex.data.entities
 
-import com.jmarkstar.easykardex.data.api.request.LoginRequest
 import com.jmarkstar.easykardex.data.di.constantTestModule
 import com.jmarkstar.easykardex.data.di.networkModule
-import com.jmarkstar.easykardex.data.entities.UserEntity
-import com.jmarkstar.easykardex.data.utils.LibraryConstants
 import com.jmarkstar.easykardex.data.utils.readFileAsString
 import com.squareup.moshi.Moshi
-import kotlinx.coroutines.runBlocking
-import org.junit.*
+import org.junit.After
+import org.junit.Assert
+import org.junit.Before
+import org.junit.Test
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
 import org.koin.test.inject
+import org.threeten.bp.LocalDateTime
 
-class AccountServiceTest: KoinTest {
-
-    private val accountService: AccountService by inject()
+class UserEntityTest : KoinTest {
 
     private val moshi: Moshi by inject()
 
+    val creationDate = LocalDateTime.now()
+    val lastUpdateDate = LocalDateTime.now()
+
+    val userEntity = UserEntity(1L, UserRoleEntity.ADMIN, "username1","full name", creationDate, lastUpdateDate, EntityStatus.ACTIVE)
+
     @Before
-    fun setupKoinModules(){
+    fun setupKoinModules() {
 
         startKoin {
             modules(listOf(constantTestModule, networkModule))
@@ -56,48 +59,34 @@ class AccountServiceTest: KoinTest {
     }
 
     @Test
-    fun `login success test`() = runBlocking {
-
-        val request = LoginRequest("jmarkstar","abc123")
-
-        val result = accountService.login(request)
-
-        assert(result.isSuccessful)
-        Assert.assertNotNull(result.body())
-        Assert.assertNotNull(result.body()?.token)
-        Assert.assertFalse(result.body()?.token == LibraryConstants.EMPTY)
-
-        val userLoggedIn = readFileAsString(this@AccountServiceTest.javaClass, "assets/UserLoggedInUser.json")
-
+    fun `parse json to user entity success`() {
+        val userLoggedIn = readFileAsString(this@UserEntityTest.javaClass, "assets/UserLoggedInUser.json")
         val userAdapter = moshi.adapter(UserEntity::class.java)
+        val userResponseJson = userAdapter.fromJson(userLoggedIn)
 
-        val userResponseJson = userAdapter.toJson(result.body()!!.user)
-
-        Assert.assertFalse(userLoggedIn == userResponseJson)
+        Assert.assertNotNull(userResponseJson)
     }
 
     @Test
-    fun `login failure user doesnt exist test`() = runBlocking {
+    fun `parse user entity to json success`() {
+        val userAdapter = moshi.adapter(UserEntity::class.java)
+        val jsonString = userAdapter.toJson(userEntity)
 
-        val request = LoginRequest("myuser","abc123")
-
-        val result = accountService.login(request)
-
-        Assert.assertFalse(result.isSuccessful)
-        Assert.assertEquals(true, 404 == result.code())
-
-        Assert.assertNull(result.body())
+        Assert.assertNotNull(jsonString)
+        Assert.assertEquals(true, jsonString != "")
     }
 
     @Test
-    fun `login failure wrong password test`() = runBlocking {
+    fun `map entity to domain success`() {
 
-        val request = LoginRequest("jmarkstar","abcdef")
+        val user = userEntity.mapToDomain()
 
-        val result = accountService.login(request)
+        Assert.assertNotNull(userEntity)
 
-        Assert.assertFalse(result.isSuccessful)
-        Assert.assertEquals(true, 401 == result.code())
+        Assert.assertTrue(user.userId == userEntity.userId)
+        Assert.assertTrue(user.roleId.value == userEntity.roleId.id)
+        Assert.assertTrue(user.username == userEntity.username)
+        Assert.assertTrue(user.fullname == userEntity.fullname)
     }
 
     @After

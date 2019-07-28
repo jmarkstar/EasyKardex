@@ -21,29 +21,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created by jmarkstar on 7/26/19 11:35 AM
+ * Created by jmarkstar on 7/25/19 11:55 PM
  *
  */
 
-package com.jmarkstar.easykardex.data.entities.adapters
+package com.jmarkstar.easykardex.data.api
 
+import com.jmarkstar.easykardex.data.api.request.LoginRequest
 import com.jmarkstar.easykardex.data.di.constantTestModule
 import com.jmarkstar.easykardex.data.di.networkModule
 import com.jmarkstar.easykardex.data.entities.UserEntity
-import com.jmarkstar.easykardex.data.utils.LibraryUtils
+import com.jmarkstar.easykardex.data.utils.LibraryConstants
 import com.jmarkstar.easykardex.data.utils.readFileAsString
 import com.squareup.moshi.Moshi
-import org.junit.After
-import org.junit.Assert
-import org.junit.Before
-import org.junit.Test
+import kotlinx.coroutines.runBlocking
+import org.junit.*
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
 import org.koin.test.inject
-import org.threeten.bp.LocalDateTime
 
-class LocalDateTimeAdapterTest: KoinTest {
+class AccountServiceE2ETest: KoinTest {
+
+    private val accountService: AccountService by inject()
 
     private val moshi: Moshi by inject()
 
@@ -56,19 +56,48 @@ class LocalDateTimeAdapterTest: KoinTest {
     }
 
     @Test
-    fun `parse String to LocalDateTime success`(){
+    fun `login success test`() = runBlocking {
 
-        val datetimeString = "2019-07-24 02:33:09"
-        val zonedDateTime = LocalDateTime.parse(datetimeString, LibraryUtils.localDateTimeFormater)
-        Assert.assertNotNull(zonedDateTime)
+        val request = LoginRequest("jmarkstar","abc123")
+
+        val result = accountService.login(request)
+
+        assert(result.isSuccessful)
+        Assert.assertNotNull(result.body())
+        Assert.assertNotNull(result.body()?.token)
+        Assert.assertFalse(result.body()?.token == LibraryConstants.EMPTY)
+
+        val userLoggedIn = readFileAsString(this@AccountServiceE2ETest.javaClass, "assets/UserLoggedInUser.json")
+
+        val userAdapter = moshi.adapter(UserEntity::class.java)
+
+        val userResponseJson = userAdapter.toJson(result.body()!!.user)
+
+        Assert.assertFalse(userLoggedIn == userResponseJson)
     }
 
     @Test
-    fun `parse LocalDateTime to String success`(){
+    fun `login failure user doesnt exist test`() = runBlocking {
 
-        val localDateTime = LocalDateTime.now()
-        val string = LibraryUtils.localDateTimeFormater.format(localDateTime)
-        Assert.assertNotNull(string)
+        val request = LoginRequest("myuser","abc123")
+
+        val result = accountService.login(request)
+
+        Assert.assertFalse(result.isSuccessful)
+        Assert.assertEquals(true, 404 == result.code())
+
+        Assert.assertNull(result.body())
+    }
+
+    @Test
+    fun `login failure wrong password test`() = runBlocking {
+
+        val request = LoginRequest("jmarkstar","abcdef")
+
+        val result = accountService.login(request)
+
+        Assert.assertFalse(result.isSuccessful)
+        Assert.assertEquals(true, 401 == result.code())
     }
 
     @After

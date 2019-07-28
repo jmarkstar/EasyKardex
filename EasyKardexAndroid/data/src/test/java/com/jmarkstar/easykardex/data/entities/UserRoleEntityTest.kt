@@ -21,28 +21,54 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created by jmarkstar on 7/12/19 6:01 PM
+ * Created by jmarkstar on 7/28/19 11:26 AM
  *
  */
 
 package com.jmarkstar.easykardex.data.entities
 
-import com.jmarkstar.easykardex.domain.models.User
-import com.jmarkstar.easykardex.domain.models.UserRole
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
-import org.threeten.bp.LocalDateTime
+import com.jmarkstar.easykardex.data.di.constantTestModule
+import com.jmarkstar.easykardex.data.di.networkModule
+import org.junit.After
+import org.junit.Assert
+import org.junit.Before
+import org.junit.Test
+import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
 
-@JsonClass(generateAdapter = true)
-data class UserEntity(@Json(name = "idu") val userId: Long,
-                      @Json(name = "idr") var roleId: UserRoleEntity,
-                      @Json(name = "un") var username: String,
-                      @Json(name = "fn") var fullname: String,
-                      @Json(name = "cd") var creationDate: LocalDateTime? = null,
-                      @Json(name = "lud") var lastUpdateDate: LocalDateTime? = null,
-                      @Json(name = "s") var status: EntityStatus = EntityStatus.ACTIVE)
+class UserRoleEntityTest {
 
-fun UserEntity.mapToDomain(): User {
-    val role = if (roleId == UserRoleEntity.ADMIN) UserRole.ADMIN else UserRole.OPERATOR
-    return User(userId, role, username, fullname )
+    @Before
+    fun setupKoinModules() {
+
+        startKoin {
+            modules(listOf(constantTestModule, networkModule))
+        }
+    }
+
+    @Test
+    fun `get Admin Role by Id success`() {
+
+        val admin = UserRoleEntity.getRoleByID(1)
+        Assert.assertTrue(admin == UserRoleEntity.ADMIN)
+    }
+
+    @Test
+    fun `get Operator Role by Id success`() {
+
+        val operator = UserRoleEntity.getRoleByID(2)
+        Assert.assertTrue(operator == UserRoleEntity.OPERATOR)
+    }
+
+    @Test
+    fun `get Null By Role Id success`() {
+
+        val unknownId = UserRoleEntity.getRoleByID(3)
+        Assert.assertNull(unknownId)
+    }
+
+    @After
+    fun stopKoinModules(){
+        stopKoin()
+    }
 }
