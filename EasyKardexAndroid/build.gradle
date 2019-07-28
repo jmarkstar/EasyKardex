@@ -51,6 +51,8 @@ buildscript {
 
         junit_version="4.12"
         mockito_version="3.0.0"
+        robolectric_version="4.3"
+        testcore_version="1.2.0"
         testRunner_version="1.2.0"
     }
 

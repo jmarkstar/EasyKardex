@@ -31,8 +31,8 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion rootProject.compileSdkVersion
 
+    compileSdkVersion rootProject.compileSdkVersion
 
     defaultConfig {
         minSdkVersion rootProject.minSdkVersion
@@ -48,6 +48,12 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
         }
     }
 
@@ -85,6 +91,8 @@ dependencies {
     testImplementation("org.threeten:threetenbp:${threetenbp_version}") {
         exclude module: "com.jakewharton.threetenabp:threetenabp:${threetenabp_version}"
     }
+    testImplementation "org.robolectric:robolectric:$robolectric_version"
+    testImplementation "androidx.test:core:$testcore_version"
 
     androidTestImplementation "androidx.test:runner:$testRunner_version"
     androidTestImplementation "org.koin:koin-test:$koin_version"

@@ -110,15 +110,6 @@ val networkModule: Module = module {
     //HTTP Client
 
     single {
-        Moshi.Builder()
-            .add(UserRoleAdapter())
-            .add(EntityStatusAdapter())
-            //.add(ZonedDateTimeAdapter())
-            .add(LocalDateTimeAdapter())
-            .build()
-    }
-
-    single {
 
         val httpLoggingInterceptor = HttpLoggingInterceptor(HttpLoggingInterceptor.Logger.DEFAULT)
         val clientBuilder = OkHttpClient.Builder()
@@ -135,6 +126,17 @@ val networkModule: Module = module {
             .baseUrl(get<String>(named("baseUrl")))
             .client(get())
             .addConverterFactory(MoshiConverterFactory.create(get()))
+            .build()
+    }
+}
+
+val commonModule: Module = module {
+
+    single {
+        Moshi.Builder()
+            .add(UserRoleAdapter())
+            .add(EntityStatusAdapter())
+            .add(LocalDateTimeAdapter())
             .build()
     }
 }

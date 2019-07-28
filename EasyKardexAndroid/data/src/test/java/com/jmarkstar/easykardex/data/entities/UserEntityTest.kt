@@ -27,8 +27,9 @@
 
 package com.jmarkstar.easykardex.data.entities
 
+import com.jmarkstar.easykardex.data.di.commonModule
 import com.jmarkstar.easykardex.data.di.constantTestModule
-import com.jmarkstar.easykardex.data.di.networkModule
+import com.jmarkstar.easykardex.data.userEntity
 import com.jmarkstar.easykardex.data.utils.readFileAsString
 import com.squareup.moshi.Moshi
 import org.junit.After
@@ -39,22 +40,16 @@ import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
 import org.koin.test.inject
-import org.threeten.bp.LocalDateTime
 
 class UserEntityTest : KoinTest {
 
     private val moshi: Moshi by inject()
 
-    val creationDate = LocalDateTime.now()
-    val lastUpdateDate = LocalDateTime.now()
-
-    val userEntity = UserEntity(1L, UserRoleEntity.ADMIN, "username1","full name", creationDate, lastUpdateDate, EntityStatus.ACTIVE)
-
     @Before
     fun setupKoinModules() {
 
         startKoin {
-            modules(listOf(constantTestModule, networkModule))
+            modules(listOf(constantTestModule, commonModule))
         }
     }
 

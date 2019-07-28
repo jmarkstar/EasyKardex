@@ -21,56 +21,58 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created by jmarkstar on 7/26/19 11:35 AM
+ * Created by jmarkstar on 7/28/19 7:12 PM
  *
  */
 
-package com.jmarkstar.easykardex.data.entities.adapters
+package com.jmarkstar.easykardex.data.cache
 
+import android.os.Build
+import androidx.test.core.app.ApplicationProvider
+import com.jmarkstar.easykardex.data.di.cacheModule
 import com.jmarkstar.easykardex.data.di.commonModule
-import com.jmarkstar.easykardex.data.di.constantTestModule
-import com.jmarkstar.easykardex.data.utils.LibraryUtils
-import com.squareup.moshi.Moshi
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
 import org.koin.test.inject
-import org.threeten.bp.LocalDateTime
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 
-class LocalDateTimeAdapterTest: KoinTest {
+@RunWith(RobolectricTestRunner::class)
+@Config(sdk = [Build.VERSION_CODES.O_MR1])
+class EasyKardexCacheTest: KoinTest {
 
-    private val moshi: Moshi by inject()
+    private val cache: EasyKardexCache  by inject()
 
     @Before
-    fun setupKoinModules(){
+    fun setup() {
 
         startKoin {
-            modules(listOf(constantTestModule, commonModule))
+            androidContext(ApplicationProvider.getApplicationContext())
+            modules(listOf(commonModule, cacheModule))
         }
     }
 
     @Test
-    fun `parse String to LocalDateTime success`(){
-
-        val datetimeString = "2019-07-24 02:33:09"
-        val zonedDateTime = LocalDateTime.parse(datetimeString, LibraryUtils.localDateTimeFormater)
-        Assert.assertNotNull(zonedDateTime)
+    fun `store session token success`() {
+        cache.token = "asa5sas54544as5a5saa"
+        assert(cache.token == "asa5sas54544as5a5saa")
     }
 
     @Test
-    fun `parse LocalDateTime to String success`(){
-
-        val localDateTime = LocalDateTime.now()
-        val string = LibraryUtils.localDateTimeFormater.format(localDateTime)
-        Assert.assertNotNull(string)
+    fun `delete session token success`() {
+        cache.token = null
+        Assert.assertNull(cache.token)
     }
 
     @After
-    fun stopKoinModules(){
+    fun unsetup() {
         stopKoin()
     }
 }

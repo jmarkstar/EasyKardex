@@ -50,7 +50,14 @@ internal class EasyKardexCache(private val context: Context, private val moshi: 
     }
 
     var token: String?
-        get() = sharedPreferences.getString(TOKEN, LibraryConstants.EMPTY)
+        get() {
+            val token = sharedPreferences.getString(TOKEN, LibraryConstants.EMPTY)
+            return if (token == LibraryConstants.EMPTY){
+                null
+            } else {
+                token
+            }
+        }
         set(value){
             if(value != null){
                 sharedPreferences.edit().putString(TOKEN, value).apply()
@@ -62,7 +69,11 @@ internal class EasyKardexCache(private val context: Context, private val moshi: 
     var role: UserRoleEntity?
         get() {
             val roleId = sharedPreferences.getInt(USER_ROLE, 0)
-            return UserRoleEntity.getRoleByID(roleId)
+            return if ( roleId == 0){
+                null
+            } else {
+                UserRoleEntity.getRoleByID(roleId)
+            }
         }
         set(value){
             if(value != null){

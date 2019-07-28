@@ -27,24 +27,10 @@
 
 package com.jmarkstar.easykardex.data.entities
 
-import com.jmarkstar.easykardex.data.di.constantTestModule
-import com.jmarkstar.easykardex.data.di.networkModule
-import org.junit.After
 import org.junit.Assert
-import org.junit.Before
 import org.junit.Test
-import org.koin.core.context.startKoin
-import org.koin.core.context.stopKoin
 
 class UserRoleEntityTest {
-
-    @Before
-    fun setupKoinModules() {
-
-        startKoin {
-            modules(listOf(constantTestModule, networkModule))
-        }
-    }
 
     @Test
     fun `get Admin Role by Id success`() {
@@ -65,10 +51,5 @@ class UserRoleEntityTest {
 
         val unknownId = UserRoleEntity.getRoleByID(3)
         Assert.assertNull(unknownId)
-    }
-
-    @After
-    fun stopKoinModules(){
-        stopKoin()
     }
 }

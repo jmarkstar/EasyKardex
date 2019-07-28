@@ -21,43 +21,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created by jmarkstar on 7/18/19 3:18 PM
+ * Created by jmarkstar on 7/28/19 7:28 PM
  *
  */
 
-package com.jmarkstar.easykardex
+package com.jmarkstar.easykardex.data
 
-import android.app.Application
-import com.jakewharton.threetenabp.AndroidThreeTen
-import com.jmarkstar.easykardex.data.di.*
-import com.jmarkstar.easykardex.di.constantModule
-import com.jmarkstar.easykardex.di.viewModelModule
-import com.jmarkstar.easykardex.domain.di.useCaseModule
-import org.koin.android.ext.koin.androidContext
-import org.koin.android.ext.koin.androidLogger
-import org.koin.core.context.startKoin
+import com.jmarkstar.easykardex.data.entities.EntityStatus
+import com.jmarkstar.easykardex.data.entities.UserEntity
+import com.jmarkstar.easykardex.data.entities.UserRoleEntity
+import org.threeten.bp.LocalDateTime
 
-class EasyKardexApplication : Application() {
+val creationDate = LocalDateTime.now()
+val lastUpdateDate = LocalDateTime.now()
 
-    override fun onCreate() {
-        super.onCreate()
-
-        AndroidThreeTen.init(this)
-
-        startKoin {
-            androidContext(this@EasyKardexApplication)
-            androidLogger()
-
-            modules(listOf(
-                commonModule,
-                networkModule,
-                databaseModule,
-                cacheModule,
-                repositoryModule,
-                useCaseModule,
-                viewModelModule,
-                constantModule))
-        }
-
-    }
-}
+val userEntity = UserEntity(1L, UserRoleEntity.ADMIN, "username1","full name", creationDate, lastUpdateDate, EntityStatus.ACTIVE)

@@ -28,6 +28,7 @@
 package com.jmarkstar.easykardex.data.api
 
 import com.jmarkstar.easykardex.data.api.request.LoginRequest
+import com.jmarkstar.easykardex.data.di.commonModule
 import com.jmarkstar.easykardex.data.di.constantTestModule
 import com.jmarkstar.easykardex.data.di.networkModule
 import com.jmarkstar.easykardex.data.entities.UserEntity
@@ -51,7 +52,7 @@ class AccountServiceE2ETest: KoinTest {
     fun setupKoinModules(){
 
         startKoin {
-            modules(listOf(constantTestModule, networkModule))
+            modules(listOf(commonModule, constantTestModule, networkModule))
         }
     }
 
