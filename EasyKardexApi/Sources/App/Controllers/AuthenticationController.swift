@@ -120,6 +120,6 @@ final class AuthenticationController: RouteCollection {
                 .query(on: req)
                 .filter(\UserToken.userID, .equal, user.requireID())
                 .delete()
-                .transform(to: HTTPResponse(status: .ok))
+                .transform(to: HTTPResponse(status: .noContent))
     }
 }

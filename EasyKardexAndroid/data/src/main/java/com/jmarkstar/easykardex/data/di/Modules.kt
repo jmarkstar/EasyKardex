@@ -120,6 +120,7 @@ val networkModule: Module = module {
             httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
             clientBuilder.addInterceptor(httpLoggingInterceptor)
         }
+        clientBuilder.addInterceptor(TokenAuthenticationInterceptor(cache = get()))
         clientBuilder.build()
     }
 

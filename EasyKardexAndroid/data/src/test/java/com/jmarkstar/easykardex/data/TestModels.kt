@@ -33,6 +33,14 @@ import com.jmarkstar.easykardex.data.entities.UserEntity
 import com.jmarkstar.easykardex.data.entities.UserRoleEntity
 import org.threeten.bp.LocalDateTime
 
+// Data for Login
+
+val rightUserName = "jmarkstar"
+val rightPassword = "abc123"
+val wrongUserName = "myuser"
+val wrongPassword = "abcdef"
+val wrongToken = "asasasadfdfdf1212113"
+
 val creationDate = LocalDateTime.now()
 val lastUpdateDate = LocalDateTime.now()
 

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created by jmarkstar on 7/25/19 11:55 PM
+ * Created by jmarkstar on 8/2/19 7:37 PM
  *
  */
 
@@ -29,19 +29,19 @@ package com.jmarkstar.easykardex.data.api
 
 import android.os.Build
 import androidx.test.core.app.ApplicationProvider
-import com.jmarkstar.easykardex.data.*
 import com.jmarkstar.easykardex.data.api.request.LoginRequest
 import com.jmarkstar.easykardex.data.cache.EasyKardexCache
 import com.jmarkstar.easykardex.data.di.cacheModule
 import com.jmarkstar.easykardex.data.di.commonModule
 import com.jmarkstar.easykardex.data.di.constantTestModule
 import com.jmarkstar.easykardex.data.di.networkModule
-import com.jmarkstar.easykardex.data.entities.UserEntity
-import com.jmarkstar.easykardex.data.utils.LibraryConstants
-import com.jmarkstar.easykardex.data.utils.readFileAsString
-import com.squareup.moshi.Moshi
+import com.jmarkstar.easykardex.data.rightPassword
+import com.jmarkstar.easykardex.data.rightUserName
 import kotlinx.coroutines.runBlocking
-import org.junit.*
+import org.junit.After
+import org.junit.Assert
+import org.junit.Before
+import org.junit.Test
 import org.junit.runner.RunWith
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -55,21 +55,36 @@ import org.robolectric.annotation.Config
  * */
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [Build.VERSION_CODES.O_MR1])
-class AccountServiceE2ETest: KoinTest {
+class BrandServiceE2ETest: KoinTest {
 
     private val accountService: AccountService by inject()
-
-    private val moshi: Moshi by inject()
+    private val brandService: BrandService by inject()
 
     private val cache: EasyKardexCache by inject()
 
     @Before
     fun setupKoinModules(){
-
         startKoin {
             androidContext(ApplicationProvider.getApplicationContext())
             modules(listOf(commonModule, constantTestModule, networkModule, cacheModule))
         }
+    }
+
+    @Before
+    fun login() = runBlocking {
+        val request = LoginRequest(rightUserName, rightPassword)
+        val result = accountService.login(request)
+
+        assert(result.isSuccessful)
+
+        cache.token = result.body()!!.token
+    }
+
+    @After
+    fun logout() = runBlocking {
+        val logoutResult = accountService.logout()
+        Assert.assertEquals(true, 204 == logoutResult.code())
+        cache.token = null
     }
 
     @After
@@ -78,79 +93,14 @@ class AccountServiceE2ETest: KoinTest {
     }
 
     @Test
-    fun `login success test`() = runBlocking {
+    fun `brand create success`() = runBlocking {
+        println("brand create success()")
 
-        val request = LoginRequest(rightUserName, rightPassword)
-
-        val result = accountService.login(request)
-
-        assert(result.isSuccessful)
-        Assert.assertNotNull(result.body())
-        Assert.assertNotNull(result.body()?.token)
-        Assert.assertFalse(result.body()?.token == LibraryConstants.EMPTY)
-
-        val userLoggedIn = readFileAsString(this@AccountServiceE2ETest.javaClass, "assets/UserLoggedInUser.json")
-
-        val userAdapter = moshi.adapter(UserEntity::class.java)
-        val userResponseJson = userAdapter.toJson(result.body()!!.user)
-
-        Assert.assertFalse(userLoggedIn == userResponseJson)
     }
 
     @Test
-    fun `login failure user doesnt exist test`() = runBlocking {
-
-        val request = LoginRequest(wrongUserName, rightPassword)
-
-        val result = accountService.login(request)
-
-        Assert.assertFalse(result.isSuccessful)
-        Assert.assertEquals(true, 404 == result.code())
-
-        Assert.assertNull(result.body())
-    }
-
-    @Test
-    fun `login failure wrong password test`() = runBlocking {
-
-        val request = LoginRequest(rightUserName, wrongPassword)
-
-        val result = accountService.login(request)
-
-        Assert.assertFalse(result.isSuccessful)
-        Assert.assertEquals(true, 401 == result.code())
-    }
-
-    @Test
-    fun `logout success test`() = runBlocking {
-
-        val request = LoginRequest(rightUserName,rightPassword)
-
-        val loginResult = accountService.login(request)
-
-        assert(loginResult.isSuccessful)
-
-        cache.token = loginResult.body()?.token
-
-        val logoutResult = accountService.logout()
-
-        Assert.assertEquals(true, 204 == logoutResult.code())
-
-        cache.token = null
-    }
-
-    @Test
-    fun `logout failure Token not provided test`() = runBlocking {
-
-        val logoutResult = accountService.logout()
-        Assert.assertEquals(true, 400 == logoutResult.code())
-    }
-
-    @Test
-    fun `logout failure Wrong token test`() = runBlocking {
-
-        cache.token = wrongToken
-        val logoutResult = accountService.logout()
-        Assert.assertEquals(true, 401 == logoutResult.code())
+    fun `get all brands success`() = runBlocking {
+        println("get all brands success()")
+        
     }
 }

@@ -27,10 +27,15 @@
 
 package com.jmarkstar.easykardex.data.api
 
+import android.util.Log
+import com.jmarkstar.easykardex.data.cache.EasyKardexCache
 import com.jmarkstar.easykardex.domain.models.FailureReason
 import com.jmarkstar.easykardex.domain.models.Result
+import okhttp3.Interceptor
+import okhttp3.Response
 import java.lang.Exception
 import java.net.UnknownHostException
+import java.util.*
 
 suspend fun <T: Any>processNetworkResult(resultCode: Int, sucessResult: suspend () -> Result<T>): Result<T> {
     return when(resultCode){
@@ -50,4 +55,28 @@ fun <T: Any>processError(exception: Exception): Result<T> {
         is UnknownHostException -> Result.Failure(FailureReason.SERVER_COULDNT_BE_FOUND)
         else -> Result.Failure(FailureReason.INTERNAL_ERROR)
     }
+}
+
+internal class TokenAuthenticationInterceptor(private val cache: EasyKardexCache): Interceptor {
+
+    override fun intercept(chain: Interceptor.Chain): Response {
+
+        var request = chain.request()
+
+        val token = checkNotNull(cache.token){
+            return chain.proceed(request)
+        }
+
+        val language = Locale.getDefault().language
+
+        Log.v("AuthInterceptor","language: $language")
+
+        request = request.newBuilder()
+            .addHeader("Accept-Language", language)
+            .addHeader("Authorization", "Bearer $token")
+            .build()
+
+        return chain.proceed(request)
+    }
+
 }
