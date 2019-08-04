@@ -28,14 +28,9 @@
 package com.jmarkstar.easykardex.data.api
 
 import android.os.Build
-import androidx.test.core.app.ApplicationProvider
 import com.jmarkstar.easykardex.data.*
 import com.jmarkstar.easykardex.data.api.request.LoginRequest
 import com.jmarkstar.easykardex.data.cache.EasyKardexCache
-import com.jmarkstar.easykardex.data.di.cacheModule
-import com.jmarkstar.easykardex.data.di.commonModule
-import com.jmarkstar.easykardex.data.di.constantTestModule
-import com.jmarkstar.easykardex.data.di.networkModule
 import com.jmarkstar.easykardex.data.entities.UserEntity
 import com.jmarkstar.easykardex.data.utils.LibraryConstants
 import com.jmarkstar.easykardex.data.utils.readFileAsString
@@ -43,10 +38,6 @@ import com.squareup.moshi.Moshi
 import kotlinx.coroutines.runBlocking
 import org.junit.*
 import org.junit.runner.RunWith
-import org.koin.android.ext.koin.androidContext
-import org.koin.core.context.startKoin
-import org.koin.core.context.stopKoin
-import org.koin.test.KoinTest
 import org.koin.test.inject
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
@@ -55,27 +46,13 @@ import org.robolectric.annotation.Config
  * */
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [Build.VERSION_CODES.O_MR1])
-class AccountServiceE2ETest: KoinTest {
+class AccountServiceE2ETest: BaseApiTest() {
 
     private val accountService: AccountService by inject()
 
     private val moshi: Moshi by inject()
 
     private val cache: EasyKardexCache by inject()
-
-    @Before
-    fun setupKoinModules(){
-
-        startKoin {
-            androidContext(ApplicationProvider.getApplicationContext())
-            modules(listOf(commonModule, constantTestModule, networkModule, cacheModule))
-        }
-    }
-
-    @After
-    fun stopKoinModules(){
-        stopKoin()
-    }
 
     @Test
     fun `login success test`() = runBlocking {

@@ -21,44 +21,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created by jmarkstar on 8/2/19 8:10 PM
+ * Created by jmarkstar on 8/5/19 12:38 AM
  *
  */
 
 package com.jmarkstar.easykardex.data.api
 
-import com.jmarkstar.easykardex.data.api.request.LoginRequest
-import com.jmarkstar.easykardex.data.cache.EasyKardexCache
-import com.jmarkstar.easykardex.data.rightPassword
-import com.jmarkstar.easykardex.data.rightUserName
-import kotlinx.coroutines.runBlocking
+import androidx.test.core.app.ApplicationProvider
+import com.jmarkstar.easykardex.data.di.cacheModule
+import com.jmarkstar.easykardex.data.di.commonModule
+import com.jmarkstar.easykardex.data.di.constantTestModule
+import com.jmarkstar.easykardex.data.di.networkModule
 import org.junit.After
-import org.junit.Assert
 import org.junit.Before
-import org.koin.test.inject
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
+import org.koin.test.KoinTest
 
-abstract class BaseAuthenticatedServiceE2ETest: BaseApiTest() {
-
-    private val accountService: AccountService by inject()
-    private val cache: EasyKardexCache by inject()
+abstract class BaseApiTest: KoinTest {
 
     @Before
-    fun login() = runBlocking {
-        println("login")
-
-        val request = LoginRequest(rightUserName, rightPassword)
-        val result = accountService.login(request)
-
-        assert(result.isSuccessful)
-
-        cache.token = result.body()!!.token
+    fun setupKoinModules(){
+        println("setupKoinModules")
+        startKoin {
+            androidContext(ApplicationProvider.getApplicationContext())
+            modules(listOf(commonModule, constantTestModule, networkModule, cacheModule))
+        }
     }
 
     @After
-    fun logout() = runBlocking {
-        println("logout")
-        val logoutResult = accountService.logout()
-        Assert.assertEquals(true, 204 == logoutResult.code())
-        cache.token = null
+    fun stopKoinModules(){
+        println("stopKoinModules")
+        stopKoin()
     }
 }
