@@ -49,7 +49,9 @@ data class BrandEntity(val id: Long? = null,
                        @Json(name = "lud") var lastUpdateDate: LocalDateTime? = null,
                        @Json(name = "s") var status: EntityStatus = EntityStatus.ACTIVE) {
 
-    @Ignore var products: List<ProductEntity>? = null
+    @Ignore // Room will ignore this variable
+    @Transient // Moshi will ignore this variable
+    var products: List<ProductEntity>? = null
 }
 
 fun BrandEntity(productProperty: ProductProperty): BrandEntity = BrandEntity(productProperty.id, productProperty.name)
