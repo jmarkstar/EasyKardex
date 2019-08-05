@@ -42,7 +42,7 @@ import org.threeten.bp.LocalDateTime
 
 
 @JsonClass(generateAdapter = true)
-data class ProviderEntity(var id: Long,
+data class ProviderEntity(var id: Long? = null,
                           @Json(name = "cpn") var companyName: String,
                           @Json(name = "cn") var contactName: String,
                           @Json(name = "cp") var contactPhoneNumber: String,

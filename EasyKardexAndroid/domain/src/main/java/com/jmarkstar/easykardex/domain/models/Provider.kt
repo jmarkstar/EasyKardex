@@ -27,4 +27,4 @@
 
 package com.jmarkstar.easykardex.domain.models
 
-class Provider(var id: Long, var companyName: String, var contactName: String, var contactPhoneNumber: String)
+class Provider(var id: Long? = null, var companyName: String, var contactName: String, var contactPhoneNumber: String)

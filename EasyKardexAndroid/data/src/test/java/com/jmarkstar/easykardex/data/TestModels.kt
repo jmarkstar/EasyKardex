@@ -46,5 +46,6 @@ val userEntity = UserEntity(1L, UserRoleEntity.ADMIN, "username1","full name", c
 val brand = BrandEntity(null, "Coca cola", creationDate, lastUpdateDate, EntityStatus.ACTIVE)
 val category = CategoryEntity(1L, "Groseries", lastUpdateDate, EntityStatus.ACTIVE)
 val unit = UnitEntity(1L, "Liter", lastUpdateDate, EntityStatus.ACTIVE)
+val provider = ProviderEntity(1L, "Google AU","Paul Smith","+610432654030")
 
 val brands = Array(10){ brand }
