@@ -21,63 +21,61 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * Created by jmarkstar on 8/2/19 7:37 PM
+ * Created by jmarkstar on 8/5/19 1:19 AM
  *
  */
 
 package com.jmarkstar.easykardex.data.api
 
 import android.os.Build
-import com.jmarkstar.easykardex.data.brand
-import com.jmarkstar.easykardex.data.entities.BrandEntity
-import com.jmarkstar.easykardex.data.utils.LibraryConstants
-import kotlinx.coroutines.runBlocking
+import com.jmarkstar.easykardex.data.entities.CategoryEntity
 import org.junit.Assert
-import org.junit.Test
 import org.junit.runner.RunWith
 import org.koin.test.inject
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
+import com.jmarkstar.easykardex.data.category
+import com.jmarkstar.easykardex.data.utils.LibraryConstants
+import kotlinx.coroutines.runBlocking
+import org.junit.Test
 
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [Build.VERSION_CODES.O_MR1])
-class BrandServiceE2ETest: BaseAuthenticatedServiceE2ETest() {
+class CategoryServiceE2ETest: BaseAuthenticatedServiceE2ETest() {
 
-    private val brandService: BrandService by inject()
+    private val categoryService: CategoryService by inject()
 
-    /** Because we are using the server, we dont want that new row exists as a normal row in the database. We must delete it.
-     * */
     @Test
-    fun `brand create and delete success`() = runBlocking {
+    fun `create and delete category successly`() = runBlocking {
 
         //Create
-        val newBrand = createBrand()
+        val newItem = create()
 
         //Delete
-        deleteBrand(newBrand.id!!)
+        delete(newItem.id!!)
     }
 
     @Test
-    fun `brand create failure Empty name`() = runBlocking {
+    fun `create category failure Empty name`() = runBlocking {
 
-        val brandWithoutName = BrandEntity(name = LibraryConstants.EMPTY)
+        val brandWithoutName = CategoryEntity(name = LibraryConstants.EMPTY)
 
-        val createResult = brandService.create(brandWithoutName)
+        val createResult = categoryService.create(brandWithoutName)
 
         Assert.assertEquals(true, createResult.code() == 400)
     }
 
     @Test
-    fun `brand update success`() = runBlocking {
+    fun `update category successly`() = runBlocking {
 
-        val newBrand = createBrand()
+        val newItem = create()
 
-        val brandId = newBrand.id!!
+        val id = newItem.id!!
 
-        val newName = "Pepsi"
-        newBrand.name = newName
+        val newName = "Technology"
+        newItem.name = newName
 
-        val updateResult = brandService.update(brandId, newBrand)
+        val updateResult = categoryService.update(id, newItem)
 
         Assert.assertEquals(true, updateResult.code() == 200)
         Assert.assertNotNull(updateResult.body())
@@ -86,45 +84,45 @@ class BrandServiceE2ETest: BaseAuthenticatedServiceE2ETest() {
 
         Assert.assertTrue(updatedBrand.name == newName)
 
-        deleteBrand(brandId)
+        delete(id)
     }
 
     @Test
-    fun `brand update failure Empty name`() = runBlocking {
+    fun `update category failure Empty name`() = runBlocking {
 
-        val newBrand = createBrand()
+        val newItem = create()
 
-        val brandId = newBrand.id!!
+        val id = newItem.id!!
 
-        newBrand.name = LibraryConstants.EMPTY
+        newItem.name = LibraryConstants.EMPTY
 
-        val createResult = brandService.update(brandId, newBrand)
+        val createResult = categoryService.update(id, newItem)
 
         Assert.assertEquals(true, createResult.code() == 400)
 
-        deleteBrand(brandId)
+        delete(id)
     }
 
     @Test
-    fun `brand update failure Brand not found`() = runBlocking {
+    fun `update category failure Brand not found`() = runBlocking {
 
-        val createResult = brandService.update(-1, brand)
+        val createResult = categoryService.update(-1, category)
 
         Assert.assertEquals(true, createResult.code() == 404)
     }
 
     @Test
-    fun `brand delete failure Brand not found`() = runBlocking {
+    fun `delete category failure Brand not found`() = runBlocking {
 
-        val createResult = brandService.delete(-1)
+        val createResult = categoryService.delete(-1)
 
         Assert.assertEquals(true, createResult.code() == 404)
     }
 
     @Test
-    fun `get all brands success`() = runBlocking {
+    fun `get all categories success`() = runBlocking {
 
-        val getAllResult = brandService.getAll()
+        val getAllResult = categoryService.getAll()
 
         Assert.assertEquals(true, getAllResult.code() == 200)
         Assert.assertNotNull(getAllResult.body())
@@ -132,31 +130,31 @@ class BrandServiceE2ETest: BaseAuthenticatedServiceE2ETest() {
     }
 
     @Test
-    fun `get Brand by Id Success`() = runBlocking {
+    fun `get Category by Id Success`() = runBlocking {
 
-        val newBrand = createBrand()
+        val newBrand = create()
 
         val brandId = newBrand.id!!
 
-        val getByIdResult = brandService.findById(brandId)
+        val getByIdResult = categoryService.findById(brandId)
 
         Assert.assertEquals(true, getByIdResult.code() == 200)
         Assert.assertNotNull(getByIdResult.body())
 
-        deleteBrand(brandId)
+        delete(brandId)
     }
 
     @Test
-    fun `get Brand by Id failure Not found`() = runBlocking {
+    fun `get Category by Id failure Not found`() = runBlocking {
 
-        val createResult = brandService.findById(-1)
+        val createResult = categoryService.findById(-1)
 
         Assert.assertEquals(true, createResult.code() == 404)
     }
 
-    private suspend fun createBrand(): BrandEntity {
+    private suspend fun create(): CategoryEntity {
 
-        val createResult = brandService.create(brand)
+        val createResult = categoryService.create(category)
 
         Assert.assertEquals(true, createResult.code() == 201)
         Assert.assertNotNull(createResult.body())
@@ -164,16 +162,16 @@ class BrandServiceE2ETest: BaseAuthenticatedServiceE2ETest() {
 
         //Update
 
-        val newBrand = createResult.body()!!
+        val newItem = createResult.body()!!
 
-        Assert.assertTrue(newBrand.name == brand.name)
+        Assert.assertTrue(newItem.name == category.name)
 
-        return newBrand
+        return newItem
     }
 
-    private suspend fun deleteBrand(brandId: Long) {
+    private suspend fun delete(id: Long) {
 
-        val deleteResult = brandService.delete(brandId)
+        val deleteResult = categoryService.delete(id)
 
         Assert.assertEquals(true, deleteResult.code() == 204)
     }
