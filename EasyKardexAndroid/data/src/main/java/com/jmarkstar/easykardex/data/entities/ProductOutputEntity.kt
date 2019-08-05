@@ -62,5 +62,7 @@ class ProductOutputEntity(var id: Long,
                           var createAt: LocalDateTime
 ) {
 
-    @Ignore var productInput: ProductInputEntity? = null
+    @Ignore // Room will ignore this variable
+    @Transient // Moshi will ignore this variable
+    var productInput: ProductInputEntity? = null
 }

@@ -48,7 +48,9 @@ data class UnitEntity(val id: Long? = null,
                       @Json(name = "lud") var lastUpdateDate: LocalDateTime? = null,
                       @Json(name = "s") var status: EntityStatus = EntityStatus.ACTIVE) {
 
-    @Ignore var products: List<ProductEntity>? = null
+    @Ignore // Room will ignore this variable
+    @Transient // Moshi will ignore this variable
+    var products: List<ProductEntity>? = null
 }
 
 fun UnitEntity(productProperty: ProductProperty): UnitEntity = UnitEntity(productProperty.id, productProperty.name)

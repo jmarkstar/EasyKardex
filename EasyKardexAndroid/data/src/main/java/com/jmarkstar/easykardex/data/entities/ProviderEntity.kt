@@ -50,7 +50,9 @@ data class ProviderEntity(var id: Long,
                           @Json(name = "lud") var lastUpdateDate: LocalDateTime? = null,
                           @Json(name = "s") var status: EntityStatus = EntityStatus.ACTIVE) {
 
-    @Ignore var inputs: List<ProductInputEntity>? = null
+    @Ignore // Room will ignore this variable
+    @Transient // Moshi will ignore this variable
+    var inputs: List<ProductInputEntity>? = null
 }
 
 fun ProviderEntity(provider: Provider): ProviderEntity = ProviderEntity(provider.id, provider.companyName, provider.contactName, provider.contactPhoneNumber)

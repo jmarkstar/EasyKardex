@@ -74,7 +74,7 @@ data class ProductInputEntity(var id: Long,
                               var createAt: LocalDateTime
 ) {
 
-    @Ignore var product: ProductEntity? = null
-    @Ignore var provider: ProviderEntity? = null
-    @Ignore var outputs: ArrayList<ProductOutputEntity>? = null
+    @Transient @Ignore var product: ProductEntity? = null
+    @Transient @Ignore var provider: ProviderEntity? = null
+    @Transient @Ignore var outputs: ArrayList<ProductOutputEntity>? = null
 }
