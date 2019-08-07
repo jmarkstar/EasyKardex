@@ -47,5 +47,6 @@ val brand = BrandEntity(null, "Coca cola", creationDate, lastUpdateDate, EntityS
 val category = CategoryEntity(1L, "Groseries", lastUpdateDate, EntityStatus.ACTIVE)
 val unit = UnitEntity(1L, "Liter", lastUpdateDate, EntityStatus.ACTIVE)
 val provider = ProviderEntity(1L, "Google AU","Paul Smith","+610432654030")
+val product = ProductEntity(1L, 1L, 1L, 1L, "Coca Cola","","","Gaseosa", creationDate, lastUpdateDate, EntityStatus.ACTIVE)
 
 val brands = Array(10){ brand }

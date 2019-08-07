@@ -58,9 +58,9 @@ class ProviderServiceE2ETest: BaseAuthenticatedServiceE2ETest() {
     @Test
     fun `create provider failure Empty name`() = runBlocking {
 
-        val brandWithoutCompanyName = ProviderEntity(null, LibraryConstants.EMPTY, "Paul Smith","+610432654030")
+        val providerWithoutCompanyName = ProviderEntity(null, LibraryConstants.EMPTY, "Paul Smith","+610432654030")
 
-        val createResult = providerService.create(brandWithoutCompanyName)
+        val createResult = providerService.create(providerWithoutCompanyName)
 
         Assert.assertEquals(true, createResult.code() == 400)
     }
@@ -68,9 +68,9 @@ class ProviderServiceE2ETest: BaseAuthenticatedServiceE2ETest() {
     @Test
     fun `create provider success Empty contact info`() = runBlocking {
 
-        val brandWithoutName = ProviderEntity(null, "Google AU", LibraryConstants.EMPTY,LibraryConstants.EMPTY)
+        val providerWithoutContactInfo = ProviderEntity(null, "Google AU", LibraryConstants.EMPTY,LibraryConstants.EMPTY)
 
-        val createResult = providerService.create(brandWithoutName)
+        val createResult = providerService.create(providerWithoutContactInfo)
 
         println("http code: ${createResult.code()}")
 
@@ -144,16 +144,16 @@ class ProviderServiceE2ETest: BaseAuthenticatedServiceE2ETest() {
     @Test
     fun `get Provider by Id Success`() = runBlocking {
 
-        val newBrand = create()
+        val newItem = create()
 
-        val brandId = newBrand.id!!
+        val newItemId = newItem.id!!
 
-        val getByIdResult = providerService.findById(brandId)
+        val getByIdResult = providerService.findById(newItemId)
 
         Assert.assertEquals(true, getByIdResult.code() == 200)
         Assert.assertNotNull(getByIdResult.body())
 
-        delete(brandId)
+        delete(newItemId)
     }
 
     @Test

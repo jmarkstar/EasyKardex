@@ -53,17 +53,17 @@ data class ProductEntity(@Json(name = "idp") val id: Long? = null,
                          @Json(name = "idc") var categoryId: Long,
                          @Json(name = "idu") var unitId: Long,
                          @Json(name = "n")   var name: String,
-                         @Json(name = "t")   var thumb: String,
-                         @Json(name = "i")   var image: String,
+                         @Json(name = "t")   var thumb: String? = null,
+                         @Json(name = "i")   var image: String? = null,
                          @Json(name = "d")   var description: String,
                          @Json(name = "cd") var creationDate: LocalDateTime? = null,
                          @Json(name = "lud") var lastUpdateDate: LocalDateTime? = null,
                          @Json(name = "s") var status: EntityStatus = EntityStatus.ACTIVE) {
 
-    @Ignore var brand: BrandEntity? = null
-    @Ignore var category: CategoryEntity? = null
-    @Ignore var unit: UnitEntity? = null
-    @Ignore var inputs: ArrayList<ProductInputEntity>? = null
+    @Transient @Ignore var brand: BrandEntity? = null
+    @Transient @Ignore var category: CategoryEntity? = null
+    @Transient @Ignore var unit: UnitEntity? = null
+    @Transient @Ignore var inputs: ArrayList<ProductInputEntity>? = null
 }
 
 fun ProductEntity(domain: Product): ProductEntity = ProductEntity(domain.id,

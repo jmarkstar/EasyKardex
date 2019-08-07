@@ -58,9 +58,9 @@ class UnitServiceE2ETest: BaseAuthenticatedServiceE2ETest() {
     @Test
     fun `create unit failure Empty name`() = runBlocking {
 
-        val brandWithoutName = UnitEntity(name = LibraryConstants.EMPTY)
+        val unitWithoutName = UnitEntity(name = LibraryConstants.EMPTY)
 
-        val createResult = unitService.create(brandWithoutName)
+        val createResult = unitService.create(unitWithoutName)
 
         Assert.assertEquals(true, createResult.code() == 400)
     }
@@ -132,16 +132,16 @@ class UnitServiceE2ETest: BaseAuthenticatedServiceE2ETest() {
     @Test
     fun `get Unit by Id Success`() = runBlocking {
 
-        val newBrand = create()
+        val newUnit = create()
 
-        val brandId = newBrand.id!!
+        val newUnitId = newUnit.id!!
 
-        val getByIdResult = unitService.findById(brandId)
+        val getByIdResult = unitService.findById(newUnitId)
 
         Assert.assertEquals(true, getByIdResult.code() == 200)
         Assert.assertNotNull(getByIdResult.body())
 
-        delete(brandId)
+        delete(newUnitId)
     }
 
     @Test

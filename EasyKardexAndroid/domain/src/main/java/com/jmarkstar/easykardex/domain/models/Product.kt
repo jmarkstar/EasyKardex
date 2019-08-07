@@ -32,6 +32,6 @@ class Product(val id: Long? = null,
               var categoryId: Long,
               var unitId: Long,
               var name: String,
-              var thumb: String,
-              var image: String,
+              var thumb: String?,
+              var image: String?,
               var description: String)
