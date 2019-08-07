@@ -34,6 +34,7 @@ import org.threeten.bp.LocalDateTime
 
 val rightUserName = "jmarkstar"
 val rightPassword = "abc123"
+val rightToken = "nZt8vCJmBTFs5teIVyfa+3RmokK2h6Cg++J6PWKZiyo="
 val wrongUserName = "myuser"
 val wrongPassword = "abcdef"
 val wrongToken = "asasasadfdfdf1212113"

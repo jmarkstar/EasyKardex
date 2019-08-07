@@ -27,7 +27,6 @@
 
 package com.jmarkstar.easykardex.data.repository
 
-import android.util.Log
 import com.jmarkstar.easykardex.data.api.AccountService
 import com.jmarkstar.easykardex.data.api.processError
 import com.jmarkstar.easykardex.data.api.processNetworkResult
@@ -59,8 +58,6 @@ internal class AccountRepositoryImpl(private val accountService: AccountService,
                     val body = checkNotNull(result.body()){
                         return Result.Failure(FailureReason.INTERNAL_ERROR)
                     }
-
-                    Log.v("AccountRepository","user: ${body.user}")
 
                     cache.userLoggedIn = body.user
                     cache.token = body.token
