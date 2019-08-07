@@ -55,5 +55,6 @@ val units = Array(10){ unit }
 val provider = ProviderEntity(null, "Google AU","Paul Smith","+610432654030")
 val providers = Array(10){ provider }
 
+//the ids of the brand, category and unit are 1 because I'm inserting one row on the @Before methods and removing them on @After.
 val product = ProductEntity(null, 1L, 1L, 1L, "Coca Cola","","","Gaseosa", creationDate, lastUpdateDate, EntityStatus.ACTIVE)
 val products = Array(10){ product }
