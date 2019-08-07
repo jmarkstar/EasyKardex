@@ -44,9 +44,16 @@ val lastUpdateDate = LocalDateTime.now()
 val userEntity = UserEntity(1L, UserRoleEntity.ADMIN, "username1","full name", creationDate, lastUpdateDate, EntityStatus.ACTIVE)
 
 val brand = BrandEntity(null, "Coca cola", creationDate, lastUpdateDate, EntityStatus.ACTIVE)
-val category = CategoryEntity(1L, "Groseries", lastUpdateDate, EntityStatus.ACTIVE)
-val unit = UnitEntity(1L, "Liter", lastUpdateDate, EntityStatus.ACTIVE)
-val provider = ProviderEntity(1L, "Google AU","Paul Smith","+610432654030")
-val product = ProductEntity(1L, 1L, 1L, 1L, "Coca Cola","","","Gaseosa", creationDate, lastUpdateDate, EntityStatus.ACTIVE)
-
 val brands = Array(10){ brand }
+
+val category = CategoryEntity(null, "Groseries", lastUpdateDate, EntityStatus.ACTIVE)
+val categories = Array(10){ category }
+
+val unit = UnitEntity(null, "Liter", lastUpdateDate, EntityStatus.ACTIVE)
+val units = Array(10){ unit }
+
+val provider = ProviderEntity(null, "Google AU","Paul Smith","+610432654030")
+val providers = Array(10){ provider }
+
+val product = ProductEntity(null, 1L, 1L, 1L, "Coca Cola","","","Gaseosa", creationDate, lastUpdateDate, EntityStatus.ACTIVE)
+val products = Array(10){ product }
