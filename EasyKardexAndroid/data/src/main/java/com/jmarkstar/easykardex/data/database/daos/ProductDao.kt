@@ -35,6 +35,9 @@ import com.jmarkstar.easykardex.data.entities.ProductEntity
 
 @Dao internal interface ProductDao {
 
+    @Query("SELECT * FROM product WHERE id = :id")
+    suspend fun getProductById(id: Long): ProductEntity?
+
     @Query("SELECT * FROM product")
     suspend fun getProducts(): List<ProductEntity>
 
@@ -47,6 +50,6 @@ import com.jmarkstar.easykardex.data.entities.ProductEntity
     @Query("DELETE FROM product")
     suspend fun cleanTable(): Int
 
-    @Query("DELETE FROM product WHERE id = :id")
+    @Query("UPDATE product SET status = 0 WHERE id = :id")
     suspend fun deleteProductById(id: Long): Int
 }

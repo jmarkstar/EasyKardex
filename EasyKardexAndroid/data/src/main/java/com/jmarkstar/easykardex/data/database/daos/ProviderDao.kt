@@ -48,6 +48,6 @@ interface ProviderDao {
     @Query("DELETE FROM provider")
     suspend fun cleanTable(): Int
 
-    @Query("DELETE FROM provider WHERE id = :id")
+    @Query("UPDATE provider SET status = 0 WHERE id = :id")
     suspend fun deleteProviderById(id: Long): Int
 }

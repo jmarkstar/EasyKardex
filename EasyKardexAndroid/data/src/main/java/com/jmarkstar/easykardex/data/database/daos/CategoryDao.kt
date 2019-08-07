@@ -50,6 +50,6 @@ import com.jmarkstar.easykardex.data.entities.CategoryEntity
     @Query("DELETE FROM product_category")
     suspend fun cleanTable(): Int
 
-    @Query("DELETE FROM product_category WHERE id = :id")
+    @Query("UPDATE product_category SET status = 0 WHERE id = :id")
     suspend fun deleteCategoryById(id: Long): Int
 }
