@@ -28,46 +28,22 @@
 package com.jmarkstar.easykardex.data.database
 
 import android.os.Build
-import androidx.test.core.app.ApplicationProvider
 import com.jmarkstar.easykardex.data.brand
 import com.jmarkstar.easykardex.data.brands
 import com.jmarkstar.easykardex.data.database.daos.BrandDao
-import com.jmarkstar.easykardex.data.di.commonModule
-import com.jmarkstar.easykardex.data.di.daoModule
-import com.jmarkstar.easykardex.data.di.databaseTestModule
 import kotlinx.coroutines.runBlocking
-import org.junit.After
 import org.junit.Assert
-import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.koin.android.ext.koin.androidContext
-import org.koin.core.context.startKoin
-import org.koin.core.context.stopKoin
-import org.koin.test.KoinTest
 import org.koin.test.inject
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [Build.VERSION_CODES.O_MR1])
-class BrandDaoTest: KoinTest {
+class BrandDaoTest: BaseDaoTest() {
 
     private val brandDao: BrandDao by inject()
-
-    @Before
-    fun setup() {
-
-        startKoin {
-            androidContext(ApplicationProvider.getApplicationContext())
-            modules(listOf(commonModule, databaseTestModule, daoModule))
-        }
-    }
-
-    @After
-    fun unsetup() {
-        stopKoin()
-    }
 
     @Test
     fun `insert brand success`()= runBlocking {
