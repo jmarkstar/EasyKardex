@@ -40,8 +40,8 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito.*
 import retrofit2.Response
-import java.net.UnknownHostException
 import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 
 internal class AccountRepositoryTest {
 
@@ -185,7 +185,26 @@ internal class AccountRepositoryTest {
         val request = LoginRequest(rightUserName, rightPassword)
 
         `when`(accountService.login(request))
-            .thenThrow(UnknownHostException())
+            .thenAnswer { throw UnknownHostException() }
+
+        val result = accountRepository.login(rightUserName, rightPassword)
+
+        assert(result is Result.Failure)
+
+        when(result){
+            is Result.Failure -> {
+                assert(result.reason == FailureReason.SERVER_COULDNT_BE_FOUND)
+            }
+        }
+    }
+
+    @Test
+    fun `login failure throw any exception test`() = runBlocking {
+
+        val request = LoginRequest(rightUserName, rightPassword)
+
+        `when`(accountService.login(request))
+            .thenAnswer { throw SocketTimeoutException() }
 
         val result = accountRepository.login(rightUserName, rightPassword)
 
@@ -193,27 +212,7 @@ internal class AccountRepositoryTest {
 
         when(result){
             is Result.Failure ->
-                assert(result.reason == FailureReason.SERVER_COULDNT_BE_FOUND)
+                assert(result.reason == FailureReason.INTERNAL_ERROR)
         }
-    }
-
-    @Test
-    fun `login failure throw any exception test`() {
-
-        val request = LoginRequest(rightUserName, rightPassword)
-
-        `when`( runBlocking { accountService.login(request) })
-            .thenThrow(SocketTimeoutException())
-            .thenAnswer {
-
-                val result = runBlocking { accountRepository.login(rightUserName, rightPassword) }
-
-                assert(result is Result.Failure)
-
-                when(result){
-                    is Result.Failure ->
-                        assert(result.reason == FailureReason.INTERNAL_ERROR)
-                }
-            }
     }
 }
